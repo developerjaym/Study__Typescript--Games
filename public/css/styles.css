@@ -12,14 +12,21 @@
 
   --empty: black;
   --border: white;
-  --sequence: white;
+  --board: rgb(33, 33, 33);
   --highlight: #fef300;
+  --anti-highlight: black;
+  --sequence: var(--highlight);
+  --anti-sequence: var(var(--anti-highlight));
   --first-light: #95c25a;
   --first-dark: #66902e;
   --first: radial-gradient(var(--first-light),var(--first-dark) );
+  --first-fg: black;
+  --anti-first: white;
   --second-light: #7251b8;
   --second-dark: #52368f;
   --second: radial-gradient(var(--second-light), var(--second-dark));
+  --anti-second: white;
+  --second-fg: black;
 }
 
 * {
@@ -35,16 +42,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: var(--wide);
+  row-gap: var(--narrow);
 }
 
 .board {
   display: grid;
   justify-content: center;
   align-content: center;
-  column-gap: 1px;
-  row-gap: 1px;
-  background: gray;
+  column-gap: 0;
+  row-gap: 0;
+  background: var(--board);
 }
 
 .controls {
@@ -64,7 +71,6 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 0;
-  text-shadow: 0 0 1px var(--sequence);
   user-select: none;
   border: none;
   padding: 0;
@@ -72,18 +78,21 @@ body {
 }
 .square--first {
   background: var(--first);
-  color: black;
+  color: var(--first-fg);
+  text-shadow: 0 0 1px var(--anti-first);
 }
 .square--second {
   background: var(--second);
-  color: black;
+  text-shadow: 0 0 1px var(--anti-second);
+  color: var(--second-fg);
 }
 .square--empty {
   background: var(--empty);
-  filter: none;
+  border: 1px solid var(--board);
 }
 .square--sequence {
-  border: 1px solid var(--sequence);
+  color: var(--sequence);
+  text-shadow: 0 0 1px var(--anti-sequence);
 }
 .game__bottom {
   display: flex;
@@ -95,13 +104,16 @@ body {
 .player-data-display {
   padding: var(--narrow) var(--wide);
 }
+.score {
+  margin: 0;
+}
 .player-data-display--first {
   background: var(--first);
-  color: black;
+  color: var(--first-fg);
 }
 .player-data-display--second {
   background: var(--second);
-  color: white;
+  color: var(--second-fg);
 }
 dialog {
     border: none;
