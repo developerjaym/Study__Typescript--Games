@@ -1,0 +1,5 @@
+node_modules/
+public/js
+*.zip
+todo.txt
+.DS_Store

@@ -1,0 +1,8 @@
+{
+    "appName": "GBP",
+    "rootElementId": "game",
+    "width": 12,
+    "height": 12,
+    "pollPeriod": 2000,
+    "remoteUrl": "http://127.0.0.1:5000/game"
+}

@@ -1,0 +1,124 @@
+@font-face {
+  font-family: "GeoSansLight";
+  src: url("https://localstorage.tools/game/font/GeosansLight.ttf");
+}
+
+:root {
+  color-scheme: light dark;
+
+  --wide: 12px;
+  --narrow: 4px;
+  --border-radius: 4px;
+
+  --empty: black;
+  --border: white;
+  --legal: white;
+  --highlight: #fef300;
+  --first-light: #95c25a;
+  --first-dark: #66902e;
+  --first: radial-gradient(var(--first-light),var(--first-dark) );
+  --second-light: #7251b8;
+  --second-dark: #52368f;
+  --second: radial-gradient(var(--second-light), var(--second-dark));
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "GeoSansLight", sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.game__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: var(--wide);
+}
+
+.board {
+  display: grid;
+  /* width: calc(100vmin);
+  height: calc(100vmin); */
+  justify-content: center;
+  align-content: center;
+  column-gap: 0;
+  row-gap: 0;
+  background: gray;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  column-gap: var(--narrow);
+}
+
+.button {
+  padding: var(--narrow);
+}
+
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(100vmin / 15);
+  border-radius: var(--border-radius);
+  text-shadow: 0 0 1px var(--legal);
+  user-select: none;
+}
+.square--first {
+  background: var(--first);
+  color: black;
+}
+.square--second {
+  background: var(--second);
+  color: black;
+}
+.square--empty {
+  background: var(--empty);
+  filter: none;
+}
+.square--selected {
+  color: var(--highlight);
+  box-shadow:  0px 0px var(--wide) var(--narrow) var(--highlight);
+  text-shadow: 0 0 1px var(--empty);
+}
+.square--legal {
+}
+
+
+dialog {
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--narrow) var(--wide);
+}
+
+dialog header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    column-gap: var(--wide);
+    font-size: 1.5rem;
+}
+dialog header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+dialog header .header__option {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.icon {
+    border-radius: 100%;
+    height: 2rem;
+    width: 2rem;
+    border: 1px solid var(--border);
+    text-align: center;
+}

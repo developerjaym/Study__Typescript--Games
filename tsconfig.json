@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es5",
+        "lib": ["es2019", "dom"],
+        "rootDir": "src",
+        "outDir": "./public/js",
+        "sourceMap": false,
+        "strict": true,
+        "moduleResolution": "nodeNext", // <- Necessary to get imports with .js
+
+    },
+    "exclue": ["node_modules", "build"]
+}
