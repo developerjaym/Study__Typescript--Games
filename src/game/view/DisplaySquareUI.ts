@@ -2,12 +2,9 @@ import { HTMLService } from "../../service/HTMLService.js";
 import injector from "../../service/Injector.js";
 import { Environment } from "../../service/environment/Environment.js";
 import { IController } from "../controller/IController.js";
-import { UserEventType } from "../controller/UserEvent.js";
 import { GameEvent } from "../model/GameEvent.js";
-import { Square } from "../model/Square.js";
 import { Viewable } from "./Viewable.js";
 import { SquareDrawer } from "./drawer/square/SquareDrawer.js";
-import { isRemoteTurnNext } from "./remoteUtilities.js";
 
 export class DisplaySquareUI implements Viewable {
   container: HTMLElement;

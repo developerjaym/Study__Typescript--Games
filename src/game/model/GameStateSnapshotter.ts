@@ -15,7 +15,8 @@ export class Snapshotter implements Observer<GameEvent> {
           players: event.players,
           board: event.board,
           activePlayer: event.activePlayer,
-          displaySquare: event.displaySquare
+          displaySquare: event.displaySquare,
+          sequences: event.sequences
         });
         this.snapshots.push(deducedState);
         break;

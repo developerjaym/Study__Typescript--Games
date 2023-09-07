@@ -15,8 +15,8 @@ export class TextSquareDrawer implements SquareDrawer {
 
         this.pieceToTextMap.set(null, " ")
     }
-    noteLegalMove(modelSquare: Square, uiSquare: HTMLElement): void {
-        uiSquare.classList.add("square--legal")
+    noteSequence(modelSquare: Square, uiSquare: HTMLElement): void {
+        uiSquare.classList.add("square--sequence")
     }
     draw(modelSquare: Square, uiSquare: HTMLElement): void {
         uiSquare.textContent = this.pieceToTextMap.get(modelSquare.piece) || ""

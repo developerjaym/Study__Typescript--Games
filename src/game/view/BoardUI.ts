@@ -48,11 +48,11 @@ export class BoardUI implements Viewable {
     event.board.squares
       .flat()
       .forEach((modelSquare) => this.updateSquare(modelSquare));
-    event.legalMoves.forEach((legalMove) =>
-      this.squareDrawer.noteLegalMove(
-        legalMove,
+    event.sequences.map(sequence => sequence.squares).flat().forEach((square) =>
+      this.squareDrawer.noteSequence(
+        square,
         this.squares.get(
-          this.xyToID(legalMove.coordinate!.x, legalMove.coordinate!.y)
+          this.xyToID(square.coordinate!.x, square.coordinate!.y)
         )!
       )
     );

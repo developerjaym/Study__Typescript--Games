@@ -18,7 +18,6 @@ export class GameView implements Viewable {
     private controller: IController,
     private htmlService: HTMLService = injector.getHtmlService()
   ) {
-    // TODO, create the HTML elements
     this.container = this.htmlService.create("main", ["game__main"], "main");
     // create controls (help, undo, end game)
     this.controls = new ControlsUI(this.controller);

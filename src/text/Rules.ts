@@ -1,28 +1,21 @@
 import { Icon } from "../game/view/Icon.js";
 
 const rules = 
-`PIECES
-${Icon.KING_PIECE} King:
- •This piece cannot move.
- •Your goal is to capture your opponent's King.
- •The first piece you move becomes your King.
- ${Icon.DIAGONAL_PIECE} Diagonal-Mover:
- •This piece can move one space diagonally.
- ${Icon.VERTICAL_PIECE} UpDown-Mover:
- •This piece can move one space up or down.
- ${Icon.HORIZONTAL_PIECE} Side-Mover:
- •This piece can move one space left or right.
- ${Icon.ALL_PIECE} All-Mover:
- •This piece can move to any connecting square.
- •The first All-Mover you move is promoted to King.
- •Later they are promoted based on direction moved.
-  •If moved diagonally, it'll be a Diagonal-Mover
-  •If moved left or right, it'll be a Side-Mover
-  •If moved up or down, it'll be an UpDown-Mover
+`${Icon.CELEBRATE}GBP${Icon.CELEBRATE}
+
+SUMMARY
+Try to build sequences of five or more dice of your color.
+
 PLAY
 •Green goes first.
 •Purple goes second.
-•Capture pieces by landing on them.
-•Capturing a King ends the game.`
+•Tap on an empty square to place the displayed die.
+•Try to build sequences (seq.) of five or more dice.
+  •A sequence can be horizontal, vertical, or diagonal.
+  •A sequence's value is equal to the sum of the dice.
+  •BUT a sequence with a ${Icon.ONE} is worth just 1 point.
+•Your score is your highest-value seq + your lowest-value seq.
+•Game ends when the board is full.
+•The winner is the player with the highest score.`
 
 export {rules}
