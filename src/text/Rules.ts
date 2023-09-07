@@ -14,7 +14,7 @@ PLAY
   •A sequence can be horizontal, vertical, or diagonal.
   •A sequence's value is equal to the sum of the dice.
   •BUT a sequence with a ${Icon.ONE} is worth just 1 point.
-•Your score is your highest-value seq + your lowest-value seq.
+•Your score is your best seq + your worst seq.
 •Game ends when the board is full.
 •The winner is the player with the highest score.`
 

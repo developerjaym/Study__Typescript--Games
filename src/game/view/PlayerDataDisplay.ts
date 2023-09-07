@@ -24,7 +24,6 @@ export class PlayerDataDisplay implements Viewable {
     return this.container;
   }
   onChange(event: GameEvent): void {
-    console.log('playerDataDisplay update');
     const player = event.players.find(p => p.id === this.playerId)!
     this.scoreDisplay.textContent = `${player.highScore + player.lowScore} = ${player.highScore} + ${player.lowScore}`
   }
