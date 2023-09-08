@@ -1,8 +1,9 @@
 import { Icon } from "../game/view/Icon.js";
-import { EnvironmentService } from "./environment/EnvironmentService.js";
+import injector from "./Injector.js";
+import { Environment } from "./environment/Environment.js";
 
 export class HTMLService {
-    constructor(private document: Document, private environmentService: EnvironmentService) {
+    constructor(private document: Document, private env: Environment = injector.getEnvironment()) {
         
     }
     create(tag: string, classes: string[] = [], id = `${crypto.randomUUID()}`, textContent=""): HTMLElement {
@@ -35,7 +36,7 @@ export class HTMLService {
         dialog.showModal()
     }
     getRoot(): HTMLElement {
-        const id: string = this.environmentService.env.rootElementId
+        const id: string = this.env.rootElementId
         return this.document.getElementById(id)!
     }
 
