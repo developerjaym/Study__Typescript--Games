@@ -39,14 +39,7 @@ export class Game extends AbstractGame {
       this.state.displaySquare.piece = null;
       this.changeTurns();
       this.state.displaySquare.player = this.state.activePlayer;
-      this.state.sequences = this.sequenceService.findSequences(
-        this.state.board
-      );
-      // find players' lowScore and highScore
-      this.sequenceService.updatePlayersScoresFromSequences(
-        this.state.sequences,
-        this.state.players
-      );
+      this.calculateScores()
       if (BoardHelper.isBoardFull(this.state.board)) {
         const winner = this.state.players.reduce((pre, cur) =>
         cur.highScore + cur.lowScore > pre.highScore + pre.lowScore
@@ -93,6 +86,16 @@ export class Game extends AbstractGame {
       (player) => player.id !== this.state.activePlayer.id
     )!;
     this.state.displaySquare.piece = this.randomPieceService.getRandomPiece();
+  }
+  private calculateScores(): void {
+    this.state.sequences = this.sequenceService.findSequences(
+      this.state.board
+    );
+    // find players' lowScore and highScore
+    this.sequenceService.updatePlayersScoresFromSequences(
+      this.state.sequences,
+      this.state.players
+    );
   }
   private getFreshState(): GameState {
     const players = PlayerHelper.createPlayers();

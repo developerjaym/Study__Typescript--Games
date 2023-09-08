@@ -1,6 +1,5 @@
 import injector from "../service/Injector.js";
 import { GameController } from "./controller/GameController.js";
-import { IController } from "./controller/IController.js";
 import { RemoteController } from "./controller/RemoteController.js";
 import { RemoteListener } from "./controller/remote/RemoteListener.js";
 import { RemoteSender } from "./controller/remote/RemoteSender.js";
@@ -12,8 +11,8 @@ import { Viewable } from "./view/Viewable.js";
 export class GameComponent implements Viewable {
   private model;
   private view;
-  constructor(private urlService = injector.getURLService()) {
-    this.model = new Game();
+  constructor(private urlService = injector.getURLService(), private storageService = injector.getStorageService()) {
+    this.model = new Game(storageService.getGameState());
     let gameController = new GameController(this.model);
     
     if(this.urlService.getSearchParam("hostId")) {
@@ -26,6 +25,7 @@ export class GameComponent implements Viewable {
     } else {
       this.view = new GameView(gameController)
     }
+    this.model.subscribe(this.storageService)
     this.model.subscribe(this.view);
     this.model.start();
     

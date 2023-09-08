@@ -104,18 +104,21 @@ body {
 }
 .player-data-display {
   padding: var(--narrow) var(--wide);
+  border-radius: var(--border-radius);
 }
 .score {
   margin: 0;
 }
+
 .player-data-display--first {
-  background: var(--first);
+  background: radial-gradient(var(--anti-first), var(--first-dark));;
   color: var(--first-fg);
 }
 .player-data-display--second {
-  background: var(--second);
+  background: radial-gradient(var(--anti-second), var(--second-dark));
   color: var(--second-fg);
 }
+
 dialog {
     border: none;
     border-radius: var(--border-radius);

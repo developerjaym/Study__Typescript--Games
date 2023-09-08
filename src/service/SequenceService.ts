@@ -8,17 +8,17 @@ export class SequenceService {
     // score each sequence
     // find highest and lowest scoring sequence for each player
     // update players lowScore and highScore
-    const scoreMap = new Map<Player, Map<Sequence, number>>()
+    const scoreMap = new Map<boolean, Map<Sequence, number>>()
     for(const player of players) {
-        scoreMap.set(player, new Map<Sequence, number>())
+        scoreMap.set(player.id, new Map<Sequence, number>())
     }
     for(const sequence of sequences) {
         const score:number = this.scoreSequence(sequence)
         const player: Player = sequence.squares[0].player!;
-        scoreMap.get(player)?.set(sequence, score)
+        scoreMap.get(player.id)?.set(sequence, score)
     }
     for(const player of players) {
-        const sequenceScoreMap = scoreMap.get(player)
+        const sequenceScoreMap = scoreMap.get(player.id)
         // if just one sequence, it becomes highScore
         const sequenceCount = Array.from(sequenceScoreMap?.entries() || []).length
         if(sequenceCount === 0) {
@@ -118,11 +118,11 @@ export class SequenceService {
           square.coordinate?.x === nextXToCheck &&
           square.coordinate?.y === nextYToCheck
       );
-
+      
     if (
       nextSquareToCheck &&
       nextSquareToCheck.player &&
-      nextSquareToCheck.player === lastSquare.player
+      nextSquareToCheck.player.id === lastSquare.player?.id
     ) {
       sequence.squares.push(nextSquareToCheck);
       // then go to next square
