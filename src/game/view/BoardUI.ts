@@ -30,12 +30,17 @@ export class BoardUI implements Viewable {
       for (let x = 0; x < this.env.width; x++) {
         const id = this.xyToID(x, y);
         const square = this.htmlService.create("button", ["square"], id);
+        const handleMove = (e: Event) =>
+        this.controller.onEvent({
+          type: UserEventType.SELECT,
+          coordinate: { x, y },
+        })
+        square.addEventListener("drop", handleMove)
+        square.addEventListener("dragover", (e) => {
+          e.preventDefault();
+        });
         square.style.zIndex = `${this.env.height - y}`;
-        square.addEventListener("click", () =>
-          this.controller.onEvent({
-            type: UserEventType.SELECT,
-            coordinate: { x, y },
-          })
+        square.addEventListener("click", handleMove
         );
         this.board.appendChild(square);
         this.squares.set(id, square);

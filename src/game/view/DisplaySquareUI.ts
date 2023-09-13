@@ -27,6 +27,7 @@ export class DisplaySquareUI implements Viewable {
     })`;
     this.displaySquare.style.height = squareWidth;
     this.displaySquare.style.width = squareWidth;
+    this.displaySquare.draggable = true;
     this.container.style.height = squareWidth;
     this.container.appendChild(this.displaySquare);
   }
