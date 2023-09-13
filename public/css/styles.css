@@ -80,11 +80,11 @@ body {
 .square--first {
   background: var(--first);
   color: var(--first-fg);
-  text-shadow: 0 0 1px var(--anti-first);
+  text-shadow: 0 0 var(--wide) var(--anti-first);
 }
 .square--second {
   background: var(--second);
-  text-shadow: 0 0 1px var(--anti-second);
+  text-shadow: 0 0 var(--wide) var(--anti-second);
   color: var(--second-fg);
 }
 .square--empty {
