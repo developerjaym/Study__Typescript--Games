@@ -4,7 +4,6 @@ import { Environment } from "../../service/environment/Environment.js";
 import { IController } from "../controller/IController.js";
 import { GameEvent } from "../model/GameEvent.js";
 import { Viewable } from "./Viewable.js";
-import { SquareDrawer } from "./drawer/square/SquareDrawer.js";
 
 export class DisplaySquareUI implements Viewable {
   container: HTMLElement;
@@ -13,7 +12,7 @@ export class DisplaySquareUI implements Viewable {
     private controller: IController,
     private htmlService: HTMLService = injector.getHtmlService(),
     private env: Environment = injector.getEnvironment(),
-    private squareDrawer: SquareDrawer = injector.getSquareDrawer()
+    private randomRollAnimationService = injector.getRandomRollAnimationService()
   ) {
     this.container = this.htmlService.create("section", [
       "displaySquareContainer",
@@ -35,6 +34,8 @@ export class DisplaySquareUI implements Viewable {
     return this.container;
   }
   onChange(event: GameEvent): void {
-    this.squareDrawer.draw(event.displaySquare, this.displaySquare);
+    this.randomRollAnimationService.roll(event, this.displaySquare, this.container)
   }
+  
+
 }

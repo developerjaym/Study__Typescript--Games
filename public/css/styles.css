@@ -19,7 +19,7 @@
   --anti-sequence: var(--anti-highlight);
   --first-light: #95c25a;
   --first-dark: #66902e;
-  --first: radial-gradient(var(--first-light),var(--first-dark) );
+  --first: radial-gradient(var(--first-light), var(--first-dark));
   --first-fg: black;
   --anti-first: white;
   --second-light: #7251b8;
@@ -111,7 +111,7 @@ body {
 }
 
 .player-data-display--first {
-  background: radial-gradient(var(--anti-first), var(--first-dark));;
+  background: radial-gradient(var(--anti-first), var(--first-dark));
   color: var(--first-fg);
 }
 .player-data-display--second {
@@ -120,34 +120,89 @@ body {
 }
 
 dialog {
-    border: none;
-    border-radius: var(--border-radius);
-    padding: var(--narrow) var(--wide);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--narrow) var(--wide);
 }
 
 dialog header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    column-gap: var(--wide);
-    font-size: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  column-gap: var(--wide);
+  font-size: 1.5rem;
 }
 dialog header h2 {
-    margin: 0;
-    font-size: 1.5rem;
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 dialog header .header__option {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
 }
 
 .icon {
-    border-radius: 100%;
-    height: 2rem;
-    width: 2rem;
-    border: 1px solid var(--border);
-    text-align: center;
+  border-radius: 100%;
+  height: 2rem;
+  width: 2rem;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .expand {
+    animation-name: expand;
+    animation-timing-function: linear;
+  }
+  .contract {
+    animation-name: contract;
+    animation-timing-function: linear;
+  }
+  .slide-in {
+    animation-name: slide-in;
+    animation-timing-function: linear;
+  }
+  .slide-out {
+    animation-name: slide-out;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes expand {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes contract {
+  0% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
 }

@@ -2,6 +2,7 @@ import { SquareDrawer } from "../game/view/drawer/square/SquareDrawer.js";
 import { TextSquareDrawer } from "../game/view/drawer/square/TextSquareDrawer.js";
 import { HTMLService } from "./HTMLService.js";
 import { RandomPieceService } from "./RandomPieceService.js";
+import { RandomRollAnimationService } from "./RandomRollAnimationService.js";
 import { SequenceService } from "./SequenceService.js";
 import { URLService } from "./URLService.js";
 import { UserService } from "./UserService.js";
@@ -18,6 +19,7 @@ class Injector {
   private urlService: URLService;
   private randomPieceService: RandomPieceService;
   private sequenceService: SequenceService;
+  private randomRollAnimationService: RandomRollAnimationService
   constructor(private env: Environment) {
     this.htmlService = new HTMLService(document, this.env);
     this.squareDrawer = new TextSquareDrawer();
@@ -26,6 +28,7 @@ class Injector {
     this.urlService = new URLService();
     this.randomPieceService = new RandomPieceService();
     this.sequenceService = new SequenceService();
+    this.randomRollAnimationService = new RandomRollAnimationService(this.randomPieceService, this.squareDrawer)
   }
   async initialize() {}
   static async getInstance() {}
@@ -52,6 +55,9 @@ class Injector {
   }
   getSequenceService(): SequenceService {
     return this.sequenceService;
+  }
+  getRandomRollAnimationService(): RandomRollAnimationService {
+    return this.randomRollAnimationService
   }
 }
 
