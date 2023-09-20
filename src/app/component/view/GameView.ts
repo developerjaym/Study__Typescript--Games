@@ -1,3 +1,4 @@
+import { Viewable } from "../../../observer/Viewable.js";
 import { HTMLService } from "../../../service/HTMLService.js";
 import injector from "../../injector/Injector.js";
 import { IController } from "../controller/IController.js";
@@ -8,9 +9,6 @@ import { ControlsUI } from "./ControlsUI.js";
 import { DisplaySquareUI } from "./DisplaySquareUI.js";
 import { Icon } from "./Icon.js";
 import { PlayerDataDisplay } from "./PlayerDataDisplay.js";
-import { Viewable } from "../../../observer/Viewable.js";
-import { DialogService } from "../../../service/dialog/DialogService.js";
-import { ToastMood } from "../../../service/toast/ToastService.js";
 
 export class GameView implements Viewable<GameEvent> {
   board: BoardUI;
