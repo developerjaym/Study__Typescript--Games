@@ -9,6 +9,8 @@ import { DisplaySquareUI } from "./DisplaySquareUI.js";
 import { Icon } from "./Icon.js";
 import { PlayerDataDisplay } from "./PlayerDataDisplay.js";
 import { Viewable } from "../../../observer/Viewable.js";
+import { DialogService } from "../../../service/dialog/DialogService.js";
+import { ToastMood } from "../../../service/toast/ToastService.js";
 
 export class GameView implements Viewable<GameEvent> {
   board: BoardUI;
@@ -19,7 +21,9 @@ export class GameView implements Viewable<GameEvent> {
   playerTwoData: PlayerDataDisplay;
   constructor(
     private controller: IController,
-    private htmlService: HTMLService = injector.getHtmlService()
+    private htmlService: HTMLService = injector.getHtmlService(),
+    private dialogService = injector.getDialogService(),
+    private toastService = injector.getToastService()
   ) {
     this.container = this.htmlService.create("main", ["game__main"], "main");
     // create controls (help, undo, end game)
@@ -42,7 +46,7 @@ export class GameView implements Viewable<GameEvent> {
     this.playerOneData.onChange(event)
     this.playerTwoData.onChange(event)
     if(event.type === GameEventType.END) {
-      this.htmlService.showDialog("Game Over", event.message, Icon.CELEBRATE, () => this.controller.onEvent({type: UserEventType.END_GAME}))
+      this.dialogService.showDialog("Game Over", event.message, Icon.CELEBRATE, () => this.controller.onEvent({type: UserEventType.END_GAME}))
       return
     }
     this.controls.onChange(event);

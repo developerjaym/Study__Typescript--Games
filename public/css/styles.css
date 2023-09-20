@@ -9,6 +9,7 @@
   --wide: 12px;
   --narrow: 4px;
   --border-radius: 4px;
+  --toast-z: 999;
 
   --empty: black;
   --border: white;
@@ -142,6 +143,18 @@ dialog header .header__option {
   background: none;
   border: none;
   font-size: 1.5rem;
+}
+
+.toast {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--highlight);
+  color: var(--anti-highlight);
+  z-index: var(--toast-z);
 }
 
 .icon {

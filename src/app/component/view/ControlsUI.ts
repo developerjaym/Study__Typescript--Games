@@ -17,7 +17,8 @@ export class ControlsUI implements Viewable<GameEvent> {
     private controller: IController,
     private htmlService: HTMLService = injector.getHtmlService(),
     private urlService: URLService = injector.getURLService(),
-    private userService = injector.getUserService()
+    private userService = injector.getUserService(),
+    private dialogService = injector.getDialogService()
   ) {
     this.container = this.htmlService.create(
       "section",
@@ -77,7 +78,7 @@ export class ControlsUI implements Viewable<GameEvent> {
     }
   }
   private showHelpDialog() {
-    this.htmlService.showDialog("Help", rules, Icon.HELP);
+    this.dialogService.showDialog("Help", rules, Icon.HELP);
   }
   // TODO show a button/dialog to create an online game
 }
