@@ -1,4 +1,4 @@
-import { Piece } from "../game/model/Piece.js"
+import { Piece } from "../../../component/model/Piece.js"
 
 export class RandomPieceService {
     constructor() {}

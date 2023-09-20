@@ -1,9 +1,9 @@
-import { Icon } from "../game/view/Icon.js";
-import injector from "./Injector.js";
-import { Environment } from "./environment/Environment.js";
+import { Icon } from "../app/component/view/Icon.js";
+import injector from "../app/injector/Injector.js";
+import { BaseEnvironment } from "./environment/Environment.js";
 
 export class HTMLService {
-    constructor(private document: Document, private env: Environment = injector.getEnvironment()) {
+    constructor(private document: Document, private env: BaseEnvironment = injector.getEnvironment()) {
         
     }
     create(tag: string, classes: string[] = [], id = `${crypto.randomUUID()}`, textContent=""): HTMLElement {

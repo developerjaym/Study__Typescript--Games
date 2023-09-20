@@ -1,17 +1,16 @@
-import { HTMLService } from "../../service/HTMLService.js";
-import injector from "../../service/Injector.js";
-import { Environment } from "../../service/environment/Environment.js";
+import { Viewable } from "../../../observer/Viewable.js";
+import { HTMLService } from "../../../service/HTMLService.js";
+import injector from "../../injector/Injector.js";
 import { IController } from "../controller/IController.js";
 import { GameEvent } from "../model/GameEvent.js";
-import { Viewable } from "./Viewable.js";
 
-export class DisplaySquareUI implements Viewable {
+export class DisplaySquareUI implements Viewable<GameEvent> {
   container: HTMLElement;
   displaySquare: HTMLElement;
   constructor(
     private controller: IController,
     private htmlService: HTMLService = injector.getHtmlService(),
-    private env: Environment = injector.getEnvironment(),
+    private env = injector.getEnvironment(),
     private randomRollAnimationService = injector.getRandomRollAnimationService()
   ) {
     this.container = this.htmlService.create("section", [

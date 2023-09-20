@@ -1,15 +1,15 @@
-import { GameEvent } from "../../game/model/GameEvent.js";
-import { GameState } from "../../game/model/GameState.js";
-import injector from "../Injector.js";
-import { StorageService } from "./StorageService.js";
+import { GameEvent } from "../../../component/model/GameEvent.js";
+import { GameState } from "../../../component/model/GameState.js";
+import injector from "../../Injector.js";
+import { StorageService } from "../../../../service/storage/StorageService.js";
 
-export class LocalStorageService implements StorageService {
+export class LocalStorageService implements StorageService<GameState> {
     static CLIENT_ID_KEY = "localstorage-client-id"
     private gameStateKey: string;
     constructor(private env = injector.getEnvironment()) {        
         this.gameStateKey = `${this.env.appName}-game_state-key`
     }
-    getGameState(): GameState | null {
+    read(): GameState | null {
         const gameStateString = localStorage.getItem(this.gameStateKey)
         if(gameStateString) {
             return JSON.parse(gameStateString)

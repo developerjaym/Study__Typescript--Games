@@ -1,7 +1,9 @@
-import { Board } from "../game/model/Board.js";
-import { Piece } from "../game/model/Piece.js";
-import { Player } from "../game/model/Player.js";
-import { Sequence } from "../game/model/Sequence.js";
+import { Board } from "../../../component/model/Board.js";
+import { Piece } from "../../../component/model/Piece.js";
+import { Player } from "../../../component/model/Player.js";
+import { Sequence } from "../../../component/model/Sequence.js";
+import { Square } from "../../../component/model/Square.js";
+
 
 export class SequenceService {
   updatePlayersScoresFromSequences(sequences: Sequence[], players: Player[]): void {
@@ -114,7 +116,7 @@ export class SequenceService {
     const nextSquareToCheck = board.squares
       .flat()
       .find(
-        (square) =>
+        (square: Square) =>
           square.coordinate?.x === nextXToCheck &&
           square.coordinate?.y === nextYToCheck
       );

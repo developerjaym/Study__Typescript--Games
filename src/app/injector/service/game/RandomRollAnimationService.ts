@@ -1,7 +1,8 @@
-import { GameEvent } from "../game/model/GameEvent.js";
-import { Player } from "../game/model/Player.js";
-import { AppTransition, CustomAnimation } from "../game/view/transition/Transition.js";
-import injector from "./Injector.js";
+
+import { GameEvent } from "../../../component/model/GameEvent.js";
+import { Player } from "../../../component/model/Player.js";
+import { CustomAnimation, AppTransition } from "../../../../transition/Transition.js";
+import injector from "../../Injector.js";
 import { RandomPieceService } from "./RandomPieceService.js";
 
 export class RandomRollAnimationService {

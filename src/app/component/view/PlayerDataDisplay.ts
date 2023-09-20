@@ -1,9 +1,9 @@
-import { HTMLService } from "../../service/HTMLService.js";
-import injector from "../../service/Injector.js";
+import { HTMLService } from "../../../service/HTMLService.js";
+import injector from "../../injector/Injector.js";
 import { GameEvent } from "../model/GameEvent.js";
-import { Viewable } from "./Viewable.js";
+import { Viewable } from "../../../observer/Viewable.js";
 
-export class PlayerDataDisplay implements Viewable {
+export class PlayerDataDisplay implements Viewable<GameEvent> {
   container: HTMLElement;
   scoreDisplay: HTMLElement;
   constructor(

@@ -1,8 +1,4 @@
-export interface Environment {
+export interface BaseEnvironment {
     appName: string,
-    width: number,
-    height: number,
-    rootElementId: string,
-    pollPeriod: number,
-    remoteUrl: string
+    rootElementId: string
 }

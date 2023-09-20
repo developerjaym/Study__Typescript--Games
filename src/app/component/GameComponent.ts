@@ -1,4 +1,4 @@
-import injector from "../service/Injector.js";
+import injector from "../injector/Injector.js";
 import { GameController } from "./controller/GameController.js";
 import { RemoteController } from "./controller/RemoteController.js";
 import { RemoteListener } from "./controller/remote/RemoteListener.js";
@@ -6,13 +6,13 @@ import { RemoteSender } from "./controller/remote/RemoteSender.js";
 import { Game } from "./model/Game.js";
 import { GameEvent } from "./model/GameEvent.js";
 import { GameView } from "./view/GameView.js";
-import { Viewable } from "./view/Viewable.js";
+import { Viewable } from "../../observer/Viewable.js";
 
-export class GameComponent implements Viewable {
+export class GameComponent implements Viewable<GameEvent> {
   private model;
   private view;
   constructor(private urlService = injector.getURLService(), private storageService = injector.getStorageService()) {
-    this.model = new Game(storageService.getGameState());
+    this.model = new Game(storageService.read());
     let gameController = new GameController(this.model);
     
     if(this.urlService.getSearchParam("hostId")) {

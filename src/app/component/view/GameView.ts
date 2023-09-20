@@ -1,5 +1,5 @@
-import { HTMLService } from "../../service/HTMLService.js";
-import injector from "../../service/Injector.js";
+import { HTMLService } from "../../../service/HTMLService.js";
+import injector from "../../injector/Injector.js";
 import { IController } from "../controller/IController.js";
 import { UserEventType } from "../controller/UserEvent.js";
 import { GameEvent, GameEventType } from "../model/GameEvent.js";
@@ -8,9 +8,9 @@ import { ControlsUI } from "./ControlsUI.js";
 import { DisplaySquareUI } from "./DisplaySquareUI.js";
 import { Icon } from "./Icon.js";
 import { PlayerDataDisplay } from "./PlayerDataDisplay.js";
-import { Viewable } from "./Viewable.js";
+import { Viewable } from "../../../observer/Viewable.js";
 
-export class GameView implements Viewable {
+export class GameView implements Viewable<GameEvent> {
   board: BoardUI;
   controls: ControlsUI;
   container: HTMLElement;

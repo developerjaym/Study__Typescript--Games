@@ -1,4 +1,4 @@
-import injector from "../../../service/Injector.js";
+import injector from "../../../injector/Injector.js";
 import { UserEvent } from "../UserEvent.js";
 
 export class RemoteSender {

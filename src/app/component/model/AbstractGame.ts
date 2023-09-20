@@ -1,4 +1,4 @@
-import { Observable } from "../../observer/observer.js";
+import { Observable } from "../../../observer/observer.js";
 import { GameEvent } from "./GameEvent.js";
 
 export abstract class AbstractGame extends Observable<GameEvent> {

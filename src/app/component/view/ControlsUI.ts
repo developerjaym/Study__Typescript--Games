@@ -1,15 +1,15 @@
-import { HTMLService } from "../../service/HTMLService.js";
-import injector from "../../service/Injector.js";
-import { URLService } from "../../service/URLService.js";
-import { rules } from "../../text/Rules.js";
+import { HTMLService } from "../../../service/HTMLService.js";
+import injector from "../../injector/Injector.js";
+import { URLService } from "../../../service/URLService.js";
+import { rules } from "./text/Rules.js";
 import { IController } from "../controller/IController.js";
 import { UserEventType } from "../controller/UserEvent.js";
 import { GameEvent, GameEventType } from "../model/GameEvent.js";
 import { Icon } from "./Icon.js";
-import { Viewable } from "./Viewable.js";
-import { isRemoteGame } from "./remoteUtilities.js";
+import { Viewable } from "../../../observer/Viewable.js";
+import { isRemoteGame } from "../../injector/service/game/remoteUtilities.js";
 
-export class ControlsUI implements Viewable {
+export class ControlsUI implements Viewable<GameEvent> {
   private helpDialogShown = false;
   private undoButton: HTMLElement;
   private container: HTMLElement;

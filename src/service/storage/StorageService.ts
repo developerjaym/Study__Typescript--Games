@@ -1,9 +1,7 @@
-import { GameEvent } from "../../game/model/GameEvent.js";
-import { GameState } from "../../game/model/GameState.js";
 import { Observer } from "../../observer/observer.js";
 
-export interface StorageService extends Observer<GameEvent>{
+export interface StorageService<T> extends Observer<T>{
   getClientId(): Promise<string>;
   setClientId(id: string): void;
-  getGameState(): GameState | null;
+  read(): T | null;
 }

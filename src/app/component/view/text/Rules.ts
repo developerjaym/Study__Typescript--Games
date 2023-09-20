@@ -1,4 +1,4 @@
-import { Icon } from "../game/view/Icon.js";
+import { Icon } from "../Icon.js";
 
 const rules = 
 `${Icon.CELEBRATE}GBP${Icon.CELEBRATE}

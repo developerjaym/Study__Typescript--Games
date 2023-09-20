@@ -1,10 +1,8 @@
-import { Observer } from "../../observer/observer.js";
+import { AbstractSnapshotter } from "../../../observer/AbstractSnapshotter.js";
 import { GameEvent, GameEventType } from "./GameEvent.js";
 import { GameState } from "./GameState.js";
 
-export class Snapshotter implements Observer<GameEvent> {
-  private snapshots: GameState[] = [];
-  private popCounter = 2;
+export class Snapshotter extends AbstractSnapshotter<GameState> {
   onChange(event: GameEvent): void {
     switch (event.type) {
       case GameEventType.START:
@@ -25,15 +23,5 @@ export class Snapshotter implements Observer<GameEvent> {
         break;
     }
   }
-  hasPreviousStates(): boolean {
-    return this.snapshots.length >= this.popCounter;
-  }
-  pop(): GameState {
-    let popped = null;
-    for (let i = 0; i < this.popCounter; i++) {
-      popped = this.snapshots.pop();
-    }
-    
-    return popped!;
-  }
+  
 }

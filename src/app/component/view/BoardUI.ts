@@ -1,21 +1,20 @@
-import { HTMLService } from "../../service/HTMLService.js";
-import injector from "../../service/Injector.js";
-import { Environment } from "../../service/environment/Environment.js";
+import { HTMLService } from "../../../service/HTMLService.js";
+import injector from "../../injector/Injector.js";
 import { IController } from "../controller/IController.js";
 import { UserEventType } from "../controller/UserEvent.js";
 import { GameEvent } from "../model/GameEvent.js";
 import { Square } from "../model/Square.js";
-import { Viewable } from "./Viewable.js";
+import { Viewable } from "../../../observer/Viewable.js";
 import { SquareDrawer } from "./drawer/square/SquareDrawer.js";
-import { isRemoteTurnNext } from "./remoteUtilities.js";
+import { isRemoteTurnNext } from "../../injector/service/game/remoteUtilities.js";
 
-export class BoardUI implements Viewable {
+export class BoardUI implements Viewable<GameEvent> {
   board: HTMLElement;
   squares: Map<string, HTMLElement>;
   constructor(
     private controller: IController,
     private htmlService: HTMLService = injector.getHtmlService(),
-    private env: Environment = injector.getEnvironment(),
+    private env = injector.getEnvironment(),
     private squareDrawer: SquareDrawer = injector.getSquareDrawer()
   ) {
     this.squares = new Map<string, HTMLElement>();

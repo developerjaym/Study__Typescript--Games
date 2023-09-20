@@ -1,6 +1,5 @@
-import injector from "../../service/Injector.js";
-import { UserService } from "../../service/UserService.js";
-import { GameEvent } from "../model/GameEvent.js";
+import injector from "../../Injector.js";
+import { GameEvent } from "../../../component/model/GameEvent.js";
 
 const isRemoteGame = (event: GameEvent, urlService = injector.getURLService()) => {
   return Boolean(urlService.getSearchParam("hostId")?.length)
@@ -8,7 +7,7 @@ const isRemoteGame = (event: GameEvent, urlService = injector.getURLService()) =
 
 const isRemoteTurnNext = async (
   event: GameEvent,
-  userService: UserService = injector.getUserService(),
+  userService = injector.getUserService(),
   urlService = injector.getURLService()
 ) => {
     const isRemote = isRemoteGame(event)

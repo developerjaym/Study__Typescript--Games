@@ -1,8 +1,7 @@
-import injector from "./Injector.js";
-import { StorageService } from "./storage/StorageService.js";
+import injector from "../../Injector.js"
 
 export class UserService {
-    constructor(private storageService: StorageService = injector.getStorageService()) {
+    constructor(private storageService = injector.getStorageService()) {
 
     }
 

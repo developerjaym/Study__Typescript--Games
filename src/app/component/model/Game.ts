@@ -1,5 +1,4 @@
-import injector from "../../service/Injector.js";
-import { Environment } from "../../service/environment/Environment.js";
+import injector from "../../injector/Injector.js";
 import { AbstractGame } from "./AbstractGame.js";
 import { BoardHelper } from "./BoardHelper.js";
 import { GameEventType } from "./GameEvent.js";
@@ -12,7 +11,7 @@ export class Game extends AbstractGame {
   private snapshotter: Snapshotter;
   constructor(
     existingState: GameState | null = null,
-    private env: Environment = injector.getEnvironment(),
+    private env = injector.getEnvironment(),
     private randomPieceService = injector.getRandomPieceService(),
     private sequenceService = injector.getSequenceService()
   ) {
