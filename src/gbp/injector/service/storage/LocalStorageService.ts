@@ -11,7 +11,7 @@ export class LocalStorageService implements GBPStorageService {
     constructor(private env = injector.getEnvironment()) {        
         this.gameStateKey = `${this.env.appName}-game_state-key`
     }
-    read(): GameState | null {
+    async read(): Promise<GameState | null> {
         const gameStateString = localStorage.getItem(this.gameStateKey)
         if(gameStateString) {
             return JSON.parse(gameStateString)
@@ -34,7 +34,7 @@ export class LocalStorageService implements GBPStorageService {
     setClientId(newClientId: string) {
         localStorage.setItem(LocalStorageService.CLIENT_ID_KEY, newClientId)
     }
-    write(gameState: GameState): void {
+    async write(gameState: GameState): Promise<void> {
         localStorage.setItem(this.gameStateKey, JSON.stringify(gameState))
     }
 

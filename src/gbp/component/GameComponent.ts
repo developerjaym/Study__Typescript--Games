@@ -7,12 +7,13 @@ import { Game } from "./model/Game.js";
 import { GameEvent } from "./model/GameEvent.js";
 import { GameView } from "./view/GameView.js";
 import { Viewable } from "../../library/observer/Viewable.js";
+import { GameState } from "./model/GameState.js";
 
 export class GameComponent implements Viewable<GameEvent> {
   private model;
   private view;
-  constructor(private urlService = injector.getURLService(), private storageService = injector.getStorageService()) {
-    this.model = new Game(storageService.read());
+  constructor(gameState: GameState | null, private urlService = injector.getURLService(), private storageService = injector.getStorageService()) {
+    this.model = new Game(gameState);
     let gameController = new GameController(this.model);
     
     if(this.urlService.getSearchParam("hostId")) {
