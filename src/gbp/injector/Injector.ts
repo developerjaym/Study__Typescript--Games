@@ -1,7 +1,5 @@
 import { BaseInjector } from "../../library/service/BaseInjector.js";
-import env  from "../../library/service/environment/EnvironmentLoader.js";
-import { StorageService } from "../../library/service/storage/StorageService.js";
-import { GameState } from "../component/model/GameState.js";
+import env from "../../library/service/environment/EnvironmentLoader.js";
 import { SquareDrawer } from "../component/view/drawer/square/SquareDrawer.js";
 import { TextSquareDrawer } from "../component/view/drawer/square/TextSquareDrawer.js";
 
@@ -10,11 +8,12 @@ import { RandomPieceService } from "./service/game/RandomPieceService.js";
 import { RandomRollAnimationService } from "./service/game/RandomRollAnimationService.js";
 import { SequenceService } from "./service/game/SequenceService.js";
 import { UserService } from "./service/game/UserService.js";
+import { GBPStorageService } from "./service/storage/GBPStorageService.js";
 import { LocalStorageService } from "./service/storage/LocalStorageService.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private squareDrawer: SquareDrawer;
-  private storageService: StorageService<GameState>;
+  private storageService: GBPStorageService;
   private userService: UserService;
   private randomPieceService: RandomPieceService;
   private sequenceService: SequenceService;
@@ -35,7 +34,7 @@ class Injector extends BaseInjector<AppEnvironment> {
   getSquareDrawer(): SquareDrawer {
     return this.squareDrawer;
   }
-  getStorageService(): StorageService<GameState> {
+  getStorageService(): GBPStorageService {
     return this.storageService;
   }
   getUserService(): UserService {
