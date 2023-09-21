@@ -4,5 +4,6 @@
     "width": 12,
     "height": 12,
     "pollPeriod": 2000,
-    "remoteUrl": "http://127.0.0.1:5000/game"
+    "remoteUrl": "http://127.0.0.1:5000/game",
+    "shareURL": "https://localstorage.tools/game/board/gbp"
 }

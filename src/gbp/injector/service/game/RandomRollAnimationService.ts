@@ -1,5 +1,6 @@
 
 import { AppTransition, CustomAnimation } from "../../../../library/transition/Transition.js";
+import { Runnable } from "../../../../library/utility/Functions.js";
 import { GameEvent } from "../../../component/model/GameEvent.js";
 import { Player } from "../../../component/model/Player.js";
 import injector from "../../Injector.js";
@@ -14,8 +15,8 @@ export class RandomRollAnimationService {
             () => this.squareDrawer.draw(event.displaySquare, dieElement)
           ], dieContainer).start() 
     }
-    private createRolls(count: number, player: Player, dieElement: HTMLElement): Function[] {
-        const rolls: Function[] = []
+    private createRolls(count: number, player: Player, dieElement: HTMLElement): Runnable[] {
+        const rolls: Runnable[] = []
         for(let i = 0; i < count; i++) {
           rolls.push(() => this.squareDrawer.draw({
             player: player,

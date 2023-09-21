@@ -1,4 +1,5 @@
 export interface BaseEnvironment {
     appName: string,
-    rootElementId: string
+    rootElementId: string,
+    shareURL: string
 }

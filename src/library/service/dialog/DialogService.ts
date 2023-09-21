@@ -1,4 +1,5 @@
 import { SystemIcon } from "../../SystemIcon.js";
+import { Runnable } from "../../utility/Functions.js";
 import { HTMLService } from "../HTMLService.js";
 
 
@@ -6,7 +7,7 @@ export class DialogService {
     constructor(private htmlService: HTMLService) {
         
     }
-    showDialog(title: string, message: string, icon: SystemIcon = SystemIcon.MESSAGE, onClose: Function = () => {}): void {
+    showDialog(title: string, message: string, icon: SystemIcon = SystemIcon.MESSAGE, onClose: Runnable = () => {}): void {
         const dialog = this.htmlService.create("dialog") as HTMLDialogElement
         const dialogHeader = this.htmlService.create("header");
         const headerIcon = this.htmlService.create("span", ["icon", "header__icon"], "dialogHeaderIcon", icon);

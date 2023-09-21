@@ -1,3 +1,4 @@
+import { Runnable } from "../utility/Functions.js"
 
 export enum AppTransition {
     SLIDE_IN = "slide-in",
@@ -7,7 +8,7 @@ export enum AppTransition {
 }
 
 export class CustomAnimation {
-    constructor(private duration: number, private transition: AppTransition, private steps: Function[], private element: HTMLElement) {
+    constructor(private duration: number, private transition: AppTransition, private steps: Runnable[], private element: HTMLElement) {
 
     }
     start(): void {
@@ -20,7 +21,7 @@ export class CustomAnimation {
             this.element.style.animationDuration = `auto`
         }, this.duration)
     }
-    private next(steps: Function[], inMS: number): void {
+    private next(steps: Runnable[], inMS: number): void {
         window.setTimeout(() => {
             this.steps.shift()?.call(this)
             this.next(steps, inMS)
