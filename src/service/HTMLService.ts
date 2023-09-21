@@ -1,4 +1,3 @@
-import { Icon } from "../app/component/view/Icon.js";
 import injector from "../app/injector/Injector.js";
 import { BaseEnvironment } from "./environment/Environment.js";
 
