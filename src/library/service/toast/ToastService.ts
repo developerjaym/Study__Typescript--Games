@@ -1,7 +1,7 @@
 
-import injector from "../../../gbp/injector/Injector.js";
 import { SystemIcon } from "../../SystemIcon.js";
 import { AppTransition, CustomAnimation } from "../../transition/Transition.js";
+import { HTMLService } from "../HTMLService.js";
 
 
 export enum ToastMood {
@@ -17,7 +17,7 @@ moodConverter.set(ToastMood.NEUTRAL, "neutral")
 
 export class ToastService {
     private static TIMEOUT = 3_000
-    constructor(private htmlService = injector.getHtmlService()) {
+    constructor(private htmlService: HTMLService) {
         
     }
     showToast(message: string, mood: ToastMood = ToastMood.NEUTRAL): void {

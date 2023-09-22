@@ -10,5 +10,5 @@
         "moduleResolution": "nodeNext", // <- Necessary to get imports with .js
 
     },
-    "exclue": ["node_modules", "build"]
+    "exclude": ["node_modules", "build"]
 }

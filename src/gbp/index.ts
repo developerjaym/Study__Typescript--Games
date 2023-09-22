@@ -1,5 +1,4 @@
 import { GameComponent } from "./component/GameComponent.js";
-import { GameState } from "./component/model/GameState.js";
 import injector from "./injector/Injector.js";
 
 // Bootstrap injector (including environment loader)
