@@ -1,4 +1,5 @@
 import DateService from "../date/DateService.js";
+import { RouterService } from "../router/RouterService.js";
 import { HTMLService } from "./HTMLService.js";
 import { URLService } from "./URLService.js";
 import { DialogService } from "./dialog/DialogService.js";
@@ -20,6 +21,7 @@ export abstract class BaseInjector<T extends BaseEnvironment> {
   private clipboardService: ClipboardService;
   private socialShareService: SocialShareService;
   private dateService: DateService;
+  private routerService: RouterService;
   protected env: T;
   constructor(env: T) {
     this.env = env;
@@ -34,6 +36,7 @@ export abstract class BaseInjector<T extends BaseEnvironment> {
       this.socialShareService
     ).getShareService();
     this.dateService = new DateService();
+    this.routerService = new RouterService(this.htmlService);
   }
   abstract initialize(): Promise<void>;
   getEnvironment(): T {
@@ -59,5 +62,8 @@ export abstract class BaseInjector<T extends BaseEnvironment> {
   }
   getDateService(): DateService {
     return this.dateService;
+  }
+  getRouterService(): RouterService {
+    return this.routerService;
   }
 }
