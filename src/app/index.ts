@@ -1,5 +1,6 @@
-import { GameComponent } from "./gbp/component/GameComponent.js";
+import { GBPComponent } from "./gbp/component/GBPGameComponent.js";
 import injector from "./injector/Injector.js";
+import { JayrrowsComponent } from "./jayrrows/component/JayrrowsComponent.js";
 
 (async () => {
   await injector.initialize();
@@ -13,15 +14,13 @@ import injector from "./injector/Injector.js";
     false
   );
   router.add(/^\/jayrrows$/, async () =>
-    injector
-      .getHtmlService()
-      .create("h1", [], "jayrrowsMain", "UNDER CONSTRUCTION")
+   new JayrrowsComponent().component
   );
   router.add(
     /^\/gbp$/,
     async () => {
       const initialGameState = await injector.getGBPStorageService().read();
-      const component = new GameComponent(initialGameState);
+      const component = new GBPComponent(initialGameState);
       return component.component;
     },
     

@@ -3,7 +3,7 @@ import { Square } from "../../../model/Square.js"
 import { AppIcon } from "../../AppIcon.js"
 import { GBPSquareDrawer } from "./GBPSquareDrawer.js"
 
-export class TextSquareDrawer implements GBPSquareDrawer {
+export class GBPTextSquareDrawer implements GBPSquareDrawer {
     private pieceToTextMap = new Map<Piece | null, string>()
     constructor() {
         this.pieceToTextMap.set(Piece.ONE, AppIcon.ONE),
