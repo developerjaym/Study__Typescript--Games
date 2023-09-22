@@ -9,7 +9,7 @@ import { RandomRollAnimationService } from "./service/game/RandomRollAnimationSe
 import { SequenceService } from "./service/game/SequenceService.js";
 import { UserService } from "./service/game/UserService.js";
 import { GBPStorageService } from "./service/storage/GBPStorageService.js";
-import { LocalStorageService } from "./service/storage/LocalStorageService.js";
+import { GBPLocalStorageService } from "./service/storage/GBPLocalStorageService.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private squareDrawer: SquareDrawer;
@@ -21,7 +21,7 @@ class Injector extends BaseInjector<AppEnvironment> {
   constructor(env: AppEnvironment) {
     super(env);
     this.squareDrawer = new TextSquareDrawer();
-    this.storageService = new LocalStorageService(this.env);
+    this.storageService = new GBPLocalStorageService(this.env);
     this.userService = new UserService(this.storageService);
     this.randomPieceService = new RandomPieceService();
     this.sequenceService = new SequenceService();

@@ -1,11 +1,9 @@
-import { Observer } from "../../../../library/observer/observer.js";
-import { StorageService } from "../../../../library/service/storage/StorageService.js";
 import { GameEvent } from "../../../component/model/GameEvent.js";
 import { GameState } from "../../../component/model/GameState.js";
 import injector from "../../Injector.js";
 import { GBPStorageService } from "./GBPStorageService.js";
 
-export class LocalStorageService implements GBPStorageService {
+export class GBPLocalStorageService implements GBPStorageService {
     static CLIENT_ID_KEY = "localstorage-client-id"
     private gameStateKey: string;
     constructor(private env = injector.getEnvironment()) {        
@@ -29,10 +27,10 @@ export class LocalStorageService implements GBPStorageService {
         this.write(gameState)
     }
     async getClientId(): Promise<string> {
-        return localStorage.getItem(LocalStorageService.CLIENT_ID_KEY) || ""
+        return localStorage.getItem(GBPLocalStorageService.CLIENT_ID_KEY) || ""
     }
     setClientId(newClientId: string) {
-        localStorage.setItem(LocalStorageService.CLIENT_ID_KEY, newClientId)
+        localStorage.setItem(GBPLocalStorageService.CLIENT_ID_KEY, newClientId)
     }
     async write(gameState: GameState): Promise<void> {
         localStorage.setItem(this.gameStateKey, JSON.stringify(gameState))
