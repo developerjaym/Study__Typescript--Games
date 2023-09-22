@@ -6,7 +6,6 @@ import { GameEvent } from "../model/GameEvent.js";
 import { Square } from "../model/Square.js";
 import { Viewable } from "../../../../library/observer/Viewable.js";
 import { GBPSquareDrawer } from "./drawer/square/GBPSquareDrawer.js";
-import { isRemoteTurnNext } from "../../service/game/remoteUtilities.js";
 
 export class BoardUI implements Viewable<GameEvent> {
   board: HTMLElement;
@@ -19,14 +18,14 @@ export class BoardUI implements Viewable<GameEvent> {
   ) {
     this.squares = new Map<string, HTMLElement>();
     this.board = this.htmlService.create("section", ["board"]);
-    const squareWidth = `calc(100% / (${this.env.width} + 0.25))`;
-    const boardWidth = `calc(100vmin - (100vmin / ${this.env.width - 4}))`;
-    this.board.style.gridTemplateColumns = `repeat(${this.env.width}, ${squareWidth})`;
-    this.board.style.gridTemplateRows = `repeat(${this.env.width}, ${squareWidth})`;
+    const squareWidth = `calc(100% / (${this.env.gbp_width} + 0.25))`;
+    const boardWidth = `calc(100vmin - (100vmin / ${this.env.gbp_width - 4}))`;
+    this.board.style.gridTemplateColumns = `repeat(${this.env.gbp_width}, ${squareWidth})`;
+    this.board.style.gridTemplateRows = `repeat(${this.env.gbp_width}, ${squareWidth})`;
     this.board.style.width = boardWidth;
     this.board.style.height = boardWidth;
-    for (let y = 0; y < this.env.height; y++) {
-      for (let x = 0; x < this.env.width; x++) {
+    for (let y = 0; y < this.env.gbp_height; y++) {
+      for (let x = 0; x < this.env.gbp_width; x++) {
         const id = this.xyToID(x, y);
         const square = this.htmlService.create("button", ["square"], id);
         const handleMove = (e: Event) =>
@@ -38,7 +37,7 @@ export class BoardUI implements Viewable<GameEvent> {
         square.addEventListener("dragover", (e) => {
           e.preventDefault();
         });
-        square.style.zIndex = `${this.env.height - y}`;
+        square.style.zIndex = `${this.env.gbp_height - y}`;
         square.addEventListener("click", handleMove
         );
         this.board.appendChild(square);
@@ -61,15 +60,6 @@ export class BoardUI implements Viewable<GameEvent> {
         )!
       )
     );
-    isRemoteTurnNext(event).then((yes) => {
-      Array.from(this.squares.values()).forEach((button) => {
-        if (yes) {
-          button.setAttribute("disabled", `true`);
-        } else {
-          button.removeAttribute("disabled")
-        }
-      });
-    });
   }
   private xyToID(x: number, y: number): string {
     return `square__${x}-${y}`;

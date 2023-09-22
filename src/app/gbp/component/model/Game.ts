@@ -101,8 +101,8 @@ export class Game extends AbstractGame {
     const state: GameState = {
       board: {
         squares: BoardHelper.createFreshSquares(
-          this.env.width,
-          this.env.height
+          this.env.gbp_width,
+          this.env.gbp_height
         ),
       },
       displaySquare: BoardHelper.createSquare(

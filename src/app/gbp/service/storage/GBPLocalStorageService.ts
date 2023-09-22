@@ -1,13 +1,12 @@
 import { GameEvent } from "../../component/model/GameEvent.js";
 import { GameState } from "../../component/model/GameState.js";
-import injector from "../../../injector/Injector.js";
 import { GBPStorageService } from "./GBPStorageService.js";
 
 export class GBPLocalStorageService implements GBPStorageService {
     static CLIENT_ID_KEY = "localstorage-client-id"
     private gameStateKey: string;
-    constructor(private env = injector.getEnvironment()) {        
-        this.gameStateKey = `${this.env.appName}-game_state-key`
+    constructor() {        
+        this.gameStateKey = `GBP-game_state-key`
     }
     async read(): Promise<GameState | null> {
         const gameStateString = localStorage.getItem(this.gameStateKey)

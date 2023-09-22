@@ -3,7 +3,6 @@ import { Viewable } from "../../../../library/observer/Viewable.js";
 import { HTMLService } from "../../../../library/service/HTMLService.js";
 import { URLService } from "../../../../library/service/URLService.js";
 import injector from "../../../injector/Injector.js";
-import { isRemoteGame } from "../../service/game/remoteUtilities.js";
 import { IController } from "../controller/IController.js";
 import { UserEventType } from "../controller/UserEvent.js";
 import { GameEvent, GameEventType } from "../model/GameEvent.js";
@@ -17,7 +16,6 @@ export class ControlsUI implements Viewable<GameEvent> {
     private controller: IController,
     private htmlService: HTMLService = injector.getHtmlService(),
     private urlService: URLService = injector.getURLService(),
-    private userService = injector.getUserService(),
     private dialogService = injector.getDialogService()
   ) {
     this.container = this.htmlService.create(
@@ -51,17 +49,7 @@ export class ControlsUI implements Viewable<GameEvent> {
     );
     helpButton.addEventListener("click", () => this.showHelpDialog());
 
-    const remoteGameButton = this.htmlService.create(
-      "button",
-      ["button", "button--game"],
-      "remoteGameButton",
-      "Start Remote Game"
-    );
-    remoteGameButton.addEventListener("click", async () => {
-      this.urlService.route("hostId", await this.userService.getUserId())
-    })
-
-    this.container.append(this.undoButton, endGameButton, helpButton/*, remoteGameButton*/);
+    this.container.append(this.undoButton, endGameButton, helpButton);
   }
   get component(): HTMLElement {
     return this.container;
@@ -71,11 +59,7 @@ export class ControlsUI implements Viewable<GameEvent> {
       this.showHelpDialog();
       this.helpDialogShown = true;
     }
-    if (isRemoteGame(event)) {
-      this.undoButton.setAttribute("disabled", "true");
-    } else {
-      this.undoButton.removeAttribute("disabled");
-    }
+    this.undoButton.removeAttribute("disabled");
   }
   private showHelpDialog() {
     this.dialogService.showDialog("Help", rules, SystemIcon.HELP);

@@ -1,9 +1,7 @@
 {
-    "appName": "GBP",
+    "appName": "Games",
     "rootElementId": "game",
-    "width": 12,
-    "height": 12,
-    "pollPeriod": 2000,
-    "remoteUrl": "http://127.0.0.1:5000/game",
+    "gbp_width": 12,
+    "gbp_height": 12,
     "shareURL": "https://localstorage.tools/game/board/gbp"
 }

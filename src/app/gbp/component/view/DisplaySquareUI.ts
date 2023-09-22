@@ -21,8 +21,8 @@ export class DisplaySquareUI implements Viewable<GameEvent> {
       ["square"],
       "displaySquare"
     );
-    const squareWidth = `calc((100vmin - (100vmin / ${this.env.width - 4})) / ${
-      this.env.width
+    const squareWidth = `calc((100vmin - (100vmin / ${this.env.gbp_width - 4})) / ${
+      this.env.gbp_width
     })`;
     this.displaySquare.style.height = squareWidth;
     this.displaySquare.style.width = squareWidth;
