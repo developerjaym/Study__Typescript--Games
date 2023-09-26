@@ -39,7 +39,6 @@ export class Game extends AbstractGame {
       this.state.board
     );
     const thisSquare = BoardHelper.getSquare(this.state.board, x, y);
-    console.log('legal', previouslySelectedSquare && BoardHelper.isLegalMove(previouslySelectedSquare, thisSquare));
     
     if (
       previouslySelectedSquare &&
