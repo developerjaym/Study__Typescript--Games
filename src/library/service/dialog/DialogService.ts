@@ -8,7 +8,7 @@ export class DialogService {
         
     }
     showDialog(title: string, message: string, icon: SystemIcon = SystemIcon.MESSAGE, onClose: Runnable = () => {}): void {
-        const dialog = this.htmlService.create("dialog") as HTMLDialogElement
+        const dialog = this.htmlService.create("dialog")
         const dialogHeader = this.htmlService.create("header");
         const headerIcon = this.htmlService.create("span", ["icon", "header__icon"], "dialogHeaderIcon", icon);
         dialogHeader.append(headerIcon)

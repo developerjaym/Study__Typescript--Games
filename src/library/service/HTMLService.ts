@@ -4,18 +4,19 @@ import { BaseEnvironment } from "./environment/Environment.js";
 
 export class HTMLService {
   constructor(private document: Document, private env: BaseEnvironment) {}
-  create(
-    tag: string,
+  create<K extends keyof HTMLElementTagNameMap>(
+    tag: K,
     classes: string[] = [],
     id = `${crypto.randomUUID()}`,
     textContent = ""
-  ): HTMLElement | HTMLDialogElement {
+  ): HTMLElementTagNameMap[K] {
     const element = this.document.createElement(tag);
     element.classList.add(...classes);
     element.id = id;
     element.textContent = textContent;
     return element;
   }
+
   getRoot(): HTMLElement {
     const id: string = this.env.rootElementId;
     return this.document.getElementById(id)!;
@@ -35,15 +36,18 @@ export class HTMLService {
     this.getRoot().replaceChildren(spinner);
 
     const page = await elementSupplier();
-    this.clearStylesheets()
-    this.appendStylesheet(page.stylesheet)
+    this.getRoot().replaceChildren()
+    this.clearStylesheets();
+    this.appendStylesheet(page.stylesheet);
     this.getRoot().replaceChildren(page.component);
   }
   private clearStylesheets(): void {
-    this.document.head.querySelectorAll(".page-stylesheet").forEach(element => element.remove())
+    this.document.head
+      .querySelectorAll(".page-stylesheet")
+      .forEach((element) => element.remove());
   }
   private appendStylesheet(href: string): void {
-    if(!href) {
+    if (!href) {
       return;
     }
     const newStylesheet = document.createElement("link");
@@ -51,7 +55,7 @@ export class HTMLService {
     newStylesheet.rel = "stylesheet";
     newStylesheet.href = `css/${href}`;
     newStylesheet.id = href;
-    newStylesheet.classList.add("page-stylesheet")
+    newStylesheet.classList.add("page-stylesheet");
     this.document.head.appendChild(newStylesheet);
   }
 }

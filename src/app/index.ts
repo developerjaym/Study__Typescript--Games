@@ -1,18 +1,17 @@
 import { GBPComponent } from "./gbp/component/GBPGameComponent.js";
 import injector from "./injector/Injector.js";
 import { JayrrowsComponent } from "./jayrrows/component/JayrrowsComponent.js";
+import { MenuComponent } from "./menu/component/MenuComponent.js";
 
 (async () => {
   await injector.initialize();
   const router = injector.getRouterService();
-  // router.add(
-  //   /^\/menu$/,
-  //   async () =>
-  //     injector
-  //       .getHtmlService()
-  //       .create("h1", [], "gameMenu", "UNDER CONSTRUCTION"),
-  //   false
-  // );
+  router.add(
+    /^\/menu$/,
+    async () =>
+      new MenuComponent(),
+    true
+  );
   router.add(/^\/jayrrows$/, async () =>
    new JayrrowsComponent()
   );

@@ -1,0 +1,31 @@
+.card {
+    border: 1px solid var(--main-fg);
+    color: var(--main-fg);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    padding: var(--wide);
+    border-radius: var(--border-radius);
+}
+
+.card__image {
+    width: calc(24rem - (2 * var(--wide)));
+    height: calc(24rem - (2 * var(--wide)));
+}
+
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    max-width: 24rem;
+    row-gap: var(--wide);
+}
+
+.main-menu__title {
+    padding: var(--wide); 
+    margin: 0;
+    text-align: center;
+}

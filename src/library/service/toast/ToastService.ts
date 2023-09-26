@@ -21,7 +21,7 @@ export class ToastService {
         
     }
     showToast(message: string, mood: ToastMood = ToastMood.NEUTRAL): void {
-        const dialog = this.htmlService.create("dialog", ["toast", `toast--${moodConverter.get(mood)}`]) as HTMLDialogElement
+        const dialog = this.htmlService.create("dialog", ["toast", `toast--${moodConverter.get(mood)}`])
         const headerIcon = this.htmlService.create("span", ["icon", "toast__icon"], crypto.randomUUID(), mood);
         dialog.append(headerIcon)
         const messageBody = this.htmlService.create("pre", ["toast__body"])

@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "GeoSansLight";
+  src: url("https://localstorage.tools/game/font/GeosansLight.ttf");
+}
+
 :root {
   color-scheme: light dark;
 
@@ -9,10 +14,21 @@
   --highlight: #fef300;
   --anti-highlight: black;
   --border: white;
+
+  --main-fg: white;
+  --main-bg: #121212;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --main-fg: #121212;
+    --main-bg: white;
+  }
 }
 
 * {
   box-sizing: border-box;
+  font-family: "GeoSansLight", sans-serif;
 }
 
 body {
