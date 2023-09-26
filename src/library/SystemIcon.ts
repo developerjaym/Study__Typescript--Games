@@ -1,4 +1,6 @@
 export enum SystemIcon {
+    HOME = "⌂",
+    HAMBURGER = "☰",
     WARNING = "⚠",
     THUMBS_UP = "👍",
     THUMBS_DOWN = "👎",

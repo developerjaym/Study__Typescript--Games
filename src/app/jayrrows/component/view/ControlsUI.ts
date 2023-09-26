@@ -2,7 +2,6 @@ import { SystemIcon } from "../../../../library/SystemIcon.js";
 import { Viewable } from "../../../../library/observer/Viewable.js";
 import { HTMLService } from "../../../../library/service/HTMLService.js";
 import { DialogService } from "../../../../library/service/dialog/DialogService.js";
-import { AppIcon } from "../../../gbp/component/view/AppIcon.js";
 import injector from "../../../injector/Injector.js";
 import { IController } from "../controller/IController.js";
 import { UserEventType } from "../controller/UserEvent.js";
@@ -16,7 +15,8 @@ export class ControlsUI implements Viewable<GameEvent> {
   constructor(
     private controller: IController,
     private htmlService: HTMLService = injector.getHtmlService(),
-    private dialogService: DialogService = injector.getDialogService()
+    private dialogService: DialogService = injector.getDialogService(),
+    private routerService = injector.getRouterService()
   ) {
     this.container = this.htmlService.create(
       "section",
@@ -49,7 +49,15 @@ export class ControlsUI implements Viewable<GameEvent> {
     );
     helpButton.addEventListener("click", () => this.showHelpDialog());
 
-    this.container.append(this.undoButton, endGameButton, helpButton);
+    const homeButton = this.htmlService.create(
+      "button",
+      ["button", "button--game"],
+      "homeButton",
+      SystemIcon.HOME
+    );
+    homeButton.addEventListener("click", () => this.routerService.routeTo("menu"));
+
+    this.container.append(this.undoButton, endGameButton, helpButton, homeButton);
   }
   get component(): HTMLElement {
     return this.container;
@@ -64,5 +72,4 @@ export class ControlsUI implements Viewable<GameEvent> {
   private showHelpDialog() {
     this.dialogService.showDialog("Help", rules, SystemIcon.HELP);
   }
-  // TODO show a button/dialog to create an online game
 }

@@ -60,8 +60,8 @@ export class MenuComponent implements Page {
         }
         
     }
-    get stylesheet(): string {
-        return "menu.css";
+    get stylesheet(): string[] {
+        return ["menu.css"];
     }
     get component(): HTMLElement {
        return this.menuElement;

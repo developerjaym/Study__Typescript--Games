@@ -9,8 +9,8 @@ class LoadingPage implements Page {
   constructor(private htmlService = injector.getHtmlService()) {
 
   }
-  get stylesheet(): string {
-    return "loading.css";
+  get stylesheet(): string[] {
+    return ["loading.css"];
   }
   get component(): HTMLElement {
     return this.htmlService.create("div", [], crypto.randomUUID(), "Loading...");

@@ -14,18 +14,6 @@
     --second: radial-gradient(var(--second-light), var(--second-dark));
   }
   
-  * {
-    box-sizing: border-box;
-    font-family: "GeoSansLight", sans-serif;
-  }
-  
-  .game__main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--wide);
-  }
-  
   .board {
     display: grid;
     width: calc(100vmin - 5vmax);
@@ -35,13 +23,6 @@
     column-gap: var(--narrow);
     row-gap: var(--narrow);
     background: gray;
-  }
-  
-  .controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    width: 100%;
-    column-gap: var(--narrow);
   }
   
   .square {

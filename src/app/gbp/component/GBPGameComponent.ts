@@ -23,8 +23,8 @@ export class GBPComponent implements Page {
   get component(): HTMLElement {
     return this.view.component;
   }
-  get stylesheet(): string {
-    return "gbp.css";
+  get stylesheet(): string[] {
+    return ["boardgame.css", "gbp.css"];
   }
   onChange(event: RouterEvent): void {}
 }

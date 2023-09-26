@@ -38,7 +38,7 @@ export class HTMLService {
     const page = await elementSupplier();
     this.getRoot().replaceChildren()
     this.clearStylesheets();
-    this.appendStylesheet(page.stylesheet);
+    page.stylesheet.forEach(stylesheet => this.appendStylesheet(stylesheet));
     this.getRoot().replaceChildren(page.component);
   }
   private clearStylesheets(): void {

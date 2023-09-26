@@ -20,8 +20,8 @@ export class JayrrowsComponent implements Page {
   get component(): HTMLElement {
     return this.view.component;
   }
-  get stylesheet(): string {
-    return "jayrrows.css"
+  get stylesheet(): string[] {
+    return ["boardgame.css", "jayrrows.css"]
   }
   onChange(event: RouterEvent): void {}
 }
