@@ -16,14 +16,20 @@ export class MenuComponent implements Page {
         {
             name: "GBP",
             description: "Place dice in sequences",
-            route: "gbp",
+            route: "#/gbp",
             image: "assets/gbp.png"
         },
         {
             name: "Jayrrows",
             description: "Strategically move your pieces to defeat the enemy king.",
-            route: "jayrrows",
+            route: "#/jayrrows",
             image: "assets/jayrrows.png"
+        },
+        {
+            name: "CrossIt",
+            description: "Use the letters to make words.",
+            route: "https://localstorage.tools/game/word/",
+            image: "https://localstorage.tools/game/image/cross_it_screenshot.png"
         },
     ]
     constructor(private htmlService: HTMLService = injector.getHtmlService()) {
@@ -33,12 +39,12 @@ export class MenuComponent implements Page {
         this.menuElement.append(menuHeader)
         for(const gameRoute of this.gameRoutes) {
             const option = this.htmlService.create("a", ["card", "card--link"])
-            option.href = `#/${gameRoute.route}`
+            option.href = `${gameRoute.route}`
 
             const image = this.htmlService.create("img", ["card__image"]);
             if(gameRoute.image) {
                 image.src = gameRoute.image
-                // image.alt
+                image.alt = `screenshot of ${gameRoute.name}`
             }
             option.append(image)
 
