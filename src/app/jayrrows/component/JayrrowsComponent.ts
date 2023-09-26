@@ -1,10 +1,11 @@
-import { Viewable } from "../../../library/observer/Viewable.js";
+import { Page } from "../../../library/observer/Page.js";
+import { RouterEvent } from "../../../library/router/RouterEvent.js";
 import { GameController } from "./controller/GameController.js";
 import { Game } from "./model/Game.js";
 import { GameEvent } from "./model/GameEvent.js";
 import { GameView } from "./view/GameView.js";
 
-export class JayrrowsComponent implements Viewable<GameEvent> {
+export class JayrrowsComponent implements Page {
   private model;
   private view;
   constructor() {
@@ -19,5 +20,8 @@ export class JayrrowsComponent implements Viewable<GameEvent> {
   get component(): HTMLElement {
     return this.view.component;
   }
-  onChange(event: GameEvent): void {}
+  get stylesheet(): string {
+    return "jayrrows.css"
+  }
+  onChange(event: RouterEvent): void {}
 }

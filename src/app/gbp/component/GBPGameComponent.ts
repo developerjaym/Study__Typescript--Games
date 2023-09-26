@@ -1,17 +1,16 @@
-import { Viewable } from "../../../library/observer/Viewable.js";
+import { Page } from "../../../library/observer/Page.js";
+import { RouterEvent } from "../../../library/router/RouterEvent.js";
 import injector from "../../injector/Injector.js";
 import { GameController } from "./controller/GameController.js";
 import { Game } from "./model/Game.js";
-import { GameEvent } from "./model/GameEvent.js";
 import { GameState } from "./model/GameState.js";
 import { GameView } from "./view/GameView.js";
 
-export class GBPComponent implements Viewable<GameEvent> {
+export class GBPComponent implements Page {
   private model;
   private view;
   constructor(
     gameState: GameState | null,
-    private urlService = injector.getURLService(),
     private storageService = injector.getGBPStorageService()
   ) {
     this.model = new Game(gameState);
@@ -24,5 +23,8 @@ export class GBPComponent implements Viewable<GameEvent> {
   get component(): HTMLElement {
     return this.view.component;
   }
-  onChange(event: GameEvent): void {}
+  get stylesheet(): string {
+    return "gbp.css";
+  }
+  onChange(event: RouterEvent): void {}
 }

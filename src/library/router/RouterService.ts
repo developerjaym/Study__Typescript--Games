@@ -1,16 +1,34 @@
+import injector from "../../app/injector/Injector.js";
+import { Page } from "../observer/Page.js";
 import { Observable } from "../observer/observer.js";
 import { HTMLService } from "../service/HTMLService.js";
 import { Supplier } from "../utility/Functions.js";
 import { RouterEvent } from "./RouterEvent.js";
 
+class LoadingPage implements Page {
+  constructor(private htmlService = injector.getHtmlService()) {
+
+  }
+  get stylesheet(): string {
+    return "loading.css";
+  }
+  get component(): HTMLElement {
+    return this.htmlService.create("div", [], crypto.randomUUID(), "Loading...");
+  }
+  onChange(event: RouterEvent): void {
+   
+  }
+  
+}
+
 export class RouterService extends Observable<RouterEvent> {
-  private map: Map<RegExp, Supplier<Promise<HTMLElement>>>;
-  private defaultElementSupplier: Supplier<Promise<HTMLElement>>;
+  private map: Map<RegExp, Supplier<Promise<Page>>>;
+  private defaultElementSupplier: Supplier<Promise<Page>>;
   constructor(private htmlService: HTMLService) {
     super();
-    this.map = new Map<RegExp, Supplier<Promise<HTMLElement>>>();
+    this.map = new Map<RegExp, Supplier<Promise<Page>>>();
     this.defaultElementSupplier = async () =>
-      this.htmlService.create("div", [], crypto.randomUUID(), "Loading...");
+      new LoadingPage()
   }
   /**
    * 
@@ -20,7 +38,7 @@ export class RouterService extends Observable<RouterEvent> {
    */
   add(
     path: RegExp,
-    elementSupplier: Supplier<Promise<HTMLElement>>,
+    elementSupplier: Supplier<Promise<Page>>,
     isDefault = false
   ): void {
     this.map.set(path, elementSupplier);
@@ -31,6 +49,9 @@ export class RouterService extends Observable<RouterEvent> {
   start(): void {
     this.reactToHash()
     window.addEventListener("hashchange", (e) => this.reactToHash());
+  }
+  routeTo(route: string): void {
+    window.location.hash = `#/${route}`
   }
   private reactToHash(): void {
     const currentHash = window.location.hash.slice(1); // Get the hash without the "#"
@@ -47,7 +68,7 @@ export class RouterService extends Observable<RouterEvent> {
     // Haven't returned yet
     this.load(this.defaultElementSupplier)
   }
-  private load(supplier: Supplier<Promise<HTMLElement>>, pathVariables:  { [x: string]: string; } = {}): void {
+  private load(supplier: Supplier<Promise<Page>>, pathVariables:  { [x: string]: string; } = {}): void {
     this.htmlService.routeTo(supplier).then(
         () => this.notifyAll({ pathVariables })
         // Emit a RouterEvent with the matched element
