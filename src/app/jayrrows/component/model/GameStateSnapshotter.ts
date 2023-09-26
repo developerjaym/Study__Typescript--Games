@@ -9,7 +9,6 @@ export class Snapshotter extends AbstractSnapshotter<GameState> {
         this.snapshots = [];
       case GameEventType.UNDO:
       case GameEventType.MOVE:
-        // this.popCounter = 2;
         const deducedState: GameState = {
           players: event.players,
           board: event.board,

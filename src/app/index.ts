@@ -13,7 +13,11 @@ import { MenuComponent } from "./menu/component/MenuComponent.js";
     true
   );
   router.add(/^\/jayrrows$/, async () =>
-   new JayrrowsComponent()
+  {
+    const initialGameState = await injector.getJayrrowsStorageService().read();
+    const component = new JayrrowsComponent(initialGameState);
+    return component;
+  }
   );
   router.add(
     /^\/gbp$/,

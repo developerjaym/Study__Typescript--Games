@@ -65,13 +65,13 @@ export class BoardHelper {
     player: Player,
     square: Square
   ): boolean {
-    const playerMatchesSquare = player === square.player;
+    const playerMatchesSquare = player.id === square.player?.id;
     const squareIsntKing = square.piece !== Piece.KING;
     const squareCanMove = this.determineLegalMovesForSquare(board, player, square).length > 0;    
     return squareIsntKing && playerMatchesSquare && squareCanMove;
   }
   static isLegalMove(originSquare: Square, destinationSquare: Square): boolean {    
-    const differentOwner = originSquare.player !== destinationSquare.player;
+    const differentOwner = originSquare.player?.id !== destinationSquare?.player?.id;
     const legalMoves = getLegalMoves(originSquare.piece);
     const xDiff = originSquare.coordinate.x - destinationSquare.coordinate.x;
     const yDiff = originSquare.coordinate.y - destinationSquare.coordinate.y;
@@ -93,7 +93,7 @@ export class BoardHelper {
     } else if (
       !board.squares
         .flat()
-        .filter((square) => square.player === player)
+        .filter((square) => square?.player?.id === player.id)
         .some((square) => square.piece === Piece.KING)
     ) {
       // No king
