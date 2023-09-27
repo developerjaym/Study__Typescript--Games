@@ -13,12 +13,15 @@ import { JayrrowsSquareDrawer } from "../jayrrows/component/view/drawer/square/J
 import { JayrrowsTextSquareDrawer } from "../jayrrows/component/view/drawer/square/JayrrowsTextSquareDrawer.js";
 import { JayrrowsStorageService } from "../jayrrows/service/storage/JayrrowsStorageService.js";
 import { JayrrowsLocalStorageService } from "../jayrrows/service/storage/JayrrowsLocalStorageService.js";
+import { UserStorageService } from "./service/UserStorageService.js";
+import { LocalUserStorageService } from "./service/LocalUserStorageService.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private gbpSquareDrawer: GBPSquareDrawer;
   private jayrrowsSquareDrawer: JayrrowsSquareDrawer;
   private gbpStorageService: GBPStorageService;
   private jayrrowsStorageService: JayrrowsStorageService;
+  private userStorageService: UserStorageService;
   private randomPieceService: RandomPieceService;
   private sequenceService: SequenceService;
   private randomRollAnimationService: RandomRollAnimationService
@@ -31,6 +34,7 @@ class Injector extends BaseInjector<AppEnvironment> {
     this.randomRollAnimationService = new RandomRollAnimationService(this.randomPieceService, this.gbpSquareDrawer)
     this.jayrrowsSquareDrawer = new JayrrowsTextSquareDrawer();
     this.jayrrowsStorageService = new JayrrowsLocalStorageService();
+    this.userStorageService = new LocalUserStorageService();
   }
   async initialize(): Promise<void> {}
   getEnvironment(): AppEnvironment {
@@ -56,6 +60,9 @@ class Injector extends BaseInjector<AppEnvironment> {
   }
   getRandomRollAnimationService(): RandomRollAnimationService {
     return this.randomRollAnimationService
+  }
+  getUserStorageService(): UserStorageService {
+    return this.userStorageService;
   }
 }
 

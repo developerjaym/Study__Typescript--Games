@@ -3,7 +3,6 @@ import { GameState } from "../../component/model/GameState.js";
 import { GBPStorageService } from "./GBPStorageService.js";
 
 export class GBPLocalStorageService implements GBPStorageService {
-    static CLIENT_ID_KEY = "localstorage-client-id"
     private gameStateKey: string;
     constructor() {        
         this.gameStateKey = `GBP-game_state-key`
@@ -24,12 +23,6 @@ export class GBPLocalStorageService implements GBPStorageService {
             sequences: event.sequences
         }
         this.write(gameState)
-    }
-    async getClientId(): Promise<string> {
-        return localStorage.getItem(GBPLocalStorageService.CLIENT_ID_KEY) || ""
-    }
-    setClientId(newClientId: string) {
-        localStorage.setItem(GBPLocalStorageService.CLIENT_ID_KEY, newClientId)
     }
     async write(gameState: GameState): Promise<void> {
         localStorage.setItem(this.gameStateKey, JSON.stringify(gameState))
