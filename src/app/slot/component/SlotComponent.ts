@@ -13,6 +13,7 @@ export class SlotComponent implements Page {
         this.controller = new SlotController(this.model);
         this.view = new SlotView(this.controller)
         this.model.subscribe(this.view)
+        this.model.start();
     }
     get stylesheet(): string[] {
         return ["slot.css"];

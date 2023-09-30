@@ -8,7 +8,7 @@ export enum AppTransition {
 }
 
 export class CustomAnimation {
-    constructor(private duration: number, private transition: AppTransition, private steps: Runnable[], private element: HTMLElement) {
+    constructor(private duration: number, private transition: AppTransition | string, private steps: Runnable[], private element: HTMLElement) {
 
     }
     start(): void {

@@ -1,0 +1,78 @@
+.wheel {
+  background-color: white;
+  color: black;
+  font-size: x-large;
+  border: 1px solid black;
+  text-align: center;
+  padding: var(--narrow);
+}
+.lever {
+  height: 20px;
+  width: 100px;
+  margin: 50px;
+  transform: rotate(300deg);
+  background-color: orange;
+  grid-column: 3 / span-all;
+  justify-self: center;
+}
+.machine {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.casino {
+  display: grid;
+}
+.number-display {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+.wheel__face {
+  background-color: white;
+}
+.wheel__face--selected {
+  border-width: 1px 0 1px 0;
+  border-color: var(--highlight);
+  background-color: var(--highlight);
+  border-style: solid;
+  transform: scaleY(1.1);
+}
+.wheel__face--top {
+  transform: rotateX(45deg);
+}
+.wheel__face--bottom {
+  transform: rotateX(-45deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .flash {
+    animation-name: flash;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+  }
+  .pull {
+    animation-name: pull;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes flash {
+  0% {
+    background-color: var(--highlight);
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+@keyframes pull {
+    0% {
+      transform: rotate(300deg) translateY(0);
+    }
+    50% {
+      transform: rotate(360deg) translateY(40px);
+    }
+    100% {
+      transform: rotate(300deg) translateY(0);
+    }
+  }
