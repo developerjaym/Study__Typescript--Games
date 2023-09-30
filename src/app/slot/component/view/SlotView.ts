@@ -14,13 +14,17 @@ export class SlotView implements Viewable<SlotEvent> {
     private htmlService = injector.getHtmlService(),
     private routerService = injector.getRouterService()
   ) {
-      this.wheels = [new WheelUI(0), new WheelUI(1), new WheelUI(2)]
+    const reenable = () => this.element.querySelectorAll("button").forEach(button => button.disabled = false)
+      this.wheels = [new WheelUI(0, reenable), new WheelUI(1, reenable), new WheelUI(2, reenable)]
     this.element = this.createElement();
   }
   get component(): HTMLElement {
     return this.element;
   }
   onChange(event: SlotEvent): void {
+    if(event.type === SlotEventType.SPIN_OVER) {
+        this.element.querySelectorAll("button").forEach(button => button.disabled = true)
+    }
     this.element.querySelector(
       "#currentBet"
     )!.textContent = `$${event.currentBet}`; // TODO format currency
@@ -33,10 +37,7 @@ export class SlotView implements Viewable<SlotEvent> {
   }
   private createElement(): HTMLElement {
     const lever = this.htmlService.create("button", ["lever"], "lever", "PULL");
-    lever.addEventListener("click", () => {
-        
-        new CustomAnimation(3000, 'pull', [() => this.controller.onPull()], lever).start()
-    });
+    
 
     const machine = this.htmlService.create("div", ["machine"], "machine");
 
@@ -63,6 +64,13 @@ export class SlotView implements Viewable<SlotEvent> {
       "DECREASE BET"
     );
     betLessButton.addEventListener("click", betAction(-1));
+
+    lever.addEventListener("click", () => {
+        lever.disabled = true
+        betMoreButton.disabled = true
+        betLessButton.disabled = true
+        new CustomAnimation(3000, 'pull', [() => this.controller.onPull()], lever).start()
+    });
 
     const currentBetArea = this.htmlService.create("div", [], "currentBetArea");
     currentBetArea.append(currentBetDisplay, betMoreButton, betLessButton);

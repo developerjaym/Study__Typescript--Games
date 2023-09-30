@@ -1,4 +1,5 @@
 import { Viewable } from "../../../../../library/observer/Viewable.js";
+import { Runnable } from "../../../../../library/utility/Functions.js";
 import injector from "../../../../injector/Injector.js";
 import { SlotEvent, SlotEventType, SlotFace } from "../../event/SlotEvent.js";
 
@@ -12,6 +13,7 @@ export class WheelUI implements Viewable<SlotEvent> {
   private element: HTMLElement;
   constructor(
     private index: number,
+    private onSpinOver: Runnable,
     private htmlService = injector.getHtmlService()
   ) {
     this.top = this.htmlService.create("div", [
@@ -85,6 +87,7 @@ export class WheelUI implements Viewable<SlotEvent> {
           this.topContents.textContent = topIcon;
           this.middleContents.textContent = middleIcon;
           this.bottomContents.textContent = bottomIcon;
+          this.onSpinOver()
           return;
         }
         numberOfTicks--;
