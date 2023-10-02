@@ -1,43 +1,47 @@
 import { SystemIcon } from "../../../../library/SystemIcon.js";
 import { Viewable } from "../../../../library/observer/Viewable.js";
-import { AppTransition, CustomAnimation } from "../../../../library/transition/Transition.js";
+import { CustomAnimation } from "../../../../library/transition/Transition.js";
 import injector from "../../../injector/Injector.js";
 import { SlotController } from "../controller/SlotController.js";
-import { SlotEvent, SlotEventType, SlotFaceType } from "../event/SlotEvent.js";
+import { SlotEvent, SlotEventType } from "../event/SlotEvent.js";
 import { WheelUI } from "./wheel/WheelUI.js";
 
 export class SlotView implements Viewable<SlotEvent> {
   private element: HTMLElement;
-  private wheels: WheelUI[] = []
+  private wheels: WheelUI[] = [];
   constructor(
     private controller: SlotController,
     private htmlService = injector.getHtmlService(),
     private routerService = injector.getRouterService()
   ) {
-    const reenable = () => this.element.querySelectorAll("button").forEach(button => button.disabled = false)
-      this.wheels = [new WheelUI(0, reenable), new WheelUI(1, reenable), new WheelUI(2, reenable)]
+    const reenable = (event: SlotEvent) => {
+      this.onSpinAnimationOver(event);
+    };
+    this.wheels = [
+      new WheelUI(0, reenable),
+      new WheelUI(1, reenable),
+      new WheelUI(2, reenable),
+    ];
     this.element = this.createElement();
   }
   get component(): HTMLElement {
     return this.element;
   }
   onChange(event: SlotEvent): void {
-    if(event.type === SlotEventType.SPIN_OVER) {
-        this.element.querySelectorAll("button").forEach(button => button.disabled = true)
+    if (event.type === SlotEventType.SPIN_OVER) {
+        console.log("Right answers", event.wheels.map(wheel => wheel.faces[wheel.position].icon))
+      this.element
+        .querySelectorAll("button")
+        .forEach((button) => (button.disabled = true));
+        this.wheels.forEach((wheel) => wheel.onChange(event));
+    } else {
+      this.updateBets(event);
     }
-    this.element.querySelector(
-      "#currentBet"
-    )!.textContent = `$${event.currentBet}`; // TODO format currency
-    this.element.querySelector(
-      "#currentBalance"
-    )!.textContent = `$${event.balance}`; // TODO format currency
-    this.wheels.forEach(wheel => wheel.onChange(event))
-    // TODO when the animation is in progress, don't let the user change their bet
-    // TODO when the animation is over, display the new bet and balance amounts
+
+    
   }
   private createElement(): HTMLElement {
     const lever = this.htmlService.create("button", ["lever"], "lever", "PULL");
-    
 
     const machine = this.htmlService.create("div", ["machine"], "machine");
 
@@ -66,16 +70,21 @@ export class SlotView implements Viewable<SlotEvent> {
     betLessButton.addEventListener("click", betAction(-1));
 
     lever.addEventListener("click", () => {
-        lever.disabled = true
-        betMoreButton.disabled = true
-        betLessButton.disabled = true
-        new CustomAnimation(3000, 'pull', [() => this.controller.onPull()], lever).start()
+      lever.disabled = true;
+      betMoreButton.disabled = true;
+      betLessButton.disabled = true;
+      new CustomAnimation(
+        3000,
+        "pull",
+        [() => this.controller.onPull()],
+        lever
+      ).start();
     });
 
     const currentBetArea = this.htmlService.create("div", [], "currentBetArea");
     currentBetArea.append(currentBetDisplay, betMoreButton, betLessButton);
 
-    this.wheels.forEach(wheel => machine.append(wheel.component))
+    this.wheels.forEach((wheel) => machine.append(wheel.component));
     machine.append(lever, currentBetArea);
 
     const currentCashDisplay = this.htmlService.create(
@@ -109,8 +118,32 @@ export class SlotView implements Viewable<SlotEvent> {
 
     header.append(title, homeButton);
 
-    casino.append(header, machine, currentCashDisplay);
+    casino.append(header, currentCashDisplay, machine);
+
+    const resultDisplay = this.htmlService.create(
+      "div",
+      ["casino__result"],
+      "currentSlotResult",
+      "Results..."
+    );
+    casino.append(resultDisplay);
 
     return casino;
+  }
+  private onSpinAnimationOver(event: SlotEvent): void {
+    this.element
+      .querySelectorAll("button")
+      .forEach((button) => (button.disabled = false));
+    this.element.querySelector("#currentSlotResult")!.textContent =
+      event.results[event.results.length - 1]?.message || "Nothing yet";
+    this.updateBets(event);
+  }
+  private updateBets(event: SlotEvent): void {
+    this.element.querySelector(
+      "#currentBet"
+    )!.textContent = `$${event.currentBet}`; // TODO format currency
+    this.element.querySelector(
+      "#currentBalance"
+    )!.textContent = `$${event.balance}`; // TODO format currency
   }
 }

@@ -1,5 +1,5 @@
 import { Viewable } from "../../../../../library/observer/Viewable.js";
-import { Runnable } from "../../../../../library/utility/Functions.js";
+import { Consumer, Runnable } from "../../../../../library/utility/Functions.js";
 import injector from "../../../../injector/Injector.js";
 import { SlotEvent, SlotEventType, SlotFace } from "../../event/SlotEvent.js";
 
@@ -11,9 +11,10 @@ export class WheelUI implements Viewable<SlotEvent> {
   private bottom: HTMLElement;
   private bottomContents: HTMLElement;
   private element: HTMLElement;
+  private static randomNumberOfSpins = Math.ceil(Math.random() * 2) + 2
   constructor(
     private index: number,
-    private onSpinOver: Runnable,
+    private onSpinOver: Consumer<SlotEvent>,
     private htmlService = injector.getHtmlService()
   ) {
     this.top = this.htmlService.create("div", [
@@ -64,7 +65,7 @@ export class WheelUI implements Viewable<SlotEvent> {
     this.element.classList.remove('flash')
     if (event.type === SlotEventType.SPIN_OVER) {
       let numberOfTicks =
-        Math.ceil(Math.random() * 5) * wheel.faces.length +
+        WheelUI.randomNumberOfSpins * wheel.faces.length +
         wheel.position +
         wheel.faces.length * this.index;
       const circularList = new WheelList<SlotFace>(wheel.faces);
@@ -87,7 +88,7 @@ export class WheelUI implements Viewable<SlotEvent> {
           this.topContents.textContent = topIcon;
           this.middleContents.textContent = middleIcon;
           this.bottomContents.textContent = bottomIcon;
-          this.onSpinOver()
+          this.onSpinOver(event)
           return;
         }
         numberOfTicks--;

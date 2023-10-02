@@ -1,5 +1,5 @@
 .wheel {
-  background-color: white;
+  background-color: antiquewhite;
   color: black;
   font-size: x-large;
   border: 1px solid black;
@@ -9,18 +9,30 @@
 .lever {
   height: 20px;
   width: 100px;
-  margin: 50px;
+  margin: 50px 25px 0 0;
   transform: rotate(300deg);
-  background-color: orange;
-  grid-column: 3 / span-all;
-  justify-self: center;
+  color: black;
+  grid-column: 1 / span-all;
+  justify-self: end;
+  border: none;
+  background: radial-gradient(silver, #a5a3a3);
+  box-shadow: calc(-1 * var(--narrow)) var(--narrow) var(--narrow) 0px rgba(0, 0, 0, 0.25);
+
 }
 .machine {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  background: radial-gradient(gold, goldenrod);
+  padding: var(--wide);
 }
 .casino {
   display: grid;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--wide);
 }
 .number-display {
   background-color: white;
@@ -28,14 +40,17 @@
   border: 1px solid black;
 }
 .wheel__face {
-  background-color: white;
+  background-color: transparent;
+  border: none;
 }
 .wheel__face--selected {
-  border-width: 1px 0 1px 0;
-  border-color: var(--highlight);
-  background-color: var(--highlight);
-  border-style: solid;
+  background: linear-gradient(0turn, transparent, white 60%, transparent);
   transform: scaleY(1.1);
+  border-color: var(--highlight);
+  border-style: ridge;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  
 }
 .wheel__face--top {
   transform: rotateX(45deg);
@@ -61,7 +76,7 @@
     background-color: var(--highlight);
   }
   100% {
-    background-color: white;
+    background-color: antiquewhite;
   }
 }
 

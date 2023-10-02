@@ -46,7 +46,14 @@ export interface SlotCombo {
   multiplier: number;
 }
 
-export class COMBOS {
+export class SLOT_COMBOS {
+  static get N_OF_A_KIND(): SlotCombo {
+    return {
+      name: "N of a Kind",
+      multiplier: 2,
+      faces: []
+    }
+  }
   static get FRONT_END(): SlotCombo {
     return {
       name: "Front End Phenom",

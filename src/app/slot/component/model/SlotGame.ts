@@ -1,7 +1,10 @@
 import { Observable } from "../../../../library/observer/observer.js";
 import {
+  SLOT_COMBOS,
+  SlotCombo,
   SlotEvent,
   SlotEventType,
+  SlotFace,
   SlotFaceType,
   SlotResult,
   SlotWheel,
@@ -159,5 +162,27 @@ export class SlotGame extends Observable<SlotEvent> {
   }
   private canPull(betState: BetState) {
     return betState.currentBet > 0;
+  }
+}
+
+class SlotScoreService {
+  constructor() {
+
+  }
+  test(wheels: SlotWheel[]): SlotCombo | null {
+    const faces = wheels.map(wheel => wheel.faces[wheel.position])
+    if(this.matches(SLOT_COMBOS.BACK_END, faces)) {
+      return SLOT_COMBOS.BACK_END
+    }
+    else if(this.matches(SLOT_COMBOS.FRONT_END, faces)) {
+      return SLOT_COMBOS.BACK_END
+    }
+    else if(faces.every(face => face.type === faces[0].type)) {
+      return SLOT_COMBOS.N_OF_A_KIND
+    }
+    return null;
+  }
+  private matches(slotCombo: SlotCombo, faces: SlotFace[]): boolean {
+    return slotCombo.faces.every((faceType, index) => faces[index].type === faceType)
   }
 }
