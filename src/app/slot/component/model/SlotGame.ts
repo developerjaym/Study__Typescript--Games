@@ -126,7 +126,7 @@ export class SlotGame extends Observable<SlotEvent> {
       this.machineState.wheels = [...this.machineState.wheels.map(wheel => ({...wheel, position: randomNumberBetweenZeroAnd(wheel.faces.length)}))]
       const matchingCombo = this.slotScoreService.test(this.machineState.wheels)
       const winnings = this.betState.currentBet * matchingCombo.multiplier
-      this.betState.balance = winnings
+      this.betState.balance = this.betState.balance + winnings
       this.results.push({
         bet: this.betState.currentBet,
         winnings,

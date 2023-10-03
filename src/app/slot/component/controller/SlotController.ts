@@ -8,6 +8,8 @@ export class SlotController {
         this.slotGame.onPull()
     }
     onChangeBet(byThisAmount: number): void {
+        console.log(byThisAmount);
+        
         this.slotGame.onChangeBet(byThisAmount)
     }
 }
