@@ -14,13 +14,13 @@ export class SlotView implements Viewable<SlotEvent> {
     private htmlService = injector.getHtmlService(),
     private routerService = injector.getRouterService()
   ) {
-    const reenable = (event: SlotEvent) => {
-      this.onSpinAnimationOver(event);
-    };
     this.wheels = [
-      new WheelUI(0, reenable),
-      new WheelUI(1, reenable),
-      new WheelUI(2, reenable),
+      new WheelUI(0, () => {}),
+      new WheelUI(1, () => {}),
+      new WheelUI(2, (event: SlotEvent) => {
+        // only the last wheel's stopping should trigger the re-enabling
+        this.onSpinAnimationOver(event);
+      }),
     ];
     this.element = this.createElement();
   }
@@ -28,48 +28,55 @@ export class SlotView implements Viewable<SlotEvent> {
     return this.element;
   }
   onChange(event: SlotEvent): void {
+    // enable or disable buttons
+    this.element
+      .querySelectorAll("button")
+      .forEach(
+        (button) =>
+          (button.disabled =
+            event.type === SlotEventType.SPIN_OVER ||
+            (button.classList.contains("lever") && event.currentBet === 0))
+      );
     if (event.type === SlotEventType.SPIN_OVER) {
-        console.log("Right answers", event.wheels.map(wheel => wheel.faces[wheel.position].icon))
-      this.element
-        .querySelectorAll("button")
-        .forEach((button) => (button.disabled = true));
-        this.wheels.forEach((wheel) => wheel.onChange(event));
+      console.log(
+        "Right answers",
+        event.wheels.map((wheel) => wheel.faces[wheel.position].icon)
+      );
+
+      this.wheels.forEach((wheel) => wheel.onChange(event));
     } else {
       this.updateBets(event);
     }
-
-    
   }
   private createElement(): HTMLElement {
     const lever = this.htmlService.create("button", ["lever"], "lever", "PULL");
 
     const machine = this.htmlService.create("div", ["machine"], "machine");
 
-    const currentBetDisplay = this.htmlService.create(
-      "div",
-      ["number-display", "number-display--current-bet"],
-      "currentBet",
-      "0"
-    );
+    const currentBetDisplay = this.createNumberDisplay('BET', '$0', "currentBet")
+
 
     const betAction = (amount: number) => () =>
       this.controller.onChangeBet(amount);
     const betMoreButton = this.htmlService.create(
       "button",
-      ["button", "button--icon"],
+      ["button", "button--icon", "machine__button"],
       "betMoreButton",
       "INCREASE BET"
     );
     betMoreButton.addEventListener("click", betAction(1));
     const betLessButton = this.htmlService.create(
       "button",
-      ["button", "button--icon"],
+      ["button", "button--icon", "machine__button"],
       "betLessButton",
       "DECREASE BET"
     );
     betLessButton.addEventListener("click", betAction(-1));
 
-    lever.addEventListener("click", () => {
+    const onLeverEvent = () => {
+      if (lever.disabled) {
+        return;
+      }
       lever.disabled = true;
       betMoreButton.disabled = true;
       betLessButton.disabled = true;
@@ -79,20 +86,17 @@ export class SlotView implements Viewable<SlotEvent> {
         [() => this.controller.onPull()],
         lever
       ).start();
-    });
+    };
 
-    const currentBetArea = this.htmlService.create("div", [], "currentBetArea");
-    currentBetArea.append(currentBetDisplay, betMoreButton, betLessButton);
+    lever.addEventListener("click", onLeverEvent);
+    lever.addEventListener("drag", onLeverEvent);
+    lever.addEventListener("touchstart", onLeverEvent, { passive: true });
 
     this.wheels.forEach((wheel) => machine.append(wheel.component));
-    machine.append(lever, currentBetArea);
+    machine.append(betLessButton, currentBetDisplay, betMoreButton, lever);
 
-    const currentCashDisplay = this.htmlService.create(
-      "div",
-      ["number-display", "number-display--current-balance"],
-      "currentBalance",
-      "100"
-    );
+    const currentCashDisplay = this.createNumberDisplay('BALANCE', '$100', "currentBalance")
+
     const casino = this.htmlService.create("main", ["casino"], "casino1");
 
     const header = this.htmlService.create(
@@ -145,5 +149,28 @@ export class SlotView implements Viewable<SlotEvent> {
     this.element.querySelector(
       "#currentBalance"
     )!.textContent = `$${event.balance}`; // TODO format currency
+  }
+
+  private createNumberDisplay(label: string, text: string = '', id: string = crypto.randomUUID()): HTMLElement {
+    const currentBetDisplay = this.htmlService.create(
+        "div",
+        ["number-display"],
+        
+      );
+  
+      const betDisplayLabel = this.htmlService.create(
+        "label",
+        ["number-display__label"],
+        crypto.randomUUID(),
+        label
+      );
+      const betDisplayText = this.htmlService.create(
+        "span",
+        ["number-display__text"],
+        id,
+        text
+      );
+      currentBetDisplay.append(betDisplayLabel, betDisplayText)
+      return currentBetDisplay
   }
 }

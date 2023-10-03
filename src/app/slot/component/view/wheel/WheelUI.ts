@@ -1,7 +1,7 @@
 import { Viewable } from "../../../../../library/observer/Viewable.js";
 import { Consumer, Runnable } from "../../../../../library/utility/Functions.js";
 import injector from "../../../../injector/Injector.js";
-import { SlotEvent, SlotEventType, SlotFace } from "../../event/SlotEvent.js";
+import { SlotEvent, SlotEventType, SlotFace, SlotWheel } from "../../event/SlotEvent.js";
 
 export class WheelUI implements Viewable<SlotEvent> {
   private top: HTMLElement;
@@ -76,31 +76,56 @@ export class WheelUI implements Viewable<SlotEvent> {
       this.topContents.textContent = topIcon;
       this.middleContents.textContent = middleIcon;
       this.bottomContents.textContent = bottomIcon;
-
-      const intervalId = setInterval(() => {
-        if (numberOfTicks < 1) {
-          clearInterval(intervalId);
-          this.element.classList.add('flash')
-          circularList.setIndex(wheel.position);
-          const [topIcon, middleIcon, bottomIcon] = circularList
-            .range(1, 1)
-            .map((face) => face.icon);
-          this.topContents.textContent = topIcon;
-          this.middleContents.textContent = middleIcon;
-          this.bottomContents.textContent = bottomIcon;
-          this.onSpinOver(event)
-          return;
-        }
-        numberOfTicks--;
-        circularList.tick();
+      this.onTick(numberOfTicks, circularList, wheel, event)
+      // const intervalId = setInterval(() => {
+      //   if (numberOfTicks < 1) {
+      //     clearInterval(intervalId);
+      //     this.element.classList.add('flash')
+      //     circularList.setIndex(wheel.position);
+      //     const [topIcon, middleIcon, bottomIcon] = circularList
+      //       .range(1, 1)
+      //       .map((face) => face.icon);
+      //     this.topContents.textContent = topIcon;
+      //     this.middleContents.textContent = middleIcon;
+      //     this.bottomContents.textContent = bottomIcon;
+      //     this.onSpinOver(event)
+      //     return;
+      //   }
+      //   numberOfTicks--;
+      //   circularList.tick();
+      //   const [topIcon, middleIcon, bottomIcon] = circularList
+      //     .range(1, 1)
+      //     .map((face) => face.icon);
+      //   this.topContents.textContent = topIcon;
+      //   this.middleContents.textContent = middleIcon;
+      //   this.bottomContents.textContent = bottomIcon;
+      // }, 100);
+    }
+  }
+  private onTick(numberOfTicks: number, circularList: WheelList<SlotFace>, wheel: SlotWheel, event: SlotEvent): void {
+    setTimeout(() => {
+      if (numberOfTicks < 1) {
+        this.element.classList.add('flash')
+        circularList.setIndex(wheel.position);
         const [topIcon, middleIcon, bottomIcon] = circularList
           .range(1, 1)
           .map((face) => face.icon);
         this.topContents.textContent = topIcon;
         this.middleContents.textContent = middleIcon;
         this.bottomContents.textContent = bottomIcon;
-      }, 100);
-    }
+        this.onSpinOver(event)
+        return;
+      }
+      numberOfTicks--;
+      circularList.tick();
+      const [topIcon, middleIcon, bottomIcon] = circularList
+        .range(1, 1)
+        .map((face) => face.icon);
+      this.topContents.textContent = topIcon;
+      this.middleContents.textContent = middleIcon;
+      this.bottomContents.textContent = bottomIcon;
+      this.onTick(numberOfTicks, circularList, wheel, event)
+    }, 500 / Math.sqrt(numberOfTicks));
   }
 }
 

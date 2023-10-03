@@ -7,38 +7,73 @@
   padding: var(--narrow);
 }
 .lever {
-  height: 20px;
-  width: 100px;
-  margin: 50px 25px 0 0;
-  transform: rotate(300deg);
+  transform: rotate(5deg);
+  margin-left: var(--wide);
   color: black;
-  grid-column: 1 / span-all;
-  justify-self: end;
+  grid-column: 3;
+  justify-self: start;
   border: none;
   background: radial-gradient(silver, #a5a3a3);
-  box-shadow: calc(-1 * var(--narrow)) var(--narrow) var(--narrow) 0px rgba(0, 0, 0, 0.25);
-
+  box-shadow: calc(-1 * var(--narrow)) var(--narrow) var(--narrow) 0px
+    rgba(0, 0, 0, 0.25);
+  grid-row: 3 / 4;
+  border-radius: 40px;
 }
 .machine {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background: radial-gradient(gold, goldenrod);
   padding: var(--wide);
+  grid-template-rows: min-content 20vh 33vh;
+}
+.machine__button {
+  height: fit-content;
+  align-self: center;
 }
 .casino {
-  display: grid;
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    grid-template-rows: min-content min-content min-content max-content;
 }
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--wide);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--wide);
+  color: white;
 }
 .number-display {
   background-color: white;
   color: black;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  align-self: center;
+  border: none;
+  background: antiquewhite;
+  height: fit-content;
+  margin: var(--narrow);
+  border-radius: var(--wide);
+  border: 1px solid black;
 }
+
+.number-display__text {
+  flex-grow: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.number-display__label {
+  font-size: small;
+  margin-bottom: auto;
+}
+
 .wheel__face {
   background-color: transparent;
   border: none;
@@ -50,7 +85,6 @@
   border-style: ridge;
   border-top-width: 0;
   border-bottom-width: 0;
-  
 }
 .wheel__face--top {
   transform: rotateX(45deg);
@@ -81,13 +115,13 @@
 }
 
 @keyframes pull {
-    0% {
-      transform: rotate(300deg) translateY(0);
-    }
-    50% {
-      transform: rotate(360deg) translateY(40px);
-    }
-    100% {
-      transform: rotate(300deg) translateY(0);
-    }
+  0% {
+    transform: rotate(5deg) translateY(0);
   }
+  50% {
+    transform: rotate(91deg) translateX(20vmin) translateY(-15vmin);
+  }
+  100% {
+    transform: rotate(5deg) translateY(0);
+  }
+}
