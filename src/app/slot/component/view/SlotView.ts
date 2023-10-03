@@ -132,9 +132,13 @@ export class SlotView implements Viewable<SlotEvent> {
     casino.append(header, currentCashDisplay, machine);
 
     
+    // TODO, determine winnings and adjust balance
     // TODO, put results inside the Machine;
     // Then it can look like dispensed coins/chips
-
+    // TODO, 'draw' something other than numbers on the slot faces
+    // TODO, refactor so that my model doesn't know what the faces look like
+    //  so... 1, 1, 1 is a winner; 3, 6, 9 is a winner, etc. The view can determine what those should look like
+    
     return casino;
   }
   private onSpinAnimationOver(event: SlotEvent): void {
