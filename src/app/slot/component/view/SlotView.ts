@@ -93,7 +93,13 @@ export class SlotView implements Viewable<SlotEvent> {
     lever.addEventListener("touchstart", onLeverEvent, { passive: true });
 
     this.wheels.forEach((wheel) => machine.append(wheel.component));
-    machine.append(betLessButton, currentBetDisplay, betMoreButton, lever);
+
+    const resultDisplay = this.htmlService.create(
+        "div",
+        ["casino__result"],
+        "currentSlotResult",
+      );
+    machine.append(betLessButton, currentBetDisplay, betMoreButton, resultDisplay, lever);
 
     const currentCashDisplay = this.createNumberDisplay('BALANCE', '$100', "currentBalance")
 
@@ -122,15 +128,12 @@ export class SlotView implements Viewable<SlotEvent> {
 
     header.append(title, homeButton);
 
+    
     casino.append(header, currentCashDisplay, machine);
 
-    const resultDisplay = this.htmlService.create(
-      "div",
-      ["casino__result"],
-      "currentSlotResult",
-      "Results..."
-    );
-    casino.append(resultDisplay);
+    
+    // TODO, put results inside the Machine;
+    // Then it can look like dispensed coins/chips
 
     return casino;
   }
