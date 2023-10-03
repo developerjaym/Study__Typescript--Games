@@ -1,5 +1,6 @@
 import { SystemIcon } from "../../../../library/SystemIcon.js";
 import { Viewable } from "../../../../library/observer/Viewable.js";
+import { ToastMood } from "../../../../library/service/toast/ToastService.js";
 import { CustomAnimation } from "../../../../library/transition/Transition.js";
 import injector from "../../../injector/Injector.js";
 import { SlotController } from "../controller/SlotController.js";
@@ -12,7 +13,8 @@ export class SlotView implements Viewable<SlotEvent> {
   constructor(
     private controller: SlotController,
     private htmlService = injector.getHtmlService(),
-    private routerService = injector.getRouterService()
+    private routerService = injector.getRouterService(),
+    private toastService = injector.getToastService()
   ) {
     this.wheels = [
       new WheelUI(0, () => {}),
@@ -53,8 +55,11 @@ export class SlotView implements Viewable<SlotEvent> {
 
     const machine = this.htmlService.create("div", ["machine"], "machine");
 
-    const currentBetDisplay = this.createNumberDisplay('BET', '$0', "currentBet")
-
+    const currentBetDisplay = this.createNumberDisplay(
+      "BET",
+      "$0",
+      "currentBet"
+    );
 
     const betAction = (amount: number) => () =>
       this.controller.onChangeBet(amount);
@@ -95,13 +100,23 @@ export class SlotView implements Viewable<SlotEvent> {
     this.wheels.forEach((wheel) => machine.append(wheel.component));
 
     const resultDisplay = this.htmlService.create(
-        "div",
-        ["casino__result"],
-        "currentSlotResult",
-      );
-    machine.append(betLessButton, currentBetDisplay, betMoreButton, resultDisplay, lever);
+      "div",
+      ["casino__result"],
+      "currentSlotResult"
+    );
+    machine.append(
+      betLessButton,
+      currentBetDisplay,
+      betMoreButton,
+      resultDisplay,
+      lever
+    );
 
-    const currentCashDisplay = this.createNumberDisplay('BALANCE', '$100', "currentBalance")
+    const currentCashDisplay = this.createNumberDisplay(
+      "BALANCE",
+      "$100",
+      "currentBalance"
+    );
 
     const casino = this.htmlService.create("main", ["casino"], "casino1");
 
@@ -128,17 +143,8 @@ export class SlotView implements Viewable<SlotEvent> {
 
     header.append(title, homeButton);
 
-    
     casino.append(header, currentCashDisplay, machine);
 
-    
-    // TODO, determine winnings and adjust balance
-    // TODO, put results inside the Machine;
-    // Then it can look like dispensed coins/chips
-    // TODO, 'draw' something other than numbers on the slot faces
-    // TODO, refactor so that my model doesn't know what the faces look like
-    //  so... 1, 1, 1 is a winner; 3, 6, 9 is a winner, etc. The view can determine what those should look like
-    
     return casino;
   }
   private onSpinAnimationOver(event: SlotEvent): void {
@@ -148,6 +154,11 @@ export class SlotView implements Viewable<SlotEvent> {
     this.element.querySelector("#currentSlotResult")!.textContent =
       event.results[event.results.length - 1]?.message || "Nothing yet";
     this.updateBets(event);
+    const winnings = event.results[event.results.length - 1].winnings;
+    this.toastService.showToast(
+      `+$${winnings}`,
+      winnings > 0 ? ToastMood.HAPPY : ToastMood.SAD
+    );
   }
   private updateBets(event: SlotEvent): void {
     this.element.querySelector(
@@ -158,26 +169,28 @@ export class SlotView implements Viewable<SlotEvent> {
     )!.textContent = `$${event.balance}`; // TODO format currency
   }
 
-  private createNumberDisplay(label: string, text: string = '', id: string = crypto.randomUUID()): HTMLElement {
-    const currentBetDisplay = this.htmlService.create(
-        "div",
-        ["number-display"],
-        
-      );
-  
-      const betDisplayLabel = this.htmlService.create(
-        "label",
-        ["number-display__label"],
-        crypto.randomUUID(),
-        label
-      );
-      const betDisplayText = this.htmlService.create(
-        "span",
-        ["number-display__text"],
-        id,
-        text
-      );
-      currentBetDisplay.append(betDisplayLabel, betDisplayText)
-      return currentBetDisplay
+  private createNumberDisplay(
+    label: string,
+    text: string = "",
+    id: string = crypto.randomUUID()
+  ): HTMLElement {
+    const currentBetDisplay = this.htmlService.create("div", [
+      "number-display",
+    ]);
+
+    const betDisplayLabel = this.htmlService.create(
+      "label",
+      ["number-display__label"],
+      crypto.randomUUID(),
+      label
+    );
+    const betDisplayText = this.htmlService.create(
+      "span",
+      ["number-display__text"],
+      id,
+      text
+    );
+    currentBetDisplay.append(betDisplayLabel, betDisplayText);
+    return currentBetDisplay;
   }
 }

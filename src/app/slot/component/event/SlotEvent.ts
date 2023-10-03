@@ -25,19 +25,19 @@ export interface SlotWheel {
 }
 
 export enum SlotFaceType {
-  JAVA,
-  JAVASCRIPT,
-  PYTHON,
-  FLASK,
-  HIBERNATE,
-  SQLALCHEMY,
-  SPRING_BOOT,
-  ALEMBIC,
-  FLYWAY,
-  REACT,
-  ANGULAR,
-  VUE,
-  EXPRESS,
+  ZERO,
+  ONE,
+  TWO,
+  THREE,
+  FOUR,
+  FIVE,
+  SIX,
+  SEVEN,
+  EIGHT,
+  NINE,
+  TEN,
+  ELEVEN,
+  TWELVE,
 }
 
 export interface SlotCombo {
@@ -54,21 +54,21 @@ export class SLOT_COMBOS {
       faces: []
     }
   }
-  static get FRONT_END(): SlotCombo {
+  static get MULTIPLES_OF_THREE(): SlotCombo {
     return {
-      name: "Front End Phenom",
+      name: "3s",
       multiplier: 3,
-      faces: [SlotFaceType.REACT, SlotFaceType.ANGULAR, SlotFaceType.VUE],
+      faces: [SlotFaceType.NINE, SlotFaceType.SIX, SlotFaceType.THREE],
     };
   }
-  static get BACK_END(): SlotCombo {
+  static get MULTIPLES_OF_FOUR(): SlotCombo {
     return {
-      name: "Back End Bonanza",
+      name: "4s",
       multiplier: 3,
       faces: [
-        SlotFaceType.EXPRESS,
-        SlotFaceType.SPRING_BOOT,
-        SlotFaceType.FLASK,
+        SlotFaceType.TWELVE,
+        SlotFaceType.EIGHT,
+        SlotFaceType.FOUR,
       ],
     };
   }

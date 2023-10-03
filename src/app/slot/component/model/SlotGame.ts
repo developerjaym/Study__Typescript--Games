@@ -23,63 +23,63 @@ interface MachineState {
 const INITIAL_WHEEL = [
   {
     id: "1",
-    type: SlotFaceType.ALEMBIC,
-    icon: `${SlotFaceType.ALEMBIC}`,
+    type: SlotFaceType.SEVEN,
+    icon: `${SlotFaceType.SEVEN}`,
   },
   {
     id: "2",
-    type: SlotFaceType.ANGULAR,
-    icon: `${SlotFaceType.ANGULAR}`,
+    type: SlotFaceType.TEN,
+    icon: `${SlotFaceType.TEN}`,
   },
   {
     id: "3",
-    type: SlotFaceType.EXPRESS,
-    icon: `${SlotFaceType.EXPRESS}`,
+    type: SlotFaceType.TWELVE,
+    icon: `${SlotFaceType.TWELVE}`,
   },
   {
     id: "4",
-    type: SlotFaceType.FLASK,
-    icon: `${SlotFaceType.FLASK}`,
+    type: SlotFaceType.THREE,
+    icon: `${SlotFaceType.THREE}`,
   },
   {
     id: "5",
-    type: SlotFaceType.FLYWAY,
-    icon: `${SlotFaceType.FLYWAY}`,
+    type: SlotFaceType.EIGHT,
+    icon: `${SlotFaceType.EIGHT}`,
   },
   {
     id: "6",
-    type: SlotFaceType.HIBERNATE,
-    icon: `${SlotFaceType.HIBERNATE}`,
+    type: SlotFaceType.FOUR,
+    icon: `${SlotFaceType.FOUR}`,
   },
   {
     id: "7",
-    type: SlotFaceType.JAVA,
-    icon: `${SlotFaceType.JAVA}`,
+    type: SlotFaceType.ZERO,
+    icon: `${SlotFaceType.ZERO}`,
   },
   {
     id: "8",
-    type: SlotFaceType.JAVASCRIPT,
-    icon: `${SlotFaceType.JAVASCRIPT}`,
+    type: SlotFaceType.ONE,
+    icon: `${SlotFaceType.ONE}`,
   },
   {
     id: "9",
-    type: SlotFaceType.PYTHON,
-    icon: `${SlotFaceType.PYTHON}`,
+    type: SlotFaceType.TWO,
+    icon: `${SlotFaceType.TWO}`,
   },
   {
     id: "10",
-    type: SlotFaceType.REACT,
-    icon: `${SlotFaceType.REACT}`,
+    type: SlotFaceType.NINE,
+    icon: `${SlotFaceType.NINE}`,
   },
   {
     id: "11",
-    type: SlotFaceType.SPRING_BOOT,
-    icon: `${SlotFaceType.SPRING_BOOT}`,
+    type: SlotFaceType.SIX,
+    icon: `${SlotFaceType.SIX}`,
   },
   {
     id: "12",
-    type: SlotFaceType.SQLALCHEMY,
-    icon: `${SlotFaceType.SQLALCHEMY}`,
+    type: SlotFaceType.FIVE,
+    icon: `${SlotFaceType.FIVE}`,
   }
 ]
 const INITIAL_MACHINE_STATE = {
@@ -104,7 +104,7 @@ export class SlotGame extends Observable<SlotEvent> {
   private betState: BetState;
   private machineState: MachineState;
   private results: SlotResult[];
-  constructor() {
+  constructor(private slotScoreService = new SlotScoreService()) {
     super();
     this.betState = {
       balance: SlotGame.STARTING_BALANCE,
@@ -124,9 +124,15 @@ export class SlotGame extends Observable<SlotEvent> {
   onPull(): void {
     if (this.canPull(this.betState)) {
       this.machineState.wheels = [...this.machineState.wheels.map(wheel => ({...wheel, position: randomNumberBetweenZeroAnd(wheel.faces.length)}))]
-      
-      // TODO update bet state
-      // TODO update results
+      const matchingCombo = this.slotScoreService.test(this.machineState.wheels)
+      const winnings = this.betState.currentBet * matchingCombo.multiplier
+      this.betState.balance = winnings
+      this.results.push({
+        bet: this.betState.currentBet,
+        winnings,
+        slotCombo: matchingCombo
+      })
+      this.betState.currentBet = 0
       this.notifyAll({
         type: SlotEventType.SPIN_OVER,
         ...this.betState,
@@ -169,20 +175,27 @@ class SlotScoreService {
   constructor() {
 
   }
-  test(wheels: SlotWheel[]): SlotCombo | null {
+  test(wheels: SlotWheel[]): SlotCombo {
     const faces = wheels.map(wheel => wheel.faces[wheel.position])
-    if(this.matches(SLOT_COMBOS.BACK_END, faces)) {
-      return SLOT_COMBOS.BACK_END
+    if(this.matches(SLOT_COMBOS.MULTIPLES_OF_FOUR, faces)) {
+      return SLOT_COMBOS.MULTIPLES_OF_FOUR
     }
-    else if(this.matches(SLOT_COMBOS.FRONT_END, faces)) {
-      return SLOT_COMBOS.BACK_END
+    else if(this.matches(SLOT_COMBOS.MULTIPLES_OF_THREE, faces)) {
+      return SLOT_COMBOS.MULTIPLES_OF_FOUR
     }
     else if(faces.every(face => face.type === faces[0].type)) {
       return SLOT_COMBOS.N_OF_A_KIND
     }
-    return null;
+    return this.failCombo();
   }
   private matches(slotCombo: SlotCombo, faces: SlotFace[]): boolean {
     return slotCombo.faces.every((faceType, index) => faces[index].type === faceType)
+  }
+  private failCombo(): SlotCombo {
+    return {
+      name: "FAIL",
+      faces: [],
+      multiplier: 0
+    }
   }
 }
