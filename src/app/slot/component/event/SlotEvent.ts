@@ -46,34 +46,6 @@ export interface SlotCombo {
   multiplier: number;
 }
 
-export class SLOT_COMBOS {
-  static get N_OF_A_KIND(): SlotCombo {
-    return {
-      name: "N of a Kind",
-      multiplier: 2,
-      faces: []
-    }
-  }
-  static get MULTIPLES_OF_THREE(): SlotCombo {
-    return {
-      name: "3s",
-      multiplier: 3,
-      faces: [SlotFaceType.NINE, SlotFaceType.SIX, SlotFaceType.THREE],
-    };
-  }
-  static get MULTIPLES_OF_FOUR(): SlotCombo {
-    return {
-      name: "4s",
-      multiplier: 3,
-      faces: [
-        SlotFaceType.TWELVE,
-        SlotFaceType.EIGHT,
-        SlotFaceType.FOUR,
-      ],
-    };
-  }
-}
-
 export interface SlotFace {
   id: string;
   type: SlotFaceType;

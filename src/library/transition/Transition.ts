@@ -14,7 +14,8 @@ export class CustomAnimation {
     start(): void {
         this.element.classList.add(this.transition)
         this.element.style.animationDuration = `${this.duration}ms`
-        const msBetweenSteps = Math.floor(this.duration / this.steps.length)
+        // adjust msBetweenSteps by 1 to prevent flash of a removed element
+        const msBetweenSteps = Math.floor(this.duration / this.steps.length) - 1
         this.next(this.steps, msBetweenSteps)
         window.setTimeout(() => {
             this.element.classList.remove(this.transition)

@@ -15,17 +15,17 @@ import { SoundEffectService } from "./sound/SoundEffectService.js";
 import { ToastService } from "./toast/ToastService.js";
 
 export abstract class BaseInjector<T extends BaseEnvironment> {
-  private htmlService: HTMLService;
-  private urlService: URLService;
-  private toastService: ToastService;
-  private dialogService: DialogService;
-  private shareService: BaseShareService;
-  private clipboardService: ClipboardService;
-  private socialShareService: SocialShareService;
-  private dateService: DateService;
-  private routerService: RouterService;
-  private soundEffectService: SoundEffectService;
-  private numberFormatService: NumberFormatService;
+  protected htmlService: HTMLService;
+  protected urlService: URLService;
+  protected toastService: ToastService;
+  protected dialogService: DialogService;
+  protected shareService: BaseShareService;
+  protected clipboardService: ClipboardService;
+  protected socialShareService: SocialShareService;
+  protected dateService: DateService;
+  protected routerService: RouterService;
+  protected soundEffectService: SoundEffectService;
+  protected numberFormatService: NumberFormatService;
   protected env: T;
   constructor(env: T) {
     this.env = env;

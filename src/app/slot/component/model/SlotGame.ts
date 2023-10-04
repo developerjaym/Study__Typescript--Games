@@ -1,16 +1,15 @@
 import { Observable } from "../../../../library/observer/observer.js";
+import injector from "../../../injector/Injector.js";
 import {
-  SLOT_COMBOS,
-  SlotCombo,
   SlotEvent,
   SlotEventType,
-  SlotFace,
   SlotFaceType,
   SlotResult,
   SlotWheel,
 } from "../event/SlotEvent.js";
 
-const randomNumberBetweenZeroAnd = (otherNumber: number) => Math.floor(Math.random() * otherNumber)
+const randomNumberBetweenZeroAnd = (otherNumber: number) =>
+  Math.floor(Math.random() * otherNumber);
 
 interface BetState {
   currentBet: number;
@@ -23,11 +22,12 @@ interface MachineState {
 const INITIAL_WHEEL = [
   {
     id: "0",
-    type: SlotFaceType.ZERO
+    type: SlotFaceType.ZERO,
   },
   {
     id: "1",
-    type: SlotFaceType.ONE  },
+    type: SlotFaceType.ONE,
+  },
   {
     id: "2",
     type: SlotFaceType.TWO,
@@ -71,8 +71,8 @@ const INITIAL_WHEEL = [
   {
     id: "12",
     type: SlotFaceType.TWELVE,
-  }
-]
+  },
+];
 const INITIAL_MACHINE_STATE = {
   wheels: [
     {
@@ -87,15 +87,15 @@ const INITIAL_MACHINE_STATE = {
       position: 3,
       faces: [...INITIAL_WHEEL],
     },
-  ], 
-}
+  ],
+};
 
 export class SlotGame extends Observable<SlotEvent> {
   private static STARTING_BALANCE = 100;
   private betState: BetState;
   private machineState: MachineState;
   private results: SlotResult[];
-  constructor(private slotScoreService = new SlotScoreService()) {
+  constructor(private slotScoreService = injector.getSlotScoreService()) {
     super();
     this.betState = {
       balance: SlotGame.STARTING_BALANCE,
@@ -114,16 +114,24 @@ export class SlotGame extends Observable<SlotEvent> {
   }
   onPull(): void {
     if (this.canPull(this.betState)) {
-      this.machineState.wheels = [...this.machineState.wheels.map(wheel => ({...wheel, position: randomNumberBetweenZeroAnd(wheel.faces.length)}))]
-      const matchingCombo = this.slotScoreService.test(this.machineState.wheels)
-      const winnings = this.betState.currentBet * matchingCombo.multiplier
-      this.betState.balance = this.betState.balance + winnings
+      this.machineState.wheels = [
+        ...this.machineState.wheels.map((wheel) => ({
+          ...wheel,
+          position: randomNumberBetweenZeroAnd(wheel.faces.length),
+        })),
+      ];
+      const matchingCombo = this.slotScoreService.test(
+        this.machineState.wheels
+      );
+      const payout = (this.betState.currentBet * matchingCombo.multiplier)
+      const winnings = payout - this.betState.currentBet;
+      this.betState.balance = this.betState.balance + payout;
       this.results.push({
         bet: this.betState.currentBet,
         winnings,
-        slotCombo: matchingCombo
-      })
-      this.betState.currentBet = 0
+        slotCombo: matchingCombo,
+      });
+      this.betState.currentBet = 0;
       this.notifyAll({
         type: SlotEventType.SPIN_OVER,
         ...this.betState,
@@ -139,7 +147,7 @@ export class SlotGame extends Observable<SlotEvent> {
         byThisAmount,
         this.betState.balance
       )
-    ) {      
+    ) {
       this.betState.balance -= byThisAmount;
       this.betState.currentBet += byThisAmount;
       this.notifyAll({
@@ -159,34 +167,5 @@ export class SlotGame extends Observable<SlotEvent> {
   }
   private canPull(betState: BetState) {
     return betState.currentBet > 0;
-  }
-}
-
-class SlotScoreService {
-  constructor() {
-
-  }
-  test(wheels: SlotWheel[]): SlotCombo {
-    const faces = wheels.map(wheel => wheel.faces[wheel.position])
-    if(this.matches(SLOT_COMBOS.MULTIPLES_OF_FOUR, faces)) {
-      return SLOT_COMBOS.MULTIPLES_OF_FOUR
-    }
-    else if(this.matches(SLOT_COMBOS.MULTIPLES_OF_THREE, faces)) {
-      return SLOT_COMBOS.MULTIPLES_OF_FOUR
-    }
-    else if(faces.every(face => face.type === faces[0].type)) {
-      return SLOT_COMBOS.N_OF_A_KIND
-    }
-    return this.failCombo();
-  }
-  private matches(slotCombo: SlotCombo, faces: SlotFace[]): boolean {
-    return slotCombo.faces.every((faceType, index) => faces[index].type === faceType)
-  }
-  private failCombo(): SlotCombo {
-    return {
-      name: "FAIL",
-      faces: [],
-      multiplier: 0
-    }
   }
 }

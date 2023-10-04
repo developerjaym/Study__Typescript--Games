@@ -34,7 +34,7 @@ export class ReceiptWinningsDrawer implements WinningsDrawer {
     private drawLineItem(result: SlotResult): HTMLElement {
         const lineItem = this.htmlService.create("section", ["receipt__line"])
 
-        const date = this.htmlService.create("span", ["receipt__detail", "receipt__detail--date", "receipt__date"], crypto.randomUUID(), `${new Date().toLocaleString()}`)
+        const date = this.htmlService.create("span", ["receipt__detail", "receipt__detail--date", "receipt__date"], crypto.randomUUID(), `${new Date().toLocaleTimeString()}`)
         const winningsElement = this.htmlService.create("span", ["receipt__detail", "receipt__detail--winnings", "receipt__date"], crypto.randomUUID(), this.numberFormatService.formatCurrency(result.winnings))
         lineItem.append(date, winningsElement)
         return lineItem;

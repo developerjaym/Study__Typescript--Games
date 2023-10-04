@@ -1,14 +1,12 @@
 import { Viewable } from "../../../../library/observer/Viewable.js";
 import { HTMLService } from "../../../../library/service/HTMLService.js";
 import injector from "../../../injector/Injector.js";
-import { IController } from "../controller/IController.js";
 import { GameEvent } from "../model/GameEvent.js";
 
 export class DisplaySquareUI implements Viewable<GameEvent> {
   container: HTMLElement;
   displaySquare: HTMLElement;
   constructor(
-    private controller: IController,
     private htmlService: HTMLService = injector.getHtmlService(),
     private env = injector.getEnvironment(),
     private randomRollAnimationService = injector.getRandomRollAnimationService()

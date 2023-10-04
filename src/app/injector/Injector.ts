@@ -11,10 +11,11 @@ import { GBPLocalStorageService } from "../gbp/service/storage/GBPLocalStorageSe
 import { GBPStorageService } from "../gbp/service/storage/GBPStorageService.js";
 import { JayrrowsSquareDrawer } from "../jayrrows/component/view/drawer/square/JayrrowsSquareDrawer.js";
 import { JayrrowsTextSquareDrawer } from "../jayrrows/component/view/drawer/square/JayrrowsTextSquareDrawer.js";
-import { JayrrowsStorageService } from "../jayrrows/service/storage/JayrrowsStorageService.js";
 import { JayrrowsLocalStorageService } from "../jayrrows/service/storage/JayrrowsLocalStorageService.js";
-import { UserStorageService } from "./service/UserStorageService.js";
+import { JayrrowsStorageService } from "../jayrrows/service/storage/JayrrowsStorageService.js";
+import { SlotScoreService } from "../slot/service/score/SlotScoreService.js";
 import { LocalUserStorageService } from "./service/LocalUserStorageService.js";
+import { UserStorageService } from "./service/UserStorageService.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private gbpSquareDrawer: GBPSquareDrawer;
@@ -24,17 +25,23 @@ class Injector extends BaseInjector<AppEnvironment> {
   private userStorageService: UserStorageService;
   private randomPieceService: RandomPieceService;
   private sequenceService: SequenceService;
-  private randomRollAnimationService: RandomRollAnimationService
+  private randomRollAnimationService: RandomRollAnimationService;
+  private slotScoreService: SlotScoreService;
   constructor(env: AppEnvironment) {
     super(env);
     this.gbpSquareDrawer = new GBPTextSquareDrawer();
     this.gbpStorageService = new GBPLocalStorageService();
     this.randomPieceService = new RandomPieceService();
     this.sequenceService = new SequenceService();
-    this.randomRollAnimationService = new RandomRollAnimationService(this.randomPieceService, this.gbpSquareDrawer)
     this.jayrrowsSquareDrawer = new JayrrowsTextSquareDrawer();
     this.jayrrowsStorageService = new JayrrowsLocalStorageService();
     this.userStorageService = new LocalUserStorageService();
+    this.slotScoreService = new SlotScoreService();
+    this.randomRollAnimationService = new RandomRollAnimationService(
+      this.randomPieceService,
+      this.gbpSquareDrawer,
+      this.soundEffectService
+    );
   }
   async initialize(): Promise<void> {}
   getEnvironment(): AppEnvironment {
@@ -59,10 +66,13 @@ class Injector extends BaseInjector<AppEnvironment> {
     return this.sequenceService;
   }
   getRandomRollAnimationService(): RandomRollAnimationService {
-    return this.randomRollAnimationService
+    return this.randomRollAnimationService;
   }
   getUserStorageService(): UserStorageService {
     return this.userStorageService;
+  }
+  getSlotScoreService(): SlotScoreService {
+    return this.slotScoreService;
   }
 }
 

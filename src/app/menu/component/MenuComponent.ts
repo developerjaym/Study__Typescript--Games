@@ -15,7 +15,7 @@ export class MenuComponent implements Page {
     private gameRoutes: MenuOption[] = [
         {
             name: "GBP",
-            description: "Place dice in sequences",
+            description: "Place dice in sequences.",
             route: "#/gbp",
             image: "assets/gbp.png"
         },
@@ -24,6 +24,12 @@ export class MenuComponent implements Page {
             description: "Strategically move your pieces to defeat the enemy king.",
             route: "#/jayrrows",
             image: "assets/jayrrows.png"
+        },
+        {
+            name: "Slot Machine",
+            description: "Pull a lever and lose money.",
+            route: "#/slot",
+            image: "assets/slot.png"
         },
         {
             name: "CrossIt",
