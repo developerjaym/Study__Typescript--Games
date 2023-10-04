@@ -4,6 +4,7 @@ import { ToastMood } from "../../../../library/service/toast/ToastService.js";
 import injector from "../../../injector/Injector.js";
 import { ReceiptWinningsDrawer } from "../../service/drawer/ReceiptWinningsDrawer.js";
 import { WinningsDrawer } from "../../service/drawer/WinningsDrawer.js";
+import { SoundEffect } from "../../sound/SoundEffect.js";
 import { SlotController } from "../controller/SlotController.js";
 import { SlotEvent, SlotEventType } from "../event/SlotEvent.js";
 import { LeverUI } from "./lever/LeverUI.js";
@@ -30,7 +31,9 @@ export class SlotView implements Viewable<SlotEvent> {
         this.onSpinAnimationOver(event);
       }),
     ];
-    this.lever = new LeverUI(this.controller, (slotEvent: SlotEvent) => this.onLeverPullAnimationOver(slotEvent))
+    this.lever = new LeverUI(this.controller, (slotEvent: SlotEvent) =>
+      this.onLeverPullAnimationOver(slotEvent)
+    );
     this.element = this.createElement();
   }
   get component(): HTMLElement {
@@ -46,15 +49,18 @@ export class SlotView implements Viewable<SlotEvent> {
             event.type === SlotEventType.SPIN_OVER ||
             (button.classList.contains("lever") && event.currentBet === 0))
       );
-      if (event.type === SlotEventType.SPIN_OVER) {
-        this.lever.onChange(event)
-      
-    } else {
-      this.updateBets(event);
+    switch(event.type) {
+        case SlotEventType.BET_MADE:
+            this.soundEffectService.get(SoundEffect.COIN).play();
+        case SlotEventType.START:
+            this.updateBets(event)
+            break;
+        case SlotEventType.SPIN_OVER:
+            this.lever.onChange(event);
+            break;
     }
   }
   private createElement(): HTMLElement {
-
     const machine = this.htmlService.create("div", ["machine"], "machine");
 
     const currentBetDisplay = this.createNumberDisplay(
@@ -127,12 +133,7 @@ export class SlotView implements Viewable<SlotEvent> {
     return casino;
   }
   private onLeverPullAnimationOver(event: SlotEvent): void {
-    console.log(
-        "Right answers",
-        event.wheels.map((wheel) => wheel.faces[wheel.position].type)
-      );
-
-      this.wheels.forEach((wheel) => wheel.onChange(event));
+    this.wheels.forEach((wheel) => wheel.onChange(event));
   }
   private onSpinAnimationOver(event: SlotEvent): void {
     this.element
@@ -141,6 +142,9 @@ export class SlotView implements Viewable<SlotEvent> {
     this.winningsDrawer.append(event.results[event.results.length - 1]);
     this.updateBets(event);
     const winnings = event.results[event.results.length - 1].winnings;
+    if(winnings > 0) {
+        this.soundEffectService.get(SoundEffect.WIN).play()
+    }
     this.toastService.showToast(
       `+$${winnings}`,
       winnings > 0 ? ToastMood.HAPPY : ToastMood.SAD
