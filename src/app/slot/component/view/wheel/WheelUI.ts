@@ -1,7 +1,16 @@
 import { Viewable } from "../../../../../library/observer/Viewable.js";
-import { Consumer, Runnable } from "../../../../../library/utility/Functions.js";
+import {
+  Consumer,
+  Runnable,
+} from "../../../../../library/utility/Functions.js";
 import injector from "../../../../injector/Injector.js";
-import { SlotEvent, SlotEventType, SlotFace, SlotWheel } from "../../event/SlotEvent.js";
+import { SoundEffect } from "../../../sound/SoundEffect.js";
+import {
+  SlotEvent,
+  SlotEventType,
+  SlotFace,
+  SlotWheel,
+} from "../../event/SlotEvent.js";
 
 export class WheelUI implements Viewable<SlotEvent> {
   private top: HTMLElement;
@@ -11,11 +20,12 @@ export class WheelUI implements Viewable<SlotEvent> {
   private bottom: HTMLElement;
   private bottomContents: HTMLElement;
   private element: HTMLElement;
-  private static randomNumberOfSpins = Math.ceil(Math.random() * 2) + 2
+  private static randomNumberOfSpins = Math.ceil(Math.random() * 2) + 2;
   constructor(
     private index: number,
     private onSpinOver: Consumer<SlotEvent>,
-    private htmlService = injector.getHtmlService()
+    private htmlService = injector.getHtmlService(),
+    private soundEffectService = injector.getSoundEffectService()
   ) {
     this.top = this.htmlService.create("div", [
       "wheel__face",
@@ -62,8 +72,10 @@ export class WheelUI implements Viewable<SlotEvent> {
   }
   onChange(event: SlotEvent): void {
     const wheel = event.wheels[this.index];
-    this.element.classList.remove('flash')
+    this.element.classList.remove("flash");
     if (event.type === SlotEventType.SPIN_OVER) {
+      const soundEffect = this.soundEffectService.get(SoundEffect.SPIN);
+      soundEffect.play();
       let numberOfTicks =
         WheelUI.randomNumberOfSpins * wheel.faces.length +
         wheel.position +
@@ -72,60 +84,44 @@ export class WheelUI implements Viewable<SlotEvent> {
 
       const [topIcon, middleIcon, bottomIcon] = circularList
         .range(1, 1)
-        .map((face) => face.icon);
+        .map((face) => face.id);
       this.topContents.textContent = topIcon;
       this.middleContents.textContent = middleIcon;
       this.bottomContents.textContent = bottomIcon;
-      this.onTick(numberOfTicks, circularList, wheel, event)
-      // const intervalId = setInterval(() => {
-      //   if (numberOfTicks < 1) {
-      //     clearInterval(intervalId);
-      //     this.element.classList.add('flash')
-      //     circularList.setIndex(wheel.position);
-      //     const [topIcon, middleIcon, bottomIcon] = circularList
-      //       .range(1, 1)
-      //       .map((face) => face.icon);
-      //     this.topContents.textContent = topIcon;
-      //     this.middleContents.textContent = middleIcon;
-      //     this.bottomContents.textContent = bottomIcon;
-      //     this.onSpinOver(event)
-      //     return;
-      //   }
-      //   numberOfTicks--;
-      //   circularList.tick();
-      //   const [topIcon, middleIcon, bottomIcon] = circularList
-      //     .range(1, 1)
-      //     .map((face) => face.icon);
-      //   this.topContents.textContent = topIcon;
-      //   this.middleContents.textContent = middleIcon;
-      //   this.bottomContents.textContent = bottomIcon;
-      // }, 100);
+      this.onTick(numberOfTicks, circularList, wheel, event, soundEffect);
     }
   }
-  private onTick(numberOfTicks: number, circularList: WheelList<SlotFace>, wheel: SlotWheel, event: SlotEvent): void {
+  private onTick(
+    numberOfTicks: number,
+    circularList: WheelList<SlotFace>,
+    wheel: SlotWheel,
+    event: SlotEvent,
+    soundEffect: HTMLAudioElement
+  ): void {
     setTimeout(() => {
       if (numberOfTicks < 1) {
-        this.element.classList.add('flash')
+        this.element.classList.add("flash");
         circularList.setIndex(wheel.position);
         const [topIcon, middleIcon, bottomIcon] = circularList
           .range(1, 1)
-          .map((face) => face.icon);
+          .map((face) => `${face.type}`);
         this.topContents.textContent = topIcon;
         this.middleContents.textContent = middleIcon;
         this.bottomContents.textContent = bottomIcon;
-        this.onSpinOver(event)
+        this.onSpinOver(event);
+        soundEffect.pause();
         return;
       }
       numberOfTicks--;
       circularList.tick();
       const [topIcon, middleIcon, bottomIcon] = circularList
         .range(1, 1)
-        .map((face) => face.icon);
+        .map((face) => `${face.type}`);
       this.topContents.textContent = topIcon;
       this.middleContents.textContent = middleIcon;
       this.bottomContents.textContent = bottomIcon;
-      this.onTick(numberOfTicks, circularList, wheel, event)
-    }, 500 / Math.sqrt(numberOfTicks));
+      this.onTick(numberOfTicks, circularList, wheel, event, soundEffect);
+    }, 450 / Math.sqrt(numberOfTicks));
   }
 }
 

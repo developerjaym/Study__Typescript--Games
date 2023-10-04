@@ -1,3 +1,6 @@
+import { SlotResult } from "../../component/event/SlotEvent.js";
+
 export interface WinningsDrawer {
-    draw(winnings: number): HTMLElement;
+    get component(): HTMLElement;
+    append(results: SlotResult): void;
 }

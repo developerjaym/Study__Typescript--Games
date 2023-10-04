@@ -32,7 +32,27 @@
 .machine__button {
   height: fit-content;
   align-self: center;
+  border: groove;
 }
+#betMoreButton {
+  background: radial-gradient(#4c7026, #639131);
+  border: groove;
+  border-color: #639131;
+}
+
+#betMoreButton:active {
+  border-style: inset;
+}
+
+#betLessButton {
+  background: radial-gradient(#70262a, #863b34);
+  border: groove;
+  border-color: #70262a;
+}
+#betLessButton:active {
+  border-style: inset;
+}
+
 .casino {
   display: grid;
   height: 100vh;
@@ -100,6 +120,27 @@
   box-shadow: 0px -14px 4px 4px #b0afafc9 inset;
 }
 
+.receipt {
+  background-color: white;
+  color: black;
+  
+}
+.receipt__line {
+  display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted black;
+    padding: var(--narrow);
+}
+
+.printer {
+  border-top: var(--narrow) ridge black;
+}
+
+.receipt__title {
+  margin: 0;
+  padding: var(--wide);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .flash {
     animation-name: flash;
@@ -110,6 +151,11 @@
     animation-name: pull;
     animation-timing-function: linear;
   }
+  .print {
+    animation-name: print;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+  }
 }
 
 @keyframes flash {
@@ -118,6 +164,24 @@
   }
   100% {
     background-color: antiquewhite;
+  }
+}
+
+@keyframes print {
+  0% {
+    transform: scaleY(0.1) translateY(-500%) rotateX(90deg);
+  }
+  25% {
+    transform: scaleY(0.2) translateY(-250%) rotateX(80deg);
+  }
+  50% {
+    transform: scaleY(0.5) translateY(-70%) rotateX(45deg);
+  }
+  75% {
+    transform: scaleY(0.75) translateY(-25%) rotateX(30deg);
+  }
+  100% {
+    transform: scaleY(1) translateY(0px) rotateX(0deg);
   }
 }
 

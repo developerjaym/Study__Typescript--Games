@@ -1,20 +1,26 @@
 import { SystemIcon } from "../../../../library/SystemIcon.js";
 import { Viewable } from "../../../../library/observer/Viewable.js";
 import { ToastMood } from "../../../../library/service/toast/ToastService.js";
-import { CustomAnimation } from "../../../../library/transition/Transition.js";
 import injector from "../../../injector/Injector.js";
+import { ReceiptWinningsDrawer } from "../../service/drawer/ReceiptWinningsDrawer.js";
+import { WinningsDrawer } from "../../service/drawer/WinningsDrawer.js";
 import { SlotController } from "../controller/SlotController.js";
 import { SlotEvent, SlotEventType } from "../event/SlotEvent.js";
+import { LeverUI } from "./lever/LeverUI.js";
 import { WheelUI } from "./wheel/WheelUI.js";
 
 export class SlotView implements Viewable<SlotEvent> {
   private element: HTMLElement;
   private wheels: WheelUI[] = [];
+  private lever: LeverUI;
+
   constructor(
     private controller: SlotController,
     private htmlService = injector.getHtmlService(),
     private routerService = injector.getRouterService(),
-    private toastService = injector.getToastService()
+    private toastService = injector.getToastService(),
+    private winningsDrawer: WinningsDrawer = new ReceiptWinningsDrawer(),
+    private soundEffectService = injector.getSoundEffectService()
   ) {
     this.wheels = [
       new WheelUI(0, () => {}),
@@ -24,6 +30,7 @@ export class SlotView implements Viewable<SlotEvent> {
         this.onSpinAnimationOver(event);
       }),
     ];
+    this.lever = new LeverUI(this.controller, (slotEvent: SlotEvent) => this.onLeverPullAnimationOver(slotEvent))
     this.element = this.createElement();
   }
   get component(): HTMLElement {
@@ -39,19 +46,14 @@ export class SlotView implements Viewable<SlotEvent> {
             event.type === SlotEventType.SPIN_OVER ||
             (button.classList.contains("lever") && event.currentBet === 0))
       );
-    if (event.type === SlotEventType.SPIN_OVER) {
-      console.log(
-        "Right answers",
-        event.wheels.map((wheel) => wheel.faces[wheel.position].icon)
-      );
-
-      this.wheels.forEach((wheel) => wheel.onChange(event));
+      if (event.type === SlotEventType.SPIN_OVER) {
+        this.lever.onChange(event)
+      
     } else {
       this.updateBets(event);
     }
   }
   private createElement(): HTMLElement {
-    const lever = this.htmlService.create("button", ["lever"], "lever", "PULL");
 
     const machine = this.htmlService.create("div", ["machine"], "machine");
 
@@ -78,38 +80,15 @@ export class SlotView implements Viewable<SlotEvent> {
     );
     betLessButton.addEventListener("click", betAction(-1));
 
-    const onLeverEvent = () => {
-      if (lever.disabled) {
-        return;
-      }
-      lever.disabled = true;
-      betMoreButton.disabled = true;
-      betLessButton.disabled = true;
-      new CustomAnimation(
-        3000,
-        "pull",
-        [() => this.controller.onPull()],
-        lever
-      ).start();
-    };
-
-    lever.addEventListener("click", onLeverEvent);
-    lever.addEventListener("drag", onLeverEvent);
-    lever.addEventListener("touchstart", onLeverEvent, { passive: true });
-
     this.wheels.forEach((wheel) => machine.append(wheel.component));
 
-    const resultDisplay = this.htmlService.create(
-      "div",
-      ["casino__result"],
-      "currentSlotResult"
-    );
+    const resultDisplay = this.winningsDrawer.component;
     machine.append(
       betLessButton,
       currentBetDisplay,
       betMoreButton,
       resultDisplay,
-      lever
+      this.lever.component
     );
 
     const currentCashDisplay = this.createNumberDisplay(
@@ -147,12 +126,19 @@ export class SlotView implements Viewable<SlotEvent> {
 
     return casino;
   }
+  private onLeverPullAnimationOver(event: SlotEvent): void {
+    console.log(
+        "Right answers",
+        event.wheels.map((wheel) => wheel.faces[wheel.position].type)
+      );
+
+      this.wheels.forEach((wheel) => wheel.onChange(event));
+  }
   private onSpinAnimationOver(event: SlotEvent): void {
     this.element
       .querySelectorAll("button")
       .forEach((button) => (button.disabled = false));
-    this.element.querySelector("#currentSlotResult")!.textContent =
-      event.results[event.results.length - 1]?.message || "Nothing yet";
+    this.winningsDrawer.append(event.results[event.results.length - 1]);
     this.updateBets(event);
     const winnings = event.results[event.results.length - 1].winnings;
     this.toastService.showToast(

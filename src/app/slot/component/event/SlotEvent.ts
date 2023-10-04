@@ -77,5 +77,4 @@ export class SLOT_COMBOS {
 export interface SlotFace {
   id: string;
   type: SlotFaceType;
-  icon: string;
 }

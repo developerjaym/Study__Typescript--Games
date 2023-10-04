@@ -22,64 +22,55 @@ interface MachineState {
 
 const INITIAL_WHEEL = [
   {
-    id: "1",
-    type: SlotFaceType.SEVEN,
-    icon: `${SlotFaceType.SEVEN}`,
+    id: "0",
+    type: SlotFaceType.ZERO
   },
   {
+    id: "1",
+    type: SlotFaceType.ONE  },
+  {
     id: "2",
-    type: SlotFaceType.TEN,
-    icon: `${SlotFaceType.TEN}`,
+    type: SlotFaceType.TWO,
   },
   {
     id: "3",
-    type: SlotFaceType.TWELVE,
-    icon: `${SlotFaceType.TWELVE}`,
+    type: SlotFaceType.THREE,
   },
   {
     id: "4",
-    type: SlotFaceType.THREE,
-    icon: `${SlotFaceType.THREE}`,
+    type: SlotFaceType.FOUR,
   },
   {
     id: "5",
-    type: SlotFaceType.EIGHT,
-    icon: `${SlotFaceType.EIGHT}`,
+    type: SlotFaceType.FIVE,
   },
   {
     id: "6",
-    type: SlotFaceType.FOUR,
-    icon: `${SlotFaceType.FOUR}`,
+    type: SlotFaceType.SIX,
   },
   {
     id: "7",
-    type: SlotFaceType.ZERO,
-    icon: `${SlotFaceType.ZERO}`,
+    type: SlotFaceType.SEVEN,
   },
   {
     id: "8",
-    type: SlotFaceType.ONE,
-    icon: `${SlotFaceType.ONE}`,
+    type: SlotFaceType.EIGHT,
   },
   {
     id: "9",
-    type: SlotFaceType.TWO,
-    icon: `${SlotFaceType.TWO}`,
+    type: SlotFaceType.NINE,
   },
   {
     id: "10",
-    type: SlotFaceType.NINE,
-    icon: `${SlotFaceType.NINE}`,
+    type: SlotFaceType.TEN,
   },
   {
     id: "11",
-    type: SlotFaceType.SIX,
-    icon: `${SlotFaceType.SIX}`,
+    type: SlotFaceType.ELEVEN,
   },
   {
     id: "12",
-    type: SlotFaceType.FIVE,
-    icon: `${SlotFaceType.FIVE}`,
+    type: SlotFaceType.TWELVE,
   }
 ]
 const INITIAL_MACHINE_STATE = {
@@ -148,7 +139,7 @@ export class SlotGame extends Observable<SlotEvent> {
         byThisAmount,
         this.betState.balance
       )
-    ) {
+    ) {      
       this.betState.balance -= byThisAmount;
       this.betState.currentBet += byThisAmount;
       this.notifyAll({

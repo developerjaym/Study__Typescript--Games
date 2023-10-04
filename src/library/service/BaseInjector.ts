@@ -4,12 +4,14 @@ import { HTMLService } from "./HTMLService.js";
 import { URLService } from "./URLService.js";
 import { DialogService } from "./dialog/DialogService.js";
 import { BaseEnvironment } from "./environment/Environment.js";
+import { NumberFormatService } from "./format/NumberFormatService.js";
 import {
   ClipboardService,
   IClipboardService,
 } from "./share/ClipboardService.js";
 import { BaseShareService, ShareServiceFactory } from "./share/ShareService.js";
 import { SocialShareService } from "./share/SocialShareService.js";
+import { SoundEffectService } from "./sound/SoundEffectService.js";
 import { ToastService } from "./toast/ToastService.js";
 
 export abstract class BaseInjector<T extends BaseEnvironment> {
@@ -22,6 +24,8 @@ export abstract class BaseInjector<T extends BaseEnvironment> {
   private socialShareService: SocialShareService;
   private dateService: DateService;
   private routerService: RouterService;
+  private soundEffectService: SoundEffectService;
+  private numberFormatService: NumberFormatService;
   protected env: T;
   constructor(env: T) {
     this.env = env;
@@ -37,6 +41,8 @@ export abstract class BaseInjector<T extends BaseEnvironment> {
     ).getShareService();
     this.dateService = new DateService();
     this.routerService = new RouterService(this.htmlService);
+    this.soundEffectService = new SoundEffectService();
+    this.numberFormatService = new NumberFormatService();
   }
   abstract initialize(): Promise<void>;
   getEnvironment(): T {
@@ -65,5 +71,11 @@ export abstract class BaseInjector<T extends BaseEnvironment> {
   }
   getRouterService(): RouterService {
     return this.routerService;
+  }
+  getSoundEffectService(): SoundEffectService {
+    return this.soundEffectService;
+  }
+  getNumberFormatService(): NumberFormatService {
+    return this.numberFormatService;
   }
 }
