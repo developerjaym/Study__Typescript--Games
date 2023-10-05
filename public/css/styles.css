@@ -84,6 +84,13 @@ dialog header .header__option {
   text-align: center;
 }
 
+.toast__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .expand {
     animation-name: expand;

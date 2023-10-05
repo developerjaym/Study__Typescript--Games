@@ -21,7 +21,8 @@ export class SlotView implements Viewable<SlotEvent> {
     private routerService = injector.getRouterService(),
     private toastService = injector.getToastService(),
     private winningsDrawer: WinningsDrawer = new ReceiptWinningsDrawer(),
-    private soundEffectService = injector.getSoundEffectService()
+    private soundEffectService = injector.getSoundEffectService(),
+    private numberFormatService = injector.getNumberFormatService()
   ) {
     this.wheels = [
       new WheelUI(0, () => {}),
@@ -146,7 +147,7 @@ export class SlotView implements Viewable<SlotEvent> {
         this.soundEffectService.get(SoundEffect.WIN).play()
     }
     this.toastService.showToast(
-      `+$${winnings}`,
+      `${winnings > 0 ? "+" : ""}${this.numberFormatService.formatCurrency(winnings)}`,
       winnings > 0 ? ToastMood.HAPPY : ToastMood.SAD
     );
   }
