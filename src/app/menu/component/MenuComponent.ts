@@ -44,6 +44,14 @@ export class MenuComponent implements Page {
             visible: true
         },
         {
+            name: "Deal or No Deal",
+            description: "Choose a case and then choose some more or accept cash.",
+            route: "https://localstorage.tools/dond/",
+            image: "https://localstorage.tools/dond/favicon.ico",
+            tags: [MenuTag.ONE_PLAYER, MenuTag.GAMBLING],
+            visible: true
+        },
+        {
             name: "CrossIt",
             description: "Use the letters to make words.",
             route: "https://localstorage.tools/game/word/",
@@ -60,6 +68,14 @@ export class MenuComponent implements Page {
             visible: true
         },
         {
+            name: "EarnIt",
+            description: "Strategically place letters to make words.",
+            route: "https://localstorage.tools/game/word/beta/",
+            image: "https://localstorage.tools/game/image/earn_it_screenshot.png",
+            tags: [MenuTag.WORD, MenuTag.ONE_A_DAY, MenuTag.ONE_PLAYER],
+            visible: true
+        },
+        {
             name: "Lost In Trivia",
             description: "Answer the questions to look smart.",
             route: "https://localstorage.tools/trivia/app/",
@@ -67,14 +83,7 @@ export class MenuComponent implements Page {
             tags: [MenuTag.ONE_PLAYER, MenuTag.TWO_PLAYER, MenuTag.MULTI_PLAYER, MenuTag.TRIVIA],
             visible: true
         },
-        {
-            name: "Deal or No Deal",
-            description: "Choose a case and then choose some more or accept cash.",
-            route: "https://localstorage.tools/dond/",
-            image: "https://localstorage.tools/dond/favicon.ico",
-            tags: [MenuTag.ONE_PLAYER, MenuTag.GAMBLING],
-            visible: true
-        },
+        
     ]
     constructor(private htmlService: HTMLService = injector.getHtmlService()) {
         this.menuElement = this.htmlService.create("main", ["main-menu"], "mainMenu");
