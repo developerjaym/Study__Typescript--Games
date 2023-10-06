@@ -3,11 +3,17 @@ import { RouterEvent } from "../../../library/router/RouterEvent.js";
 import { HTMLService } from "../../../library/service/HTMLService.js";
 import injector from "../../injector/Injector.js";
 
+enum MenuTag {
+    BOARD_GAME = "Board", ONE_A_DAY = "One-A-Day", TWO_PLAYER = "Two Player", ONE_PLAYER = "One Player", WORD = "Word", GAMBLING = "Gambling", TRIVIA = "Trivia", MULTI_PLAYER = "Multiplayer"
+}
+
 interface MenuOption {
     name: string,
     description: string,
     route: string,
-    image?: string
+    image?: string,
+    tags: MenuTag[],
+    visible: boolean
 }
 
 export class MenuComponent implements Page {
@@ -17,25 +23,57 @@ export class MenuComponent implements Page {
             name: "GBP",
             description: "Place dice in sequences.",
             route: "#/gbp",
-            image: "assets/gbp.png"
+            image: "assets/gbp.png",
+            tags: [MenuTag.BOARD_GAME, MenuTag.TWO_PLAYER],
+            visible: true
         },
         {
             name: "Jayrrows",
             description: "Strategically move your pieces to defeat the enemy king.",
             route: "#/jayrrows",
-            image: "assets/jayrrows.png"
+            image: "assets/jayrrows.png",
+            tags: [MenuTag.BOARD_GAME, MenuTag.TWO_PLAYER],
+            visible: true
         },
         {
             name: "Slot Machine",
             description: "Pull a lever and lose money.",
             route: "#/slot",
-            image: "assets/slot.png"
+            image: "assets/slot.png",
+            tags: [MenuTag.GAMBLING, MenuTag.ONE_PLAYER],
+            visible: true
         },
         {
             name: "CrossIt",
             description: "Use the letters to make words.",
             route: "https://localstorage.tools/game/word/",
-            image: "https://localstorage.tools/game/image/cross_it_screenshot.png"
+            image: "https://localstorage.tools/game/image/cross_it_screenshot.png",
+            tags: [MenuTag.WORD, MenuTag.ONE_A_DAY, MenuTag.ONE_PLAYER],
+            visible: true
+        },
+        {
+            name: "FindIt",
+            description: "Use the letters to make a single word.",
+            route: "https://localstorage.tools/game/word/dice/",
+            image: "https://localstorage.tools/game/image/find_it_screenshot.png",
+            tags: [MenuTag.WORD, MenuTag.ONE_A_DAY, MenuTag.ONE_PLAYER],
+            visible: true
+        },
+        {
+            name: "Lost In Trivia",
+            description: "Answer the questions to look smart.",
+            route: "https://localstorage.tools/trivia/app/",
+            image: "https://localstorage.tools/trivia/app/logo_squares.png",
+            tags: [MenuTag.ONE_PLAYER, MenuTag.TWO_PLAYER, MenuTag.MULTI_PLAYER, MenuTag.TRIVIA],
+            visible: true
+        },
+        {
+            name: "Deal or No Deal",
+            description: "Choose a case and then choose some more or accept cash.",
+            route: "https://localstorage.tools/dond/",
+            image: "https://localstorage.tools/dond/favicon.ico",
+            tags: [MenuTag.ONE_PLAYER, MenuTag.GAMBLING],
+            visible: true
         },
     ]
     constructor(private htmlService: HTMLService = injector.getHtmlService()) {

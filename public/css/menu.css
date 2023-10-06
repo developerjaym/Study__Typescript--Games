@@ -1,3 +1,7 @@
+:root {
+    --card-width: 24rem;
+}
+
 .card {
     border: 1px solid var(--main-fg);
     color: var(--main-fg);
@@ -6,6 +10,7 @@
     flex-direction: column;
     padding: var(--wide);
     border-radius: var(--border-radius);
+    width: var(--card-width);
 }
 
 .card--link:hover {
@@ -14,19 +19,22 @@
 }
 
 .card__image {
-    width: calc(24rem - (2 * var(--wide)));
-    height: calc(24rem - (2 * var(--wide)));
+    width: calc(var(--card-width) - (2 * var(--wide)));
+    height: calc(var(--card-width) - (2 * var(--wide)));
 }
 
 .main-menu {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    width: fit-content;
+    flex-direction: row;
     margin: 0 auto;
-    max-width: 24rem;
     row-gap: var(--wide);
+    flex-wrap: wrap;
+    column-gap: var(--wide);
+    justify-content: space-evenly;
+}
+
+.main-menu__header {
+    width: 100%;
 }
 
 .main-menu__title {
