@@ -37,7 +37,7 @@ export class MenuModel extends Observable<MenuFilterEvent> {
           name: "Slot Machine",
           description: "Pull a lever and lose money.",
           route: "#/slot",
-          image: "https://localstorage.tools/game/image/slot_screenshot.png",
+          image: "https://localstorage.tools/game/image/slot_screenshot.webp",
           tags: [MenuTag.GAMBLING, MenuTag.ONE_PLAYER],
           visible: true,
         },
