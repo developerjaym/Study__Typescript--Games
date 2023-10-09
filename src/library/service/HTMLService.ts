@@ -37,13 +37,14 @@ export class HTMLService {
 
     const page = await elementSupplier();
     this.getRoot().replaceChildren()
-    this.clearStylesheets();
+    this.clearStylesheets(page.stylesheet);
     page.stylesheet.forEach(stylesheet => this.appendStylesheet(stylesheet));
     this.getRoot().replaceChildren(page.component);
   }
-  private clearStylesheets(): void {
-    this.document.head
-      .querySelectorAll(".page-stylesheet")
+  private clearStylesheets(except: string[]): void {
+    Array.from(this.document.head
+      .querySelectorAll(".page-stylesheet"))
+      .filter(element => !except.includes((element as HTMLLinkElement).href))
       .forEach((element) => element.remove());
   }
   private appendStylesheet(href: string): void {
