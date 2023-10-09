@@ -76,10 +76,18 @@ export class MenuComponent implements Page {
             visible: true
         },
         {
+            name: "Chinglish",
+            description: "Given an audio clip of a Chinese adaptation of an English name, guess the English name.",
+            route: "https://localstorage.tools/game/chinglish/",
+            image: "https://localstorage.tools/game/image/chinglish_screenshot.png",
+            tags: [MenuTag.WORD, MenuTag.ONE_A_DAY, MenuTag.ONE_PLAYER, MenuTag.TWO_PLAYER, MenuTag.MULTI_PLAYER, MenuTag.TRIVIA],
+            visible: true
+        },
+        {
             name: "Lost In Trivia",
             description: "Answer the questions to look smart.",
             route: "https://localstorage.tools/trivia/app/",
-            image: "https://localstorage.tools/trivia/app/logo_squares.png",
+            image: "https://localstorage.tools/game/image/trivia_screenshot.png",
             tags: [MenuTag.ONE_PLAYER, MenuTag.TWO_PLAYER, MenuTag.MULTI_PLAYER, MenuTag.TRIVIA],
             visible: true
         },
