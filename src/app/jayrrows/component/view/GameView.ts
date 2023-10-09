@@ -19,7 +19,6 @@ export class GameView implements Viewable<GameEvent> {
     private htmlService: HTMLService = injector.getHtmlService(),
     private dialogService: DialogService = injector.getDialogService()
   ) {
-    // TODO, create the HTML elements
     this.container = this.htmlService.create("main", ["game__main"], "main");
     // create controls (help, undo, end game)
     this.controls = new ControlsUI(this.controller);

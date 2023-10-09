@@ -1,5 +1,6 @@
 :root {
     --card-width: 24rem;
+    --accent: #52368f;
 }
 
 .card {
@@ -41,4 +42,39 @@
     padding: var(--wide); 
     margin: 0;
     text-align: center;
+}
+
+.main-menu__filters {
+    grid-template-columns: repeat(auto-fit, minmax(6rem, min-content));
+    display: grid;
+    justify-content: center;
+    column-gap: var(--narrow);
+    row-gap: var(--narrow);
+    grid-auto-rows: 1fr;
+    padding: 0 var(--wide);
+}
+
+input {
+    accent-color: gold;
+}
+
+.form__label {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+    align-items: center;
+    padding: 0 var(--narrow);
+    background: var(--main-fg);
+    color: var(--main-bg);
+    column-gap: var(--narrow);
+}
+
+.main-menu__options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 24rem);
+    column-gap: var(--wide);
+    row-gap: var(--wide);
+    flex-grow: 2;
+    justify-content: center;
+    grid-auto-rows: 1fr;
 }
