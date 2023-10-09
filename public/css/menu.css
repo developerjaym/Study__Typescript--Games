@@ -63,10 +63,11 @@ input {
     flex-direction: row-reverse;
     justify-content: start;
     align-items: center;
-    padding: 0 var(--narrow);
+    padding: var(--narrow);
     background: var(--main-fg);
     color: var(--main-bg);
     column-gap: var(--narrow);
+    border-radius: var(--border-radius);
 }
 
 .main-menu__options {
