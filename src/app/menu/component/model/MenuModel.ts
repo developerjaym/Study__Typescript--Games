@@ -146,10 +146,7 @@ export class MenuModel extends Observable<MenuFilterEvent> {
         return options.map(option => ({...option, visible: this.shouldBeVisible(filterState, option)}))
       }
       private shouldBeVisible(filterState: MenuFilterState, option: MenuOption): boolean {
-        // check each checkbox against tags        
-        return option.tags.some(tag => this.tagMatches(filterState, tag)) 
-      }
-      private tagMatches(filterState: MenuFilterState, tag: MenuTag): boolean {
-        return Object.entries(filterState).filter(([name, on]) => on === 'on').map(([name, on]) => name).some((name) => name === tag)
+        // every checked filter matches some tag on the MenuOption      
+        return Object.entries(filterState).filter(([name, on]) => on === 'on').map(([name, on]) => name).every((name) => option.tags.some(tag => tag === name));
       }
 }
