@@ -7,14 +7,14 @@ import { MenuTag } from "./MenuTag.js";
 
 export class MenuModel extends Observable<MenuFilterEvent> {
     private menuFilterState: MenuFilterState = {
-        BOARD_GAME: "on",
-        GAMBLING: "on",
-        MULTIPLAYER: "on",
-        ONE_A_DAY: "on",
-        ONE_PLAYER: "on",
-        TRIVIA: "on",
-        TWO_PLAYER: "on",
-        WORD: "on",
+      BOARD_GAME: undefined,
+      GAMBLING: undefined,
+      MULTIPLAYER: undefined,
+      ONE_A_DAY: undefined,
+      ONE_PLAYER: undefined,
+      TRIVIA: undefined,
+      TWO_PLAYER: undefined,
+      WORD: undefined
     }
     private gameRoutes: MenuOption[] = [
         {
@@ -139,7 +139,10 @@ export class MenuModel extends Observable<MenuFilterEvent> {
           menuFilterState: structuredClone(this.menuFilterState)
       })
       }
-      private adjustVisibility(filterState: MenuFilterState, options: MenuOption[]): MenuOption[] {
+      private adjustVisibility(filterState: MenuFilterState, options: MenuOption[]): MenuOption[] {        
+        if(Object.values(filterState).every(filter => !Boolean(filter))) {
+          return options.map(option => ({...option, visible: true}))
+        }
         return options.map(option => ({...option, visible: this.shouldBeVisible(filterState, option)}))
       }
       private shouldBeVisible(filterState: MenuFilterState, option: MenuOption): boolean {
