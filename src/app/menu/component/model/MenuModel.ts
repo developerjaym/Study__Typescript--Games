@@ -92,7 +92,7 @@ export class MenuModel extends Observable<MenuFilterEvent> {
         {
           name: "Giffish",
           description:
-            "Given a series of gifs, guess the movie hinted at. For example, a gif of a candle + a gif of a toilet = John Wick.",
+            "Given a series of gifs, guess the movie hinted at. For example, a gif of a toilet + a gif of a candle = John Wick.",
           route: "https://localstorage.tools/game/giffish/",
           image: "https://localstorage.tools/game/image/giffish_screenshot.webp",
           tags: [
