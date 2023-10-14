@@ -24,7 +24,7 @@ export class WheelUI implements Viewable<SlotEvent> {
     private htmlService = injector.getHtmlService(),
     private soundEffectService = injector.getSoundEffectService(),
     private configuration: SlotConfiguration = slotConfiguration,
-    private wheelFaceDrawer = injector.getWheelFaceDrawer()
+    private wheelFaceDrawerFactory = injector.getWheelFaceDrawerFactory()
   ) {
     this.top = this.htmlService.create("div", [
       "wheel__face",
@@ -40,29 +40,29 @@ export class WheelUI implements Viewable<SlotEvent> {
     ]);
 
     this.topContents = this.htmlService.create(
-      "label",
+      "div",
       ["face__contents"],
       crypto.randomUUID()
     );
-    this.wheelFaceDrawer.draw(
+    this.wheelFaceDrawerFactory.get(this.configuration.wheels[this.index][0].type).draw(
       this.configuration.wheels[this.index][0],
       this.topContents
     );
     this.middleContents = this.htmlService.create(
-      "label",
+      "div",
       ["face__contents"],
       crypto.randomUUID()
     );
-    this.wheelFaceDrawer.draw(
+    this.wheelFaceDrawerFactory.get(this.configuration.wheels[this.index][1].type).draw(
       this.configuration.wheels[this.index][1],
       this.middleContents
     );
     this.bottomContents = this.htmlService.create(
-      "label",
+      "div",
       ["face__contents"],
       crypto.randomUUID()
     );
-    this.wheelFaceDrawer.draw(
+    this.wheelFaceDrawerFactory.get(this.configuration.wheels[this.index][2].type).draw(
       this.configuration.wheels[this.index][2],
       this.bottomContents
     );
@@ -134,12 +134,12 @@ export class WheelUI implements Viewable<SlotEvent> {
     }, 450 / Math.sqrt(numberOfTicks));
   }
   private draw(circularList: WheelList<WheelConfiguration>): void {
-    const [topIcon, middleIcon, bottomIcon] = circularList
+    const [topFace, middleFace, bottomFace] = circularList
       .range(1, 1)
       .map((face) => face);
-    this.wheelFaceDrawer.draw(topIcon, this.topContents);
-    this.wheelFaceDrawer.draw(middleIcon, this.middleContents);
-    this.wheelFaceDrawer.draw(bottomIcon, this.bottomContents);
+      this.wheelFaceDrawerFactory.get(topFace.type).draw(topFace, this.topContents);
+      this.wheelFaceDrawerFactory.get(middleFace.type).draw(middleFace, this.middleContents);
+      this.wheelFaceDrawerFactory.get(bottomFace.type).draw(bottomFace, this.bottomContents);
   }
 }
 

@@ -13,12 +13,13 @@ import { JayrrowsSquareDrawer } from "../jayrrows/component/view/drawer/square/J
 import { JayrrowsTextSquareDrawer } from "../jayrrows/component/view/drawer/square/JayrrowsTextSquareDrawer.js";
 import { JayrrowsLocalStorageService } from "../jayrrows/service/storage/JayrrowsLocalStorageService.js";
 import { JayrrowsStorageService } from "../jayrrows/service/storage/JayrrowsStorageService.js";
+import slotConfiguration from "../slot/service/configuration/SlotConfigurationLoader.js";
+import { IconOnlyWheelFaceDrawer } from "../slot/service/drawer/WheelFaceDrawer/IconOnlyWheelFaceDrawer.js";
+import { ImageOnlyWheelFaceDrawer } from "../slot/service/drawer/WheelFaceDrawer/ImageOnlyWheelFaceDrawer.js";
+import { WheelFaceDrawerFactory } from "../slot/service/drawer/WheelFaceDrawer/WheelFaceDrawerFactory.js";
 import { SlotScoreService } from "../slot/service/score/SlotScoreService.js";
 import { LocalUserStorageService } from "./service/LocalUserStorageService.js";
 import { UserStorageService } from "./service/UserStorageService.js";
-import slotConfiguration from "../slot/service/configuration/SlotConfigurationLoader.js";
-import { WheelFaceDrawer } from "../slot/service/drawer/WheelFaceDrawer/WheelFaceDrawer.js";
-import { IconOnlyWheelFaceDrawer } from "../slot/service/drawer/WheelFaceDrawer/IconOnlyWheelFaceDrawer.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private gbpSquareDrawer: GBPSquareDrawer;
@@ -30,7 +31,7 @@ class Injector extends BaseInjector<AppEnvironment> {
   private sequenceService: SequenceService;
   private randomRollAnimationService: RandomRollAnimationService;
   private slotScoreService: SlotScoreService;
-  private wheelFaceDrawer: WheelFaceDrawer;
+  private wheelFacerDrawerFactory: WheelFaceDrawerFactory;
   constructor(env: AppEnvironment) {
     super(env);
     this.gbpSquareDrawer = new GBPTextSquareDrawer();
@@ -46,7 +47,7 @@ class Injector extends BaseInjector<AppEnvironment> {
       this.gbpSquareDrawer,
       this.soundEffectService
     );
-    this.wheelFaceDrawer = new IconOnlyWheelFaceDrawer();
+    this.wheelFacerDrawerFactory = new WheelFaceDrawerFactory(new IconOnlyWheelFaceDrawer(), new ImageOnlyWheelFaceDrawer(this.htmlService))
   }
   async initialize(): Promise<void> {}
   getEnvironment(): AppEnvironment {
@@ -79,8 +80,8 @@ class Injector extends BaseInjector<AppEnvironment> {
   getSlotScoreService(): SlotScoreService {
     return this.slotScoreService;
   }
-  getWheelFaceDrawer(): WheelFaceDrawer {
-    return this.wheelFaceDrawer;
+  getWheelFaceDrawerFactory(): WheelFaceDrawerFactory {
+    return this.wheelFacerDrawerFactory;
   }
 }
 
