@@ -1,7 +1,9 @@
-import { SlotCombo, SlotFaceType, SlotWheel } from "../../component/event/SlotEvent.js";
+import { SlotCombo, SlotWheel } from "../../component/event/SlotEvent.js";
+import { SlotConfiguration } from "../configuration/SlotConfiguration.js";
+import slotConfiguration from "../configuration/SlotConfigurationLoader.js";
 
 export class SlotScoreService {
-  constructor() {}
+  constructor(private configuration: SlotConfiguration = slotConfiguration) {}
   test(wheels: SlotWheel[]): SlotCombo {
     const faces = wheels.map((wheel) => wheel.faces[wheel.position]);
     if (faces.every((face) => face.type === faces[0].type)) {

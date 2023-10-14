@@ -16,6 +16,7 @@ import { JayrrowsStorageService } from "../jayrrows/service/storage/JayrrowsStor
 import { SlotScoreService } from "../slot/service/score/SlotScoreService.js";
 import { LocalUserStorageService } from "./service/LocalUserStorageService.js";
 import { UserStorageService } from "./service/UserStorageService.js";
+import slotConfiguration from "../slot/service/configuration/SlotConfigurationLoader.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private gbpSquareDrawer: GBPSquareDrawer;
@@ -36,7 +37,7 @@ class Injector extends BaseInjector<AppEnvironment> {
     this.jayrrowsSquareDrawer = new JayrrowsTextSquareDrawer();
     this.jayrrowsStorageService = new JayrrowsLocalStorageService();
     this.userStorageService = new LocalUserStorageService();
-    this.slotScoreService = new SlotScoreService();
+    this.slotScoreService = new SlotScoreService(slotConfiguration);
     this.randomRollAnimationService = new RandomRollAnimationService(
       this.randomPieceService,
       this.gbpSquareDrawer,

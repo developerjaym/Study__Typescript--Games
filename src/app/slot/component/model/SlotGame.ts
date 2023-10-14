@@ -1,5 +1,6 @@
 import { Observable } from "../../../../library/observer/observer.js";
 import injector from "../../../injector/Injector.js";
+import slotConfiguration from "../../service/configuration/SlotConfigurationLoader.js";
 import {
   SlotEvent,
   SlotEventType,
@@ -95,7 +96,7 @@ export class SlotGame extends Observable<SlotEvent> {
   private betState: BetState;
   private machineState: MachineState;
   private results: SlotResult[];
-  constructor(private slotScoreService = injector.getSlotScoreService()) {
+  constructor(private slotScoreService = injector.getSlotScoreService(), private configuration = slotConfiguration) {
     super();
     this.betState = {
       balance: SlotGame.STARTING_BALANCE,
@@ -105,6 +106,7 @@ export class SlotGame extends Observable<SlotEvent> {
     this.results = [];
   }
   start(): void {
+    // TODO, load slot config
     this.notifyAll({
       type: SlotEventType.START,
       ...this.betState,
