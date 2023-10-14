@@ -1,3 +1,5 @@
+import { MatchConfiguration } from "../../service/configuration/SlotConfiguration";
+
 export enum SlotEventType {
     BET_MADE,
     SPIN_OVER,
@@ -9,44 +11,11 @@ export interface SlotEvent {
   balance: number;
   currentBet: number;
   results: SlotResult[];
-  wheels: SlotWheel[];
+  wheels: number[];
 }
 
 export interface SlotResult {
   bet: number;
   winnings: number;
-  slotCombo: SlotCombo;
-  message?: string;
-}
-
-export interface SlotWheel {
-  position: number;
-  faces: SlotFace[];
-}
-
-export enum SlotFaceType {
-  ZERO,
-  ONE,
-  TWO,
-  THREE,
-  FOUR,
-  FIVE,
-  SIX,
-  SEVEN,
-  EIGHT,
-  NINE,
-  TEN,
-  ELEVEN,
-  TWELVE,
-}
-
-export interface SlotCombo {
-  name: string;
-  faces: SlotFaceType[];
-  multiplier: number;
-}
-
-export interface SlotFace {
-  id: string;
-  type: SlotFaceType;
+  slotCombo: MatchConfiguration;
 }

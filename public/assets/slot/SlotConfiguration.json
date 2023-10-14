@@ -4,208 +4,247 @@
         {
           "type": "ICON",
           "image": "0",
-          "alt": "Numeral Zero"
+          "alt": "Numeral Zero",
+          "id": 0
         },
         {
           "type": "ICON",
           "image": "1",
-          "alt": "Numeral One"
+          "alt": "Numeral One",
+          "id": 1
         },
         {
           "type": "ICON",
           "image": "2",
-          "alt": "Numeral Two"
+          "alt": "Numeral Two",
+          "id": 2
         },
         {
           "type": "ICON",
           "image": "3",
-          "alt": "Numeral Three"
+          "alt": "Numeral Three",
+          "id": 3
         },
         {
           "type": "ICON",
           "image": "4",
-          "alt": "Numeral Four"
+          "alt": "Numeral Four",
+          "id": 4
         },
         {
           "type": "ICON",
           "image": "5",
-          "alt": "Numeral Five"
+          "alt": "Numeral Five",
+          "id": 5
         },
         {
           "type": "ICON",
           "image": "6",
-          "alt": "Numeral Six"
+          "alt": "Numeral Six",
+          "id": 6
         },
         {
           "type": "ICON",
           "image": "7",
-          "alt": "Numeral Seven"
+          "alt": "Numeral Seven",
+          "id": 7
         },
         {
           "type": "ICON",
           "image": "8",
-          "alt": "Numeral Eight"
+          "alt": "Numeral Eight",
+          "id": 8
         },
         {
           "type": "ICON",
           "image": "9",
-          "alt": "Numeral Nine"
+          "alt": "Numeral Nine",
+          "id": 9
         },
         {
           "type": "ICON",
           "image": "10",
-          "alt": "Numeral Ten"
+          "alt": "Numeral Ten",
+          "id": 10
         },
         {
           "type": "ICON",
           "image": "11",
-          "alt": "Numeral Eleven"
+          "alt": "Numeral Eleven",
+          "id": 11
         },
         {
           "type": "ICON",
           "image": "12",
-          "alt": "Numeral Twelve"
+          "alt": "Numeral Twelve",
+          "id": 12
         }
       ],
       [
         {
           "type": "ICON",
           "image": "0",
-          "alt": "Numeral Zero"
+          "alt": "Numeral Zero",
+          "id": 0
         },
         {
           "type": "ICON",
           "image": "1",
-          "alt": "Numeral One"
+          "alt": "Numeral One",
+          "id": 1
         },
         {
           "type": "ICON",
           "image": "2",
-          "alt": "Numeral Two"
+          "alt": "Numeral Two",
+          "id": 2
         },
         {
           "type": "ICON",
           "image": "3",
-          "alt": "Numeral Three"
+          "alt": "Numeral Three",
+          "id": 3
         },
         {
           "type": "ICON",
           "image": "4",
-          "alt": "Numeral Four"
+          "alt": "Numeral Four",
+          "id": 4
         },
         {
           "type": "ICON",
           "image": "5",
-          "alt": "Numeral Five"
+          "alt": "Numeral Five",
+          "id": 5
         },
         {
           "type": "ICON",
           "image": "6",
-          "alt": "Numeral Six"
+          "alt": "Numeral Six",
+          "id": 6
         },
         {
           "type": "ICON",
           "image": "7",
-          "alt": "Numeral Seven"
+          "alt": "Numeral Seven",
+          "id": 7
         },
         {
           "type": "ICON",
           "image": "8",
-          "alt": "Numeral Eight"
+          "alt": "Numeral Eight",
+          "id": 8
         },
         {
           "type": "ICON",
           "image": "9",
-          "alt": "Numeral Nine"
+          "alt": "Numeral Nine",
+          "id": 9
         },
         {
           "type": "ICON",
           "image": "10",
-          "alt": "Numeral Ten"
+          "alt": "Numeral Ten",
+          "id": 10
         },
         {
           "type": "ICON",
           "image": "11",
-          "alt": "Numeral Eleven"
+          "alt": "Numeral Eleven",
+          "id": 11
         },
         {
           "type": "ICON",
           "image": "12",
-          "alt": "Numeral Twelve"
+          "alt": "Numeral Twelve",
+          "id": 12
         }
       ],
       [
         {
           "type": "ICON",
           "image": "0",
-          "alt": "Numeral Zero"
+          "alt": "Numeral Zero",
+          "id": 0
         },
         {
           "type": "ICON",
           "image": "1",
-          "alt": "Numeral One"
+          "alt": "Numeral One",
+          "id": 1
         },
         {
           "type": "ICON",
           "image": "2",
-          "alt": "Numeral Two"
+          "alt": "Numeral Two",
+          "id": 2
         },
         {
           "type": "ICON",
           "image": "3",
-          "alt": "Numeral Three"
+          "alt": "Numeral Three",
+          "id": 3
         },
         {
           "type": "ICON",
           "image": "4",
-          "alt": "Numeral Four"
+          "alt": "Numeral Four",
+          "id": 4
         },
         {
           "type": "ICON",
           "image": "5",
-          "alt": "Numeral Five"
+          "alt": "Numeral Five",
+          "id": 5
         },
         {
           "type": "ICON",
           "image": "6",
-          "alt": "Numeral Six"
+          "alt": "Numeral Six",
+          "id": 6
         },
         {
           "type": "ICON",
           "image": "7",
-          "alt": "Numeral Seven"
+          "alt": "Numeral Seven",
+          "id": 7
         },
         {
           "type": "ICON",
           "image": "8",
-          "alt": "Numeral Eight"
+          "alt": "Numeral Eight",
+          "id": 8
         },
         {
           "type": "ICON",
           "image": "9",
-          "alt": "Numeral Nine"
+          "alt": "Numeral Nine",
+          "id": 9
         },
         {
           "type": "ICON",
           "image": "10",
-          "alt": "Numeral Ten"
+          "alt": "Numeral Ten",
+          "id": 10
         },
         {
           "type": "ICON",
           "image": "11",
-          "alt": "Numeral Eleven"
+          "alt": "Numeral Eleven",
+          "id": 11
         },
         {
           "type": "ICON",
           "image": "12",
-          "alt": "Numeral Twelve"
+          "alt": "Numeral Twelve",
+          "id": 12
         }
       ]
                   
   ],
   "matches": [
     {
-      "faceTypes": [
+      "requirements": [
         [0, 0, 0],
         [1, 1, 1],
         [2, 2, 2],
@@ -229,20 +268,20 @@
       "icon": "3K"
     },
     {
-        "faceTypes": [
-          [0, 0, null],
-          [2, 2, null],
-          [1, 1, null],
-          [3, 3, null],
-          [4, 4, null],
-          [5, 5, null],
-          [6, 6, null],
-          [7, 7, null],
-          [8, 8, null],
-          [9, 9, null],
-          [10, 10, null],
-          [11, 11, null],
-          [12, 12, null]
+        "requirements": [
+          [0, 0],
+          [2, 2],
+          [1, 1],
+          [3, 3],
+          [4, 4],
+          [5, 5],
+          [6, 6],
+          [7, 7],
+          [8, 8],
+          [9, 9],
+          [10, 10],
+          [11, 11],
+          [12, 12]
         ],
         "name": "Two of a Kind!",
         "shortName": "2K",

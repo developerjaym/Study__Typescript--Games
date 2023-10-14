@@ -1,16 +1,13 @@
 import { Viewable } from "../../../../../library/observer/Viewable.js";
-import {
-  Consumer,
-  Runnable,
-} from "../../../../../library/utility/Functions.js";
+import { Consumer } from "../../../../../library/utility/Functions.js";
 import injector from "../../../../injector/Injector.js";
-import { SoundEffect } from "../../../sound/SoundEffect.js";
 import {
-  SlotEvent,
-  SlotEventType,
-  SlotFace,
-  SlotWheel,
-} from "../../event/SlotEvent.js";
+  SlotConfiguration,
+  WheelConfiguration,
+} from "../../../service/configuration/SlotConfiguration.js";
+import slotConfiguration from "../../../service/configuration/SlotConfigurationLoader.js";
+import { SoundEffect } from "../../../sound/SoundEffect.js";
+import { SlotEvent, SlotEventType } from "../../event/SlotEvent.js";
 
 export class WheelUI implements Viewable<SlotEvent> {
   private top: HTMLElement;
@@ -25,7 +22,9 @@ export class WheelUI implements Viewable<SlotEvent> {
     private index: number,
     private onSpinOver: Consumer<SlotEvent>,
     private htmlService = injector.getHtmlService(),
-    private soundEffectService = injector.getSoundEffectService()
+    private soundEffectService = injector.getSoundEffectService(),
+    private configuration: SlotConfiguration = slotConfiguration,
+    private wheelFaceDrawer = injector.getWheelFaceDrawer()
   ) {
     this.top = this.htmlService.create("div", [
       "wheel__face",
@@ -43,20 +42,29 @@ export class WheelUI implements Viewable<SlotEvent> {
     this.topContents = this.htmlService.create(
       "label",
       ["face__contents"],
-      crypto.randomUUID(),
-      "0"
+      crypto.randomUUID()
+    );
+    this.wheelFaceDrawer.draw(
+      this.configuration.wheels[this.index][0],
+      this.topContents
     );
     this.middleContents = this.htmlService.create(
       "label",
       ["face__contents"],
-      crypto.randomUUID(),
-      "1"
+      crypto.randomUUID()
+    );
+    this.wheelFaceDrawer.draw(
+      this.configuration.wheels[this.index][1],
+      this.middleContents
     );
     this.bottomContents = this.htmlService.create(
       "label",
       ["face__contents"],
-      crypto.randomUUID(),
-      "2"
+      crypto.randomUUID()
+    );
+    this.wheelFaceDrawer.draw(
+      this.configuration.wheels[this.index][2],
+      this.bottomContents
     );
 
     this.top.appendChild(this.topContents);
@@ -71,57 +79,67 @@ export class WheelUI implements Viewable<SlotEvent> {
     return this.element;
   }
   onChange(event: SlotEvent): void {
-    const wheel = event.wheels[this.index];
+    const selectedFace = event.wheels[this.index];
+    const wheelSize = this.configuration.wheels[this.index].length;
     this.element.classList.remove("flash");
     if (event.type === SlotEventType.SPIN_OVER) {
       const soundEffect = this.soundEffectService.get(SoundEffect.SPIN);
       soundEffect.play();
       let numberOfTicks =
-        WheelUI.randomNumberOfSpins * wheel.faces.length +
-        wheel.position +
-        wheel.faces.length * this.index;
-      const circularList = new WheelList<SlotFace>(wheel.faces);
+        WheelUI.randomNumberOfSpins * wheelSize +
+        selectedFace +
+        wheelSize * this.index;
+      const circularList = new WheelList<WheelConfiguration>(
+        this.configuration.wheels[this.index]
+      );
 
-      const [topIcon, middleIcon, bottomIcon] = circularList
-        .range(1, 1)
-        .map((face) => face.id);
-      this.topContents.textContent = topIcon;
-      this.middleContents.textContent = middleIcon;
-      this.bottomContents.textContent = bottomIcon;
-      this.onTick(numberOfTicks, circularList, wheel, event, soundEffect);
+      this.draw(circularList)
+
+      this.onTick(
+        numberOfTicks,
+        circularList,
+        selectedFace,
+        event,
+        soundEffect
+      );
     }
   }
   private onTick(
     numberOfTicks: number,
-    circularList: WheelList<SlotFace>,
-    wheel: SlotWheel,
+    circularList: WheelList<WheelConfiguration>,
+    selectedFace: number,
     event: SlotEvent,
     soundEffect: HTMLAudioElement
   ): void {
     setTimeout(() => {
       if (numberOfTicks < 1) {
         this.element.classList.add("flash");
-        circularList.setIndex(wheel.position);
-        const [topIcon, middleIcon, bottomIcon] = circularList
-          .range(1, 1)
-          .map((face) => `${face.type}`);
-        this.topContents.textContent = topIcon;
-        this.middleContents.textContent = middleIcon;
-        this.bottomContents.textContent = bottomIcon;
+        circularList.setIndex(selectedFace);
+        this.draw(circularList)
+
         this.onSpinOver(event);
         soundEffect.pause();
         return;
       }
       numberOfTicks--;
       circularList.tick();
-      const [topIcon, middleIcon, bottomIcon] = circularList
-        .range(1, 1)
-        .map((face) => `${face.type}`);
-      this.topContents.textContent = topIcon;
-      this.middleContents.textContent = middleIcon;
-      this.bottomContents.textContent = bottomIcon;
-      this.onTick(numberOfTicks, circularList, wheel, event, soundEffect);
+      this.draw(circularList)
+      this.onTick(
+        numberOfTicks,
+        circularList,
+        selectedFace,
+        event,
+        soundEffect
+      );
     }, 450 / Math.sqrt(numberOfTicks));
+  }
+  private draw(circularList: WheelList<WheelConfiguration>): void {
+    const [topIcon, middleIcon, bottomIcon] = circularList
+      .range(1, 1)
+      .map((face) => face);
+    this.wheelFaceDrawer.draw(topIcon, this.topContents);
+    this.wheelFaceDrawer.draw(middleIcon, this.middleContents);
+    this.wheelFaceDrawer.draw(bottomIcon, this.bottomContents);
   }
 }
 

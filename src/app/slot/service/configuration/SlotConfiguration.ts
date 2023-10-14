@@ -2,10 +2,11 @@
 export interface WheelConfiguration {
     type: "ICON" | "IMAGE",
     image: string,
-    alt: string
+    alt: string,
+    id: number
 }
 export interface MatchConfiguration {
-    faceTypes: number[],
+    requirements: number[][],
     name: string,
     shortName: string,
     message: string,
@@ -14,6 +15,11 @@ export interface MatchConfiguration {
     multiplier: number,
     icon: string
 }
+export interface SlotConfiguration {
+    wheels: WheelConfiguration[][],
+    matches: MatchConfiguration[]
+}
+
 export interface SlotConfiguration {
     wheels: WheelConfiguration[][],
     matches: MatchConfiguration[]

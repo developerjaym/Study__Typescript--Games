@@ -1,46 +1,71 @@
-import { SlotCombo, SlotWheel } from "../../component/event/SlotEvent.js";
-import { SlotConfiguration } from "../configuration/SlotConfiguration.js";
+import {
+  MatchConfiguration,
+  SlotConfiguration,
+  WheelConfiguration,
+} from "../configuration/SlotConfiguration.js";
 import slotConfiguration from "../configuration/SlotConfigurationLoader.js";
 
 export class SlotScoreService {
   constructor(private configuration: SlotConfiguration = slotConfiguration) {}
-  test(wheels: SlotWheel[]): SlotCombo {
-    const faces = wheels.map((wheel) => wheel.faces[wheel.position]);
-    if (faces.every((face) => face.type === faces[0].type)) {
-      return {
-        name: "ALL MATCH!",
-        faces: [],
-        multiplier: wheels.length * 12,
-      };
-    }
-    else if(this.checkIfXMatch(wheels, 2)) {
-        return {
-            name: "PAIR!",
-            faces: [],
-            multiplier: Math.ceil(12 / wheels.length)
-        }
-    }
-    return this.failCombo();
+  test(positions: number[]): MatchConfiguration {
+    const selectedFaces = this.configuration.wheels.map(
+      (wheel, i) => wheel[positions[i]].id
+    );
+    // now go through each match configuration
+    return (
+      this.configuration.matches.find((matchConfiguration) =>
+        this.isMatch(matchConfiguration, selectedFaces)
+      ) || this.failCombo()
+    );
   }
-  /**
-   *
-   * @param wheels
-   * @param x number of matches we are testing for
-   */
-  private checkIfXMatch(wheels: SlotWheel[], x: number): boolean {
-    const wheelValues = wheels.map((wheel) => wheel.faces[wheel.position].type);
-    // for each wheel value, see how many times it appears
-    const countMap = new Map<number, number>()
-    wheelValues.forEach(wheelValue => {
-        countMap.set(wheelValue, wheelValues.filter(innerWheelValue => innerWheelValue === wheelValue).length)
-    })
-    return Array.from(countMap.values()).some(value => value >= x)
+  private isMatch(
+    matchConfiguration: MatchConfiguration,
+    selectedFaces: number[]
+  ): boolean {
+    // look through matchConfiguration's requirements
+    // compare each requirement to the selectedFaces
+    return matchConfiguration.requirements.some((requirement) =>
+      this.meetsRequirement(
+        requirement,
+        selectedFaces,
+        matchConfiguration.orderMatters
+      )
+    );
   }
-  private failCombo(): SlotCombo {
+  private meetsRequirement(
+    requirement: number[],
+    selectedFaces: number[],
+    orderMatters: boolean
+  ): boolean {
+    if (orderMatters) {
+      return requirement.every(
+        (requiredNum, index) => requiredNum === selectedFaces[index]
+      );
+    } else {
+      // count how often each number appears in each array
+      const reqCount: Map<number, number> = new Map<number, number>();
+      const faceCount: Map<number, number> = new Map<number, number>();
+      requirement.forEach((req) => {
+        reqCount.set(req, (reqCount.get(req) || 0) + 1);
+      });
+      selectedFaces.forEach((face) => {
+        faceCount.set(face, (faceCount.get(face) || 0) + 1);
+      });
+      return Array.from(reqCount.entries()).every(
+        ([key, value]) => faceCount.get(key) === value
+      );
+    }
+  }
+  private failCombo(): MatchConfiguration {
     return {
-      name: "FAIL",
-      faces: [],
+      requirements: [],
+      name: "FAIL!",
+      shortName: "F",
+      message: "You're not very good at games!",
+      orderMatters: false,
+      sound: "../assets/sad.mp3",
       multiplier: 0,
+      icon: "F",
     };
   }
 }

@@ -4,9 +4,7 @@ import slotConfiguration from "../../service/configuration/SlotConfigurationLoad
 import {
   SlotEvent,
   SlotEventType,
-  SlotFaceType,
-  SlotResult,
-  SlotWheel,
+  SlotResult
 } from "../event/SlotEvent.js";
 
 const randomNumberBetweenZeroAnd = (otherNumber: number) =>
@@ -17,79 +15,8 @@ interface BetState {
   balance: number;
 }
 interface MachineState {
-  wheels: SlotWheel[];
+  wheels: number[];
 }
-
-const INITIAL_WHEEL = [
-  {
-    id: "0",
-    type: SlotFaceType.ZERO,
-  },
-  {
-    id: "1",
-    type: SlotFaceType.ONE,
-  },
-  {
-    id: "2",
-    type: SlotFaceType.TWO,
-  },
-  {
-    id: "3",
-    type: SlotFaceType.THREE,
-  },
-  {
-    id: "4",
-    type: SlotFaceType.FOUR,
-  },
-  {
-    id: "5",
-    type: SlotFaceType.FIVE,
-  },
-  {
-    id: "6",
-    type: SlotFaceType.SIX,
-  },
-  {
-    id: "7",
-    type: SlotFaceType.SEVEN,
-  },
-  {
-    id: "8",
-    type: SlotFaceType.EIGHT,
-  },
-  {
-    id: "9",
-    type: SlotFaceType.NINE,
-  },
-  {
-    id: "10",
-    type: SlotFaceType.TEN,
-  },
-  {
-    id: "11",
-    type: SlotFaceType.ELEVEN,
-  },
-  {
-    id: "12",
-    type: SlotFaceType.TWELVE,
-  },
-];
-const INITIAL_MACHINE_STATE = {
-  wheels: [
-    {
-      position: 0,
-      faces: [...INITIAL_WHEEL],
-    },
-    {
-      position: 2,
-      faces: [...INITIAL_WHEEL],
-    },
-    {
-      position: 3,
-      faces: [...INITIAL_WHEEL],
-    },
-  ],
-};
 
 export class SlotGame extends Observable<SlotEvent> {
   private static STARTING_BALANCE = 100;
@@ -102,11 +29,10 @@ export class SlotGame extends Observable<SlotEvent> {
       balance: SlotGame.STARTING_BALANCE,
       currentBet: 0,
     };
-    this.machineState = INITIAL_MACHINE_STATE;
+    this.machineState = {wheels: this.configuration.wheels.map(wheel => 0)};
     this.results = [];
   }
   start(): void {
-    // TODO, load slot config
     this.notifyAll({
       type: SlotEventType.START,
       ...this.betState,
@@ -117,10 +43,7 @@ export class SlotGame extends Observable<SlotEvent> {
   onPull(): void {
     if (this.canPull(this.betState)) {
       this.machineState.wheels = [
-        ...this.machineState.wheels.map((wheel) => ({
-          ...wheel,
-          position: randomNumberBetweenZeroAnd(wheel.faces.length),
-        })),
+        ...this.configuration.wheels.map((wheel) => randomNumberBetweenZeroAnd(wheel.length)),
       ];
       const matchingCombo = this.slotScoreService.test(
         this.machineState.wheels

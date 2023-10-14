@@ -17,6 +17,8 @@ import { SlotScoreService } from "../slot/service/score/SlotScoreService.js";
 import { LocalUserStorageService } from "./service/LocalUserStorageService.js";
 import { UserStorageService } from "./service/UserStorageService.js";
 import slotConfiguration from "../slot/service/configuration/SlotConfigurationLoader.js";
+import { WheelFaceDrawer } from "../slot/service/drawer/WheelFaceDrawer/WheelFaceDrawer.js";
+import { IconOnlyWheelFaceDrawer } from "../slot/service/drawer/WheelFaceDrawer/IconOnlyWheelFaceDrawer.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private gbpSquareDrawer: GBPSquareDrawer;
@@ -28,6 +30,7 @@ class Injector extends BaseInjector<AppEnvironment> {
   private sequenceService: SequenceService;
   private randomRollAnimationService: RandomRollAnimationService;
   private slotScoreService: SlotScoreService;
+  private wheelFaceDrawer: WheelFaceDrawer;
   constructor(env: AppEnvironment) {
     super(env);
     this.gbpSquareDrawer = new GBPTextSquareDrawer();
@@ -43,6 +46,7 @@ class Injector extends BaseInjector<AppEnvironment> {
       this.gbpSquareDrawer,
       this.soundEffectService
     );
+    this.wheelFaceDrawer = new IconOnlyWheelFaceDrawer();
   }
   async initialize(): Promise<void> {}
   getEnvironment(): AppEnvironment {
@@ -74,6 +78,9 @@ class Injector extends BaseInjector<AppEnvironment> {
   }
   getSlotScoreService(): SlotScoreService {
     return this.slotScoreService;
+  }
+  getWheelFaceDrawer(): WheelFaceDrawer {
+    return this.wheelFaceDrawer;
   }
 }
 
