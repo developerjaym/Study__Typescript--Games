@@ -1,4 +1,5 @@
 import { GBPComponent } from "./gbp/component/GBPGameComponent.js";
+import { HuntGameComponent } from "./hunt/component/HuntGameComponent.js";
 import injector from "./injector/Injector.js";
 import { JayrrowsComponent } from "./jayrrows/component/JayrrowsComponent.js";
 import { MenuComponent } from "./menu/component/MenuComponent.js";
@@ -19,5 +20,6 @@ import { SlotComponent } from "./slot/component/SlotComponent.js";
     return component;
   });
   router.add(/^\/slot$/, async () => new SlotComponent());
+  router.add(/^\/hunt$/, async () => new HuntGameComponent());
   router.start();
 })();
