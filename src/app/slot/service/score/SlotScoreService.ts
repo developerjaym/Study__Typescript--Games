@@ -1,7 +1,6 @@
 import {
   MatchConfiguration,
-  SlotConfiguration,
-  WheelConfiguration,
+  SlotConfiguration
 } from "../configuration/SlotConfiguration.js";
 import slotConfiguration from "../configuration/SlotConfigurationLoader.js";
 
