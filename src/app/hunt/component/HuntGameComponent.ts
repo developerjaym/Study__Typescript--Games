@@ -13,7 +13,7 @@ export class HuntGameComponent implements Page {
     let gameController = new HuntController(this.model);
     this.view = new HuntView(gameController);
     this.model.subscribe(this.view);
-    // this.model.start();
+    
   }
   get component(): HTMLElement {
     return this.view.component;

@@ -1,4 +1,3 @@
-import { LocalDate } from "../../../../library/date/LocalDate.js";
 import injector from "../../../injector/Injector.js";
 import { SlotResult } from "../../component/event/SlotEvent.js";
 import { SoundEffect } from "../../sound/SoundEffect.js";

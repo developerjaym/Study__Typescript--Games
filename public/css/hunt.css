@@ -1,0 +1,44 @@
+.hunt__main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hunt__canvases {
+    display: grid;
+    grid-template-rows: calc(100vh * 4/9) calc(100vh * 1/9) calc(100vh * 4/9);
+    grid-template-columns: 1fr;
+    height: 100vh;
+    height: 100vh;
+    width: calc(100vh * 6/9);
+
+}
+
+.hunt-canvas {
+    width: 100%;
+    height: auto;
+    grid-column: 1 / 2;
+ }
+
+ .background__canvas {
+    z-index: 0;
+    grid-row: 1 / 4;
+ }
+
+ .sky__canvas {
+    z-index: 2;
+    grid-row: 1 / 2;
+    
+    background-color: skyblue;
+ }
+ .horizon__canvas {
+    z-index: 2;
+    grid-row: 2 / 3;
+    background-color: skyblue;
+ }
+ .ground__canvas {
+    z-index: 2;
+    grid-row: 3 / 4;
+    
+    background-color: darkolivegreen;
+ }
