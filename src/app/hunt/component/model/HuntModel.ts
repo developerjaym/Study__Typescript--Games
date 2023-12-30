@@ -18,16 +18,30 @@ export class HuntModel extends Observable<HuntEvent> {
   constructor() {
     super();
     this.state = {
-      ground: [{
+      horizon: [{
+        name: "Box",
+        image: "",
+        size: {height: 10, width: 10},
+        position: {x: 0, y: 90},
+        status: HuntEntityStatus.ALIVE,
+        speed: {x: 10, y: 0}
+      }],
+      sky: [{
         name: "Box",
         image: "",
         size: {height: 5, width: 5},
-        position: {x: 0, y: 0},
+        position: {x: 0, y: 45},
         status: HuntEntityStatus.ALIVE,
-        speed: {x: 1, y: 0}
+        speed: {x: 10, y: 1}
       }],
-      sky: [],
-      horizon: [],
+      ground: [{
+        name: "Box",
+        image: "",
+        size: {height: 25, width: 25},
+        position: {x: 0, y: 25},
+        status: HuntEntityStatus.ALIVE,
+        speed: {x: 3, y: 0}
+      }],
       crosshairs: {x: 0, y: 0}
     };
   }
@@ -35,6 +49,17 @@ export class HuntModel extends Observable<HuntEvent> {
   tick(): void {
     console.log('tick');
     // update positions of each entity
+    for(const entity of [...this.state.sky, ...this.state.horizon, ...this.state.ground]) {
+        entity.position = {x: entity.position.x + entity.speed.x, y: entity.position.y + entity.speed.y}
+        // if entity is off the map reverse it
+        if(entity.position.x >= 600 || entity.position.x <= 0 ){
+            entity.speed.x = -1 * entity.speed.x
+        }
+        if(entity.position.y >= 900 || entity.position.y <= 0 ){
+            entity.speed.y = -1 * entity.speed.y
+        }
+    }
+
 
     this.notifyAll({...this.state, type: HuntEventType.MOVEMENT})
   }

@@ -1,7 +1,7 @@
 import { Viewable } from "../../../../library/observer/Viewable.js";
 import injector from "../../../injector/Injector.js";
 import { HuntController } from "../controller/HuntController.js";
-import { HuntEntityStatus, HuntEvent } from "../model/HuntEvent.js";
+import { HuntEntity, HuntEntityStatus, HuntEvent } from "../model/HuntEvent.js";
 
 export class HuntCanvasUI implements Viewable<HuntEvent> {
   private container: HTMLElement;
@@ -27,15 +27,15 @@ export class HuntCanvasUI implements Viewable<HuntEvent> {
     ]);
     this.skyCanvas.height = 400
     this.skyCanvas.width = 600
-    // let's pretend our canvas is 144 units across and 216 units tall
+    // let's pretend our canvas is 6 units across and 9 units tall
     const clientCoordinateConverter = (
       clientX: number,
       clientY: number,
       screenWidth: number,
       screenHeight: number
     ) => ({
-      x: clientX / (screenWidth / 144),
-      y: clientY / (screenHeight / 216),
+      x: clientX / (screenWidth / 600),
+      y: clientY / (screenHeight / 900),
     });
     const canvasShotListener = (e: MouseEvent) => {
       const coordinates = clientCoordinateConverter(
@@ -48,19 +48,19 @@ export class HuntCanvasUI implements Viewable<HuntEvent> {
       
       this.controller.onShot(coordinates);
     };
-    this.skyCanvas.addEventListener("click", canvasShotListener);
+    this.skyCanvas.addEventListener("click", (e) => canvasShotListener(e));
     this.horizonCanvas = this.htmlService.create("canvas", [
       "hunt-canvas",
       "horizon__canvas",
     ]);
     this.horizonCanvas.height = 100
     this.horizonCanvas.width = 600
-    this.horizonCanvas.addEventListener("click", canvasShotListener);
+    this.horizonCanvas.addEventListener("click", (e) => canvasShotListener(e));
     this.groundCanvas = this.htmlService.create("canvas", [
       "hunt-canvas",
       "ground__canvas",
     ]);
-    this.groundCanvas.addEventListener("click", canvasShotListener);
+    this.groundCanvas.addEventListener("click", (e) => canvasShotListener(e));
     this.groundCanvas.height = 400
     this.groundCanvas.width = 600
     this.container.append(
@@ -75,37 +75,41 @@ export class HuntCanvasUI implements Viewable<HuntEvent> {
     return this.container;
   }
   onChange(event: HuntEvent): void {
-    // convert event's coordinates back from logical units to pixel units
-    // the logical grid is 144 units across and 216 units high
-    console.log("hunt event (canvas ui)", event.type);
-    const logicalCoordinateConverter = (logicalX: number, logicalY: number) => [
-      logicalX * (this.container.clientWidth / 144),
-      logicalY * (this.container.clientHeight / 216),
-    ];
-
-    const skyContext = this.skyCanvas.getContext("2d")!;
-
-    skyContext.clearRect(0, 0, this.skyCanvas.width, this.skyCanvas.height);
-    skyContext.fillStyle = "skyblue";
-    skyContext.strokeStyle = "skyblue";
-    skyContext.fillRect(0, 0, this.skyCanvas.width, this.skyCanvas.height);
-
-    for (const entity of event.horizon) {
-      const [x, y] = logicalCoordinateConverter(
-        entity.position.x,
-        entity.position.y
-      );
-      const [width, height] = logicalCoordinateConverter(
-        entity.size.width,
-        entity.size.height
-      );
-      console.log('entity', x, y, width, height);
+    this.drawCanvas(this.horizonCanvas, event.horizon, "skyblue")
+    this.drawCanvas(this.skyCanvas, event.sky, "skyblue")
+    this.drawCanvas(this.groundCanvas, event.ground, "darkolivegreen")
+  }
+  private drawCanvas(canvas: HTMLCanvasElement, entities: HuntEntity[], fillStyle: string): void {
+    const logicalCoordinateConverter = (logicalX: number, logicalY: number, canvas: HTMLCanvasElement) => [
+        (logicalX * (this.container.clientWidth / 600))   * canvas.height / canvas.clientHeight,
+        logicalY * (this.container.clientHeight / 900)   * canvas.height / canvas.clientHeight,
+      ];
+  
+      const context = canvas.getContext("2d")!;
       
-      skyContext.fillStyle =
-        entity.status === HuntEntityStatus.ALIVE ? "green" : "red";
-      skyContext.strokeStyle = "black";
-      skyContext.fillRect(x, y, width, height);
-      console.log("filling", entity.name);
-    }
+  
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = fillStyle;
+      context.lineWidth = 0;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+  
+      for (const entity of entities) {
+        const [x, y] = logicalCoordinateConverter(
+          entity.position.x,
+          entity.position.y,
+          canvas
+        );
+        const [width, height] = logicalCoordinateConverter(
+          entity.size.width,
+          entity.size.height,
+          canvas
+        );
+        
+        context.fillStyle =
+          entity.status === HuntEntityStatus.ALIVE ? "green" : "red";
+        context.strokeStyle = "black";
+        context.lineWidth = 0
+        context.fillRect(x , y, width, height);
+      }
   }
 }

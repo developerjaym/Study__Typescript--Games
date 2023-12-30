@@ -13,6 +13,14 @@ export interface HuntEvent {
     // I need to know if I should play some sound clip
 }
 
+// TODO, for more efficiency, the event should just include the "area(s)" that have had a change
+
+// export interface HuntLayer {
+//     name: string,
+//     size: HuntSize,
+//     entities: HuntEntity[]
+// }
+
 export interface HuntEventBackground {
     image: string,
     size: HuntSize
