@@ -1,0 +1,66 @@
+:root {
+  --empty: black;
+
+  --board: rgb(33, 33, 33);
+
+  --sequence: var(--highlight);
+  --anti-sequence: var(--anti-highlight);
+  --first-light: #95c25a;
+  --first-dark: #66902e;
+  --first: radial-gradient(var(--first-light), var(--first-dark));
+  --first-fg: black;
+  --anti-first: white;
+  --second-light: #7251b8;
+  --second-dark: #52368f;
+  --second: radial-gradient(var(--second-light), var(--second-dark));
+  --anti-second: white;
+  --second-fg: black;
+}
+
+.board {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  column-gap: 0;
+  row-gap: 0;
+  background: var(--board);
+}
+
+.square {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  user-select: none;
+  border: none;
+  padding: 0;
+  font-size: calc(100vmin / 12);
+  padding-bottom: calc(100vmin / 80);
+  border-radius: 100%;
+}
+.square--first {
+  background: var(--first);
+  color: var(--first-fg);
+  text-shadow: 0 0 var(--wide) var(--anti-first);
+}
+.square--second {
+  background: var(--second);
+  text-shadow: 0 0 var(--wide) var(--anti-second);
+  color: var(--second-fg);
+}
+.square--empty {
+  background: var(--board);
+  border: 1px solid var(--empty);
+}
+.square--sequence {
+  color: var(--sequence);
+  text-shadow: 0 0 1px var(--anti-sequence);
+}
+.game__bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  column-gap: var(--wide);
+}

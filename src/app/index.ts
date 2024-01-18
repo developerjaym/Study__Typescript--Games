@@ -4,6 +4,7 @@ import injector from "./injector/Injector.js";
 import { JayrrowsComponent } from "./jayrrows/component/JayrrowsComponent.js";
 import { MenuComponent } from "./menu/component/MenuComponent.js";
 import { SlotComponent } from "./slot/component/SlotComponent.js";
+import { WuziqiComponent } from "./wuziqi/component/WuziqiGameComponent.js";
 
 (async () => {
   await injector.initialize();
@@ -17,6 +18,11 @@ import { SlotComponent } from "./slot/component/SlotComponent.js";
   router.add(/^\/gbp$/, async () => {
     const initialGameState = await injector.getGBPStorageService().read();
     const component = new GBPComponent(initialGameState);
+    return component;
+  });
+  router.add(/^\/wuziqi$/, async () => {
+    const initialGameState = await injector.getWuziqiStorageService().read();
+    const component = new WuziqiComponent(initialGameState);
     return component;
   });
   router.add(/^\/slot$/, async () => new SlotComponent());

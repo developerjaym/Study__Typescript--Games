@@ -5,7 +5,7 @@ import { Sequence } from "../../component/model/Sequence.js";
 import { Square } from "../../component/model/Square.js";
 
 
-export class SequenceService {
+export class GBPSequenceService {
   updatePlayersScoresFromSequences(sequences: Sequence[], players: Player[]): void {
     // score each sequence
     // find highest and lowest scoring sequence for each player
@@ -25,24 +25,15 @@ export class SequenceService {
         const sequenceCount = Array.from(sequenceScoreMap?.entries() || []).length
         if(sequenceCount === 0) {
             player.highScore = 0
-            player.lowScore = 0
-        }
-        else if(sequenceCount === 1) {
-            player.highScore = Array.from(sequenceScoreMap!.values())[0]
-            player.lowScore = 0
         }
         else {
             const sequenceValues = Array.from(sequenceScoreMap!.values())
             player.highScore = Math.max(...sequenceValues)
-            player.lowScore = Math.min(...sequenceValues)
         }
     }
   }
   private scoreSequence(sequence: Sequence): number {
-    if(sequence.squares.find(square => square.piece === Piece.ONE)) {
-        return 1;
-    }
-    return sequence.squares.reduce((pre, cur) => (cur.piece || 0) + pre, 0)
+    return sequence.squares.length
   }
   findSequences(board: Board): Sequence[] {
     let sequences: Sequence[] = [];

@@ -26,6 +26,14 @@ export class MenuModel extends Observable<MenuFilterEvent> {
           visible: true,
         },
         {
+          name: "Wuziqi",
+          description: "Make a sequence of five stones.",
+          route: "#/wuziqi",
+          image: "https://localstorage.tools/game/image/wuziqi_screenshot.webp",
+          tags: [MenuTag.BOARD_GAME, MenuTag.TWO_PLAYER],
+          visible: true,
+        },
+        {
           name: "Jayrrows",
           description: "Strategically move your pieces to defeat the enemy king.",
           route: "#/jayrrows",

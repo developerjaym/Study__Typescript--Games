@@ -12,8 +12,7 @@ export class Game extends AbstractGame {
   constructor(
     existingState: GameState | null = null,
     private env = injector.getEnvironment(),
-    private randomPieceService = injector.getRandomPieceService(),
-    private sequenceService = injector.getGBPSequenceService()
+    private sequenceService = injector.getWuziqiSequenceService()
   ) {
     super();
     this.state = existingState || this.getFreshState();
@@ -31,29 +30,27 @@ export class Game extends AbstractGame {
     );
   }
   move(x: number, y: number): void {
+    if(this.state.over) {
+      return;
+    }
     const thisSquare = BoardHelper.getSquare(this.state.board, x, y);
     if (BoardHelper.isLegalSelection(thisSquare)) {
-      thisSquare.piece = this.state.displaySquare.piece;
       thisSquare.player = this.state.activePlayer;
-      this.state.displaySquare.piece = null;
-      this.changeTurns();
-      this.state.displaySquare.player = this.state.activePlayer;
-      this.calculateScores()
-      if (BoardHelper.isBoardFull(this.state.board)) {
-        const winner = this.state.players.reduce((pre, cur) =>
-        cur.highScore + cur.lowScore > pre.highScore + pre.lowScore
-          ? cur
-          : pre
-      )
+      this.state.sequences = this.sequenceService.findSequences(this.state.board);
+      if(this.state.sequences.length) {
+        this.state.over = true
+        this.state.activePlayer.victor = true;
         this.notifyAll({
           type: GameEventType.END,
           message: `${
-            winner.name
-          } wins! Score: ${winner.highScore} + ${winner.lowScore} = ${winner.highScore + winner.lowScore}`,
+            thisSquare.player.name
+          } wins!`,
           legalMoves: [],
           ...this.state,
         });
-      } else {
+      }
+      else {
+        this.changeTurns();
         this.notifyAll({
           type: GameEventType.MOVE,
           message: "Moved!",
@@ -61,6 +58,7 @@ export class Game extends AbstractGame {
           ...this.state,
         });
       }
+      
     }
   }
   undo() {
@@ -84,33 +82,17 @@ export class Game extends AbstractGame {
     this.state.activePlayer = this.state.players.find(
       (player) => player.id !== this.state.activePlayer.id
     )!;
-    this.state.displaySquare.piece = this.randomPieceService.getRandomPiece();
-  }
-  private calculateScores(): void {
-    this.state.sequences = this.sequenceService.findSequences(
-      this.state.board
-    );
-    // find players' lowScore and highScore
-    this.sequenceService.updatePlayersScoresFromSequences(
-      this.state.sequences,
-      this.state.players
-    );
   }
   private getFreshState(): GameState {
     const players = PlayerHelper.createPlayers();
     const state: GameState = {
+      over: false,
       board: {
         squares: BoardHelper.createFreshSquares(
           this.env.gbp_width,
           this.env.gbp_height
         ),
       },
-      displaySquare: BoardHelper.createSquare(
-        -1,
-        -1,
-        this.randomPieceService.getRandomPiece(),
-        players[0]
-      ),
       players,
       activePlayer: players[0],
       sequences: [],

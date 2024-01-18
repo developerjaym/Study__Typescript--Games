@@ -6,7 +6,7 @@ import { GBPTextSquareDrawer } from "../gbp/component/view/drawer/square/TextSqu
 import { AppEnvironment } from "../environment/AppEnvironment.js";
 import { RandomPieceService } from "../gbp/service/game/RandomPieceService.js";
 import { RandomRollAnimationService } from "../gbp/service/game/RandomRollAnimationService.js";
-import { SequenceService } from "../gbp/service/game/SequenceService.js";
+import { GBPSequenceService } from "../gbp/service/game/GBPSequenceService.js";
 import { GBPLocalStorageService } from "../gbp/service/storage/GBPLocalStorageService.js";
 import { GBPStorageService } from "../gbp/service/storage/GBPStorageService.js";
 import { JayrrowsSquareDrawer } from "../jayrrows/component/view/drawer/square/JayrrowsSquareDrawer.js";
@@ -20,24 +20,35 @@ import { WheelFaceDrawerFactory } from "../slot/service/drawer/WheelFaceDrawer/W
 import { SlotScoreService } from "../slot/service/score/SlotScoreService.js";
 import { LocalUserStorageService } from "./service/LocalUserStorageService.js";
 import { UserStorageService } from "./service/UserStorageService.js";
+import { WuziqiStorageService } from "../wuziqi/service/storage/WuziqiStorageService.js";
+import { WuziqiLocalStorageService } from "../wuziqi/service/storage/WuziqiLocalStorageService.js";
+import { WuziqiSquareDrawer } from "../wuziqi/component/view/drawer/square/WuziqiSquareDrawer.js";
+import { WuziqiTextSquareDrawer } from "../wuziqi/component/view/drawer/square/TextSquareDrawer.js";
+import { WuziqiSequenceService } from "../wuziqi/service/game/WuziqiSequenceService.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private gbpSquareDrawer: GBPSquareDrawer;
+  private wuziqiSquareDrawer: WuziqiSquareDrawer;
   private jayrrowsSquareDrawer: JayrrowsSquareDrawer;
   private gbpStorageService: GBPStorageService;
+  private wuziqiStorageService: WuziqiStorageService;
   private jayrrowsStorageService: JayrrowsStorageService;
   private userStorageService: UserStorageService;
   private randomPieceService: RandomPieceService;
-  private sequenceService: SequenceService;
+  private gbpSequenceService: GBPSequenceService;
+  private wuziqiSequenceService: WuziqiSequenceService;
   private randomRollAnimationService: RandomRollAnimationService;
   private slotScoreService: SlotScoreService;
   private wheelFacerDrawerFactory: WheelFaceDrawerFactory;
   constructor(env: AppEnvironment) {
     super(env);
     this.gbpSquareDrawer = new GBPTextSquareDrawer();
+    this.wuziqiSquareDrawer = new WuziqiTextSquareDrawer();
     this.gbpStorageService = new GBPLocalStorageService();
+    this.wuziqiStorageService = new WuziqiLocalStorageService();
     this.randomPieceService = new RandomPieceService();
-    this.sequenceService = new SequenceService();
+    this.gbpSequenceService = new GBPSequenceService();
+    this.wuziqiSequenceService = new WuziqiSequenceService();
     this.jayrrowsSquareDrawer = new JayrrowsTextSquareDrawer();
     this.jayrrowsStorageService = new JayrrowsLocalStorageService();
     this.userStorageService = new LocalUserStorageService();
@@ -56,8 +67,14 @@ class Injector extends BaseInjector<AppEnvironment> {
   getGBPSquareDrawer(): GBPSquareDrawer {
     return this.gbpSquareDrawer;
   }
+  getWuziqiSquareDrawer(): WuziqiSquareDrawer {
+    return this.wuziqiSquareDrawer;
+  }
   getGBPStorageService(): GBPStorageService {
     return this.gbpStorageService;
+  }
+  getWuziqiStorageService(): WuziqiStorageService {
+    return this.wuziqiStorageService;
   }
   getJayrrowsSquareDrawer(): JayrrowsSquareDrawer {
     return this.jayrrowsSquareDrawer;
@@ -68,8 +85,11 @@ class Injector extends BaseInjector<AppEnvironment> {
   getRandomPieceService(): RandomPieceService {
     return this.randomPieceService;
   }
-  getSequenceService(): SequenceService {
-    return this.sequenceService;
+  getGBPSequenceService(): GBPSequenceService {
+    return this.gbpSequenceService;
+  }
+  getWuziqiSequenceService(): WuziqiSequenceService {
+    return this.wuziqiSequenceService;
   }
   getRandomRollAnimationService(): RandomRollAnimationService {
     return this.randomRollAnimationService;
