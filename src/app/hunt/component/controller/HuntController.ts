@@ -9,7 +9,6 @@ export class HuntController {
         this.model.tick()
     }
     onShot(coordinates: HuntCoordinates) {
-        console.log('controller.onShot', coordinates);
         this.model.shoot(coordinates)
     }
 }

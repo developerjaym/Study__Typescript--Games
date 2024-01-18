@@ -44,7 +44,6 @@ export class HuntCanvasUI implements Viewable<HuntEvent> {
         this.container.clientWidth,
         this.container.clientHeight
       );
-      console.log(e.offsetX, e.offsetY, coordinates.x, coordinates.y);
       
       this.controller.onShot(coordinates);
     };
@@ -110,6 +109,8 @@ export class HuntCanvasUI implements Viewable<HuntEvent> {
         context.strokeStyle = "black";
         context.lineWidth = 0
         context.fillRect(x , y, width, height);
+        context.font = `${height}px sans-serif`
+        context.fillText(entity.image, x, y+height)
       }
   }
 }

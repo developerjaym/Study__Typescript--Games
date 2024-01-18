@@ -19,39 +19,81 @@ export class HuntModel extends Observable<HuntEvent> {
     super();
     this.state = {
       horizon: [{
-        name: "Box",
-        image: "",
-        size: {height: 10, width: 10},
-        position: {x: 0, y: 90},
+        name: "Cow",
+        image: "🐄",
+        size: {height: 20, width: 25},
+        position: {x: 0, y: 80},
         status: HuntEntityStatus.ALIVE,
         speed: {x: 10, y: 0}
       }],
-      sky: [{
-        name: "Box",
-        image: "",
-        size: {height: 5, width: 5},
+      sky: [
+        {
+        name: "Eagle",
+        image: "🦅",
+        size: {height: 12, width: 15},
         position: {x: 0, y: 45},
         status: HuntEntityStatus.ALIVE,
         speed: {x: 10, y: 1}
-      }],
+      },
+        {
+        name: "Bat",
+        image: "🦇",
+        size: {height: 8, width: 16},
+        position: {x: 0, y: 35},
+        status: HuntEntityStatus.ALIVE,
+        speed: {x: 13, y: 4}
+      }
+    ],
       ground: [{
-        name: "Box",
-        image: "",
-        size: {height: 25, width: 25},
+        name: "Pig",
+        image: "🐖",
+        size: {height: 25, width: 30},
         position: {x: 0, y: 25},
         status: HuntEntityStatus.ALIVE,
         speed: {x: 3, y: 0}
+      },
+      {
+        name: "Deer",
+        image: "🦌",
+        size: {height: 25, width: 30},
+        position: {x: 0, y: 55},
+        status: HuntEntityStatus.ALIVE,
+        speed: {x: 7, y: 0}
+      },
+      {
+        name: "Mammoth",
+        image: "🦣",
+        size: {height: 45, width: 60},
+        position: {x: 0, y: 55},
+        status: HuntEntityStatus.ALIVE,
+        speed: {x: 2, y: 0}
+      },
+      {
+        name: "Rat",
+        image: "🐀",
+        size: {height: 5, width: 8},
+        position: {x: 0, y: 80},
+        status: HuntEntityStatus.ALIVE,
+        speed: {x: 12, y: 0}
+      },
+      {
+        name: "Bison",
+        image: "🦬",
+        size: {height: 30, width: 36},
+        position: {x: 0, y: 85},
+        status: HuntEntityStatus.ALIVE,
+        speed: {x: 5, y: 0}
       }],
       crosshairs: {x: 0, y: 0}
     };
   }
 
   tick(): void {
-    console.log('tick');
     // update positions of each entity
     for(const entity of [...this.state.sky, ...this.state.horizon, ...this.state.ground]) {
         entity.position = {x: entity.position.x + entity.speed.x, y: entity.position.y + entity.speed.y}
         // if entity is off the map reverse it
+        // TODO each section of the map (sky, horizon, ground) can be a different size. Adjust model to accomodate this.
         if(entity.position.x >= 600 || entity.position.x <= 0 ){
             entity.speed.x = -1 * entity.speed.x
         }
@@ -67,12 +109,10 @@ export class HuntModel extends Observable<HuntEvent> {
   shoot(coordinates: HuntCoordinates): void {
     for(const entity of [...this.state.sky, ...this.state.horizon, ...this.state.ground]) {
         const isHit = this.isHit(entity, coordinates);
-        console.log('isHit', isHit, coordinates, entity.position, entity.size);
-        
         if(isHit) {
             entity.status = HuntEntityStatus.DEAD
             entity.speed = {x: 0, y: 0}
-            // entities in sky should fall down?
+            // TODO entities in sky should fall down
         }
     }
     // check for entities in the vicinity

@@ -119,7 +119,7 @@ export class MenuModel extends Observable<MenuFilterEvent> {
           visible: true,
         },
         {
-          name: "Unnamed Game",
+          name: "Unfinished Hunting Game",
           description: "Hunt animals, probably.",
           route: "#/hunt",
           image: "https://localstorage.tools/game/image/trivia_screenshot.webp",
