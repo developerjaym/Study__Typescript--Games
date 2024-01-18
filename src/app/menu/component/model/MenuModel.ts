@@ -122,7 +122,7 @@ export class MenuModel extends Observable<MenuFilterEvent> {
           name: "Unfinished Hunting Game",
           description: "Hunt animals, probably.",
           route: "#/hunt",
-          image: "https://localstorage.tools/game/image/trivia_screenshot.webp",
+          image: "https://localstorage.tools/game/image/hunt_screenshot.webp",
           tags: [
             MenuTag.ONE_PLAYER
           ],
