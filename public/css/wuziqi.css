@@ -1,7 +1,7 @@
 :root {
-  --empty: black;
+  --empty: gray;
 
-  --board: rgb(33, 33, 33);
+  --board: black;
 
   --sequence: var(--highlight);
   --anti-sequence: var(--anti-highlight);
@@ -54,7 +54,7 @@
   border: 1px solid var(--empty);
 }
 .square--sequence {
-  color: var(--sequence);
+  border: 1vmin solid var(--sequence);
   text-shadow: 0 0 1px var(--anti-sequence);
 }
 .game__bottom {
