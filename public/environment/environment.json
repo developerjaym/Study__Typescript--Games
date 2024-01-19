@@ -3,6 +3,8 @@
     "rootElementId": "game",
     "gbp_width": 12,
     "gbp_height": 12,
+    "wuziqi_width": 12,
+    "wuziqi_height": 12,
     "jayrrows_width": 8,
     "jayrrows_height": 8,
     "shareURL": "https://localstorage.tools/game/board/gbp"

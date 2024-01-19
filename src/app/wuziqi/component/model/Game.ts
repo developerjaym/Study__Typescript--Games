@@ -89,8 +89,8 @@ export class Game extends AbstractGame {
       over: false,
       board: {
         squares: BoardHelper.createFreshSquares(
-          this.env.gbp_width,
-          this.env.gbp_height
+          this.env.wuziqi_width,
+          this.env.wuziqi_height
         ),
       },
       players,
