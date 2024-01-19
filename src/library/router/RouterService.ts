@@ -18,6 +18,9 @@ class LoadingPage implements Page {
   onDestroy(): void {
       
   }
+  onInit(): void {
+
+  }
   onChange(event: RouterEvent): void {
    
   }

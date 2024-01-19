@@ -7,13 +7,11 @@ import { HuntView } from "./view/HuntView.js";
 export class HuntGameComponent implements Page {
   private model;
   private view;
-  constructor(
-  ) {
+  constructor() {
     this.model = new HuntModel();
     let gameController = new HuntController(this.model);
     this.view = new HuntView(gameController);
     this.model.subscribe(this.view);
-    
   }
   get component(): HTMLElement {
     return this.view.component;
@@ -21,9 +19,9 @@ export class HuntGameComponent implements Page {
   get stylesheet(): string[] {
     return ["hunt.css"];
   }
+  onInit(): void {}
   onDestroy(): void {
-      this.view.stop();
+    this.view.stop();
   }
-  onChange(event: RouterEvent): void {
-  }
+  onChange(event: RouterEvent): void {}
 }

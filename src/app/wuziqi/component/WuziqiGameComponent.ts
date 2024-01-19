@@ -18,11 +18,11 @@ export class WuziqiComponent implements Page {
     this.view = new GameView(gameController);
     this.model.subscribe(this.storageService);
     this.model.subscribe(this.view);
+  }
+  onInit(): void {
     this.model.start();
   }
-  onDestroy(): void {
-      
-  }
+  onDestroy(): void {}
   get component(): HTMLElement {
     return this.view.component;
   }

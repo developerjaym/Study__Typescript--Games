@@ -7,13 +7,11 @@ import { MenuModel } from "./model/MenuModel.js";
 import { MenuDisplayUI } from "./view/MenuDisplayUI.js";
 import { MenuFilterFormUI } from "./view/MenuFilterFormUI.js";
 
-
 export class MenuComponent implements Page {
   private menuElement: HTMLElement;
   private menuDisplayUI: MenuDisplayUI;
   private menuFilterForm: MenuFilterFormUI;
-  
-  
+
   constructor(private htmlService: HTMLService = injector.getHtmlService()) {
     this.menuElement = this.htmlService.create(
       "main",
@@ -32,15 +30,15 @@ export class MenuComponent implements Page {
     const menuModel = new MenuModel();
     const menuController = new MenuController(menuModel);
 
-    this.menuFilterForm = new MenuFilterFormUI(menuController)
-    
+    this.menuFilterForm = new MenuFilterFormUI(menuController);
+
     menuHeader.append(this.menuFilterForm.component);
     this.menuElement.append(menuHeader);
-    this.menuDisplayUI = new MenuDisplayUI()
-    this.menuElement.append(this.menuDisplayUI.component)
+    this.menuDisplayUI = new MenuDisplayUI();
+    this.menuElement.append(this.menuDisplayUI.component);
     menuModel.subscribe(this.menuDisplayUI);
     menuModel.subscribe(this.menuFilterForm);
-    menuModel.start()
+    menuModel.start();
   }
   get stylesheet(): string[] {
     return ["menu.css"];
@@ -48,11 +46,7 @@ export class MenuComponent implements Page {
   get component(): HTMLElement {
     return this.menuElement;
   }
-  onDestroy(): void {
-      
-  }
-  onChange(event: RouterEvent): void {
-    
-    
-  }
+  onInit(): void {}
+  onDestroy(): void {}
+  onChange(event: RouterEvent): void {}
 }

@@ -54,10 +54,16 @@ export class ControlsUI implements Viewable<GameEvent> {
       "homeButton",
       SystemIcon.HOME
     );
-    homeButton.addEventListener("click", () => this.routerService.routeTo("menu"));
+    homeButton.addEventListener("click", () =>
+      this.routerService.routeTo("menu")
+    );
 
-
-    this.container.append(this.undoButton, endGameButton, helpButton, homeButton);
+    this.container.append(
+      this.undoButton,
+      endGameButton,
+      helpButton,
+      homeButton
+    );
   }
   get component(): HTMLElement {
     return this.container;

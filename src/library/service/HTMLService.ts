@@ -36,11 +36,13 @@ export class HTMLService {
     );
     this.getRoot().replaceChildren(spinner);
     this.activePage?.onDestroy();
+    this.activePage?.component?.remove();
     this.activePage = await elementSupplier();
     this.getRoot().replaceChildren()
     this.clearStylesheets(this.activePage.stylesheet);
     this.activePage.stylesheet.forEach(stylesheet => this.appendStylesheet(stylesheet));
     this.getRoot().replaceChildren(this.activePage.component);
+    this.activePage.onInit()
   }
   private clearStylesheets(except: string[]): void {
     Array.from(this.document.head

@@ -18,13 +18,16 @@ export class GBPComponent implements Page {
     this.view = new GameView(gameController);
     this.model.subscribe(this.storageService);
     this.model.subscribe(this.view);
-    this.model.start();
+    
   }
   get component(): HTMLElement {
     return this.view.component;
   }
   get stylesheet(): string[] {
     return ["boardgame.css", "gbp.css"];
+  }
+  onInit(): void {
+    this.model.start();
   }
   onDestroy(): void {
       
