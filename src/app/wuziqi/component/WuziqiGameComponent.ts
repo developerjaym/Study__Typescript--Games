@@ -20,6 +20,9 @@ export class WuziqiComponent implements Page {
     this.model.subscribe(this.view);
     this.model.start();
   }
+  onDestroy(): void {
+      
+  }
   get component(): HTMLElement {
     return this.view.component;
   }

@@ -15,6 +15,9 @@ class LoadingPage implements Page {
   get component(): HTMLElement {
     return this.htmlService.create("div", [], crypto.randomUUID(), "Loading...");
   }
+  onDestroy(): void {
+      
+  }
   onChange(event: RouterEvent): void {
    
   }

@@ -24,5 +24,8 @@ export class JayrrowsComponent implements Page {
   get stylesheet(): string[] {
     return ["boardgame.css", "jayrrows.css"]
   }
+  onDestroy(): void {
+      
+  }
   onChange(event: RouterEvent): void {}
 }

@@ -26,5 +26,8 @@ export class GBPComponent implements Page {
   get stylesheet(): string[] {
     return ["boardgame.css", "gbp.css"];
   }
+  onDestroy(): void {
+      
+  }
   onChange(event: RouterEvent): void {}
 }

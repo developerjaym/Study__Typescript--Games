@@ -17,6 +17,9 @@ export class HuntView implements Viewable<HuntEvent> {
     get component(): HTMLElement {
         return this.container;
     }
+    stop(): void {
+        window.clearInterval(this.timerId);
+    }
     onChange(event: HuntEvent): void {
         this.canvas.onChange(event)
         if(event.type === HuntEventType.SHOT_FIRED) {

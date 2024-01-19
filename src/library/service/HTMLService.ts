@@ -3,6 +3,7 @@ import { Supplier } from "../utility/Functions.js";
 import { BaseEnvironment } from "./environment/Environment.js";
 
 export class HTMLService {
+  private activePage?: Page;
   constructor(private document: Document, private env: BaseEnvironment) {}
   create<K extends keyof HTMLElementTagNameMap>(
     tag: K,
@@ -34,12 +35,12 @@ export class HTMLService {
       "Loading..."
     );
     this.getRoot().replaceChildren(spinner);
-
-    const page = await elementSupplier();
+    this.activePage?.onDestroy();
+    this.activePage = await elementSupplier();
     this.getRoot().replaceChildren()
-    this.clearStylesheets(page.stylesheet);
-    page.stylesheet.forEach(stylesheet => this.appendStylesheet(stylesheet));
-    this.getRoot().replaceChildren(page.component);
+    this.clearStylesheets(this.activePage.stylesheet);
+    this.activePage.stylesheet.forEach(stylesheet => this.appendStylesheet(stylesheet));
+    this.getRoot().replaceChildren(this.activePage.component);
   }
   private clearStylesheets(except: string[]): void {
     Array.from(this.document.head

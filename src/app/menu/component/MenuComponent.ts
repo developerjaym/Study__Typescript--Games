@@ -48,6 +48,9 @@ export class MenuComponent implements Page {
   get component(): HTMLElement {
     return this.menuElement;
   }
+  onDestroy(): void {
+      
+  }
   onChange(event: RouterEvent): void {
     
     

@@ -21,5 +21,9 @@ export class HuntGameComponent implements Page {
   get stylesheet(): string[] {
     return ["hunt.css"];
   }
-  onChange(event: RouterEvent): void {}
+  onDestroy(): void {
+      this.view.stop();
+  }
+  onChange(event: RouterEvent): void {
+  }
 }

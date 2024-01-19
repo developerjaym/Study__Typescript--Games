@@ -25,15 +25,24 @@ export class GBPSequenceService {
         const sequenceCount = Array.from(sequenceScoreMap?.entries() || []).length
         if(sequenceCount === 0) {
             player.highScore = 0
+            player.lowScore = 0
+        }
+        else if(sequenceCount === 1) {
+            player.highScore = Array.from(sequenceScoreMap!.values())[0]
+            player.lowScore = 0
         }
         else {
             const sequenceValues = Array.from(sequenceScoreMap!.values())
             player.highScore = Math.max(...sequenceValues)
+            player.lowScore = Math.min(...sequenceValues)
         }
     }
   }
   private scoreSequence(sequence: Sequence): number {
-    return sequence.squares.length
+    if(sequence.squares.find(square => square.piece === Piece.ONE)) {
+        return 1;
+    }
+    return sequence.squares.reduce((pre, cur) => (cur.piece || 0) + pre, 0)
   }
   findSequences(board: Board): Sequence[] {
     let sequences: Sequence[] = [];

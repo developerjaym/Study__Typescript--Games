@@ -21,6 +21,9 @@ export class SlotComponent implements Page {
     get component(): HTMLElement {
         return this.view.component
     }
+    onDestroy(): void {
+      
+    }
     onChange(event: RouterEvent): void {
        
     }
