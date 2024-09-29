@@ -1,7 +1,7 @@
 import { Viewable } from "../../../../library/observer/Viewable.js";
 import injector from "../../../injector/Injector.js";
 import { FlipbookController } from "../controller/FlipbookController.js";
-import { FlipbookEntity, FlipbookEntityStatus, FlipbookEvent } from "../model/FlipbookEvent.js";
+import { FlipbookEntity, FlipbookEvent } from "../model/FlipbookEvent.js";
 
 export class FlipbookCanvasUI implements Viewable<FlipbookEvent> {
   private container: HTMLElement;
@@ -30,14 +30,14 @@ export class FlipbookCanvasUI implements Viewable<FlipbookEvent> {
       y: clientY / (screenHeight / 600),
     });
     const canvasShotListener = (e: MouseEvent) => {
-      const coordinates = clientCoordinateConverter(
-        e.offsetX,
-        e.offsetY,
-        this.container.clientWidth,
-        this.container.clientHeight
-      );
+      // const coordinates = clientCoordinateConverter(
+      //   e.offsetX,
+      //   e.offsetY,
+      //   this.container.clientWidth,
+      //   this.container.clientHeight
+      // );
       
-      this.controller.onShot(coordinates);
+      // this.controller.onShot(coordinates);
     };
     this.container.appendChild(this.backgroundCanvas);
     
@@ -47,7 +47,7 @@ export class FlipbookCanvasUI implements Viewable<FlipbookEvent> {
     return this.container;
   }
   onChange(event: FlipbookEvent): void {
-    // this.drawCanvas(this.backgroundCanvas, event.background, "white")
+    this.drawCanvas(this.backgroundCanvas, event.entities, "white")
   }
   private drawCanvas(canvas: HTMLCanvasElement, entities: FlipbookEntity[], fillStyle: string): void {
     const logicalCoordinateConverter = (logicalX: number, logicalY: number, canvas: HTMLCanvasElement) => [
@@ -75,8 +75,7 @@ export class FlipbookCanvasUI implements Viewable<FlipbookEvent> {
           canvas
         );
         
-        context.fillStyle =
-          entity.status === FlipbookEntityStatus.ALIVE ? "green" : "red";
+        context.fillStyle = "white";
         context.strokeStyle = "black";
         context.lineWidth = 0
         context.fillRect(x , y, width, height);

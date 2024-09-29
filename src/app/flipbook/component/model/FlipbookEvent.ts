@@ -1,14 +1,12 @@
 export interface FlipbookEvent {
-    sky: FlipbookEntity[],
-    horizon: FlipbookEntity[],
-    ground: FlipbookEntity[],
-    type: FlipbookEventType,
-    crosshairs: FlipbookCoordinates,
+    entities: FlipbookEntity[],
+    background: string,
+    type: FlipbookEventType
 }
 
-export interface FlipbookEventBackground {
-    image: string,
-    size: FlipbookSize
+export interface FlipbookPage {
+    entities: FlipbookEntity[],
+    background: string
 }
 
 export interface FlipbookCoordinates {
@@ -22,21 +20,15 @@ export interface FlipbookSize {
 }
 
 export enum FlipbookEventType {
-    SHOT_FIRED,
-    MOVEMENT
-}
-
-export enum FlipbookEntityStatus {
-    ALIVE,
-    DEAD,
-    HURT
+    ENTITY_CHANGE,
+    BACKGROUND_CHANGE,
+    PAGE_CREATED,
+    PAGE_FOCUS_CHANGE
 }
 
 export interface FlipbookEntity {
     name: string,
     image: string,
     size: FlipbookSize,
-    status: FlipbookEntityStatus,
-    position: FlipbookCoordinates,
-    speed: FlipbookCoordinates
+    position: FlipbookCoordinates
 }

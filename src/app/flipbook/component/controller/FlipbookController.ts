@@ -5,10 +5,4 @@ export class FlipbookController {
     constructor(private model: FlipbookModel) {
         
     }
-    onTick(): void {
-        this.model.tick()
-    }
-    onShot(coordinates: FlipbookCoordinates) {
-        this.model.shoot(coordinates)
-    }
 }

@@ -3,15 +3,19 @@ import injector from "../../../injector/Injector.js";
 import { FlipbookController } from "../controller/FlipbookController.js";
 import { FlipbookEvent, FlipbookEventType } from "../model/FlipbookEvent.js";
 import { FlipbookCanvasUI } from "./FlipbookCanvasUI.js";
+import { FlipbookPageList } from "./FlipbookPageList.js";
 
 export class FlipbookView implements Viewable<FlipbookEvent> {
     private container: HTMLElement;
     private canvas: FlipbookCanvasUI;
-    // private timerId: number;
+    private pageList: FlipbookPageList;
+
     constructor(private controller: FlipbookController, private htmlService = injector.getHtmlService(), private soundEffectService = injector.getSoundEffectService()) {
         this.container = this.htmlService.create("main", ["flipbook__main"]);
+        this.pageList = new FlipbookPageList(this.controller);
+        this.container.appendChild(this.pageList.component);
         this.canvas = new FlipbookCanvasUI(this.controller);
-        this.container.appendChild(this.canvas.component)
+        this.container.appendChild(this.canvas.component);
         // this.timerId = window.setInterval(() => this.controller.onTick(), 1_00)
         // I want a vertical pane on the left that shows thumbnails of the 'pages'
         // I want a toolbar on the right that shows tools
@@ -28,14 +32,7 @@ export class FlipbookView implements Viewable<FlipbookEvent> {
     get component(): HTMLElement {
         return this.container;
     }
-    stop(): void {
-        // window.clearInterval(this.timerId);
-    }
     onChange(event: FlipbookEvent): void {
-        console.log('onChange')
         this.canvas.onChange(event)
-        if(event.type === FlipbookEventType.SHOT_FIRED) {
-            this.soundEffectService.get("assets/flipbook/shot.mp3").play()
-        }
     }
 }
