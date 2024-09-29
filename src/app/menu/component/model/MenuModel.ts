@@ -136,6 +136,16 @@ export class MenuModel extends Observable<MenuFilterEvent> {
           ],
           visible: true,
         },
+        {
+          name: "Unfinished Flipbook Animator",
+          description: "Make simple animations.",
+          route: "#/flipbook",
+          image: "https://localstorage.tools/game/image/x.webp",
+          tags: [
+            MenuTag.ONE_PLAYER
+          ],
+          visible: true,
+        },
       ];
       constructor() {
         super();

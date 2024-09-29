@@ -1,3 +1,4 @@
+import { FlipbookComponent } from "./flipbook/component/FlipbookComponent.js";
 import { GBPComponent } from "./gbp/component/GBPGameComponent.js";
 import { HuntGameComponent } from "./hunt/component/HuntGameComponent.js";
 import injector from "./injector/Injector.js";
@@ -27,5 +28,6 @@ import { WuziqiComponent } from "./wuziqi/component/WuziqiGameComponent.js";
   });
   router.add(/^\/slot$/, async () => new SlotComponent());
   router.add(/^\/hunt$/, async () => new HuntGameComponent());
+  router.add(/^\/flipbook$/, async () => new FlipbookComponent());
   router.start();
 })();
