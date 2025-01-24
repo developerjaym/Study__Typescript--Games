@@ -1,12 +1,14 @@
 export interface FlipbookEvent {
-    entities: FlipbookEntity[],
-    background: string,
-    type: FlipbookEventType
+    pages: FlipbookPage[],
+    type: FlipbookEventType,
+    focused: string
 }
 
 export interface FlipbookPage {
     entities: FlipbookEntity[],
-    background: string
+    background: string,
+    name: string,
+    id: string
 }
 
 export interface FlipbookCoordinates {
@@ -23,7 +25,8 @@ export enum FlipbookEventType {
     ENTITY_CHANGE,
     BACKGROUND_CHANGE,
     PAGE_CREATED,
-    PAGE_FOCUS_CHANGE
+    PAGE_FOCUS_CHANGE,
+    START
 }
 
 export interface FlipbookEntity {

@@ -47,7 +47,8 @@ export class FlipbookCanvasUI implements Viewable<FlipbookEvent> {
     return this.container;
   }
   onChange(event: FlipbookEvent): void {
-    this.drawCanvas(this.backgroundCanvas, event.entities, "white")
+    const activePage = event.pages.find(page => page.id === event.focused)!;
+    this.drawCanvas(this.backgroundCanvas, activePage.entities, activePage.background);
   }
   private drawCanvas(canvas: HTMLCanvasElement, entities: FlipbookEntity[], fillStyle: string): void {
     const logicalCoordinateConverter = (logicalX: number, logicalY: number, canvas: HTMLCanvasElement) => [

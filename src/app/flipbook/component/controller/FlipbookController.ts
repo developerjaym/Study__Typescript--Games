@@ -5,4 +5,8 @@ export class FlipbookController {
     constructor(private model: FlipbookModel) {
         
     }
+    addPage(): void {
+        console.log("add page");
+        // TODO add a page to the model
+    }
 }

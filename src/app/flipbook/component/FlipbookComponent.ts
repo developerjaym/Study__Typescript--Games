@@ -19,7 +19,9 @@ export class FlipbookComponent implements Page {
   get stylesheet(): string[] {
     return ["flipbook.css"];
   }
-  onInit(): void {}
+  onInit(): void {
+    this.model.start();
+  }
   onDestroy(): void {
     this.view.stop();
   }

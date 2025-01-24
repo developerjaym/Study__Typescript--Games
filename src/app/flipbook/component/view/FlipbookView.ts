@@ -35,4 +35,7 @@ export class FlipbookView implements Viewable<FlipbookEvent> {
     onChange(event: FlipbookEvent): void {
         this.canvas.onChange(event)
     }
+    stop(): void {
+        
+    }
 }
