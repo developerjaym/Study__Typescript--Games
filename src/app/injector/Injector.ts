@@ -20,6 +20,7 @@ import { WheelFaceDrawerFactory } from "../slot/service/drawer/WheelFaceDrawer/W
 import { SlotScoreService } from "../slot/service/score/SlotScoreService.js";
 import { LocalUserStorageService } from "./service/LocalUserStorageService.js";
 import { UserStorageService } from "./service/UserStorageService.js";
+import { HuntAnimationService } from "../hunt/service/ExampleCode.js";
 
 class Injector extends BaseInjector<AppEnvironment> {
   private gbpSquareDrawer: GBPSquareDrawer;
@@ -32,6 +33,7 @@ class Injector extends BaseInjector<AppEnvironment> {
   private randomRollAnimationService: RandomRollAnimationService;
   private slotScoreService: SlotScoreService;
   private wheelFacerDrawerFactory: WheelFaceDrawerFactory;
+  private huntAnimationService: HuntAnimationService;
   constructor(env: AppEnvironment) {
     super(env);
     this.gbpSquareDrawer = new GBPTextSquareDrawer();
@@ -48,6 +50,7 @@ class Injector extends BaseInjector<AppEnvironment> {
       this.soundEffectService
     );
     this.wheelFacerDrawerFactory = new WheelFaceDrawerFactory(new IconOnlyWheelFaceDrawer(), new ImageOnlyWheelFaceDrawer(this.htmlService))
+    this.huntAnimationService = new HuntAnimationService();
   }
   async initialize(): Promise<void> {}
   getEnvironment(): AppEnvironment {
@@ -82,6 +85,9 @@ class Injector extends BaseInjector<AppEnvironment> {
   }
   getWheelFaceDrawerFactory(): WheelFaceDrawerFactory {
     return this.wheelFacerDrawerFactory;
+  }
+  getHuntAnimationService(): HuntAnimationService {
+    return this.huntAnimationService;
   }
 }
 

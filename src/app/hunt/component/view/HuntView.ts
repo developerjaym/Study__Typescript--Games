@@ -12,10 +12,15 @@ export class HuntView implements Viewable<HuntEvent> {
         this.container = this.htmlService.create("main", ["hunt__main"]);
         this.canvas = new HuntCanvasUI(this.controller);
         this.container.appendChild(this.canvas.component)
-        this.timerId = window.setInterval(() => this.controller.onTick(), 1_00)
+        this.timerId = window.setInterval(() => this.controller.onTick(), 1_000)
     }
     get component(): HTMLElement {
         return this.container;
+    }
+    stop(): void {
+        console.log("Stopping interval", this.timerId);
+        
+        window.clearInterval(this.timerId);
     }
     onChange(event: HuntEvent): void {
         this.canvas.onChange(event)

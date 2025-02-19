@@ -13,7 +13,6 @@ export class HuntGameComponent implements Page {
     let gameController = new HuntController(this.model);
     this.view = new HuntView(gameController);
     this.model.subscribe(this.view);
-    
   }
   get component(): HTMLElement {
     return this.view.component;
@@ -21,5 +20,7 @@ export class HuntGameComponent implements Page {
   get stylesheet(): string[] {
     return ["hunt.css"];
   }
-  onChange(event: RouterEvent): void {}
+  onChange(event: RouterEvent): void {
+    this.view.stop();
+  }
 }

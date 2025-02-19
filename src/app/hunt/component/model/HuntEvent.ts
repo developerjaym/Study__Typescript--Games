@@ -47,11 +47,25 @@ export enum HuntEntityStatus {
     HURT
 }
 
+export enum HuntEntitySpecies {
+    GOOSE = "Goose",
+    DUCK = "Duck",
+    COW = "Cow",
+    EAGLE = "EAGLE",
+    BAT = "BAT",
+    PIG = "PIG",
+    DEER = "DEER",
+    MAMMOTH = "MAMMOTH",
+    RAT = "RAT",
+    BISON = "BISON"
+}
+
 export interface HuntEntity {
-    name: string,
+    name: HuntEntitySpecies,
     image: string,
     size: HuntSize,
     status: HuntEntityStatus,
     position: HuntCoordinates,
-    speed: HuntCoordinates
+    speed: HuntCoordinates,
+    pose: number
 }
